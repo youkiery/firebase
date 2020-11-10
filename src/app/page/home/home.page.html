@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="row">
+    <div class="col-xs-6 col-sm-3">
+      <ion-card (click)="rest.router.navigateByUrl('/work')" color="secondary">
+        <ion-card-header>
+          <ion-img src="assets/image/work.png"></ion-img>
+        </ion-card-header>
+        <ion-card-content class="text-center">
+          Quản lý công việc 
+          <ion-badge color="danger" slot="end" *ngIf="rest.work.unread"> {{rest.work.unread}} </ion-badge>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <ion-card (click)="rest.router.navigateByUrl('/kaizen')" color="secondary">
+        <ion-card-header>
+          <ion-img src="assets/image/kaizen.png"></ion-img>
+        </ion-card-header>
+        <ion-card-content class="text-center">
+          Chiến lược Kaizen
+          <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <ion-card (click)="rest.router.navigateByUrl('/schedule')" color="secondary">
+        <ion-card-header>
+          <ion-img src="assets/image/schedule.png"></ion-img>
+        </ion-card-header>
+        <ion-card-content class="text-center">
+          Đăng ký lịch
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

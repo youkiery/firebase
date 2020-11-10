@@ -1,0 +1,27 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <b> {{rest.work.edit.content}} </b>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Tiến độ: {{rest.work.edit.process}}%
+      </p>
+      <p>
+        Hạn chót: {{rest.totime(rest.work.edit.calltime)}}
+      </p>
+      <p *ngIf="rest.work.edit.note.length">
+        Ghi chú: {{rest.work.edit.note}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngFor="let image of rest.work.edit.image; let i = index">
+    <ion-img [src]="image"></ion-img>
+  </ion-card>
+</ion-content>

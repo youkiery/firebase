@@ -1,0 +1,23 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="download()" color="light" fill="clear">
+    Tải về
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <div style="height: 50px; background: green;">
+    <div style="float: left; width: 50px; line-height: 50px; text-align: center; color: white; font-weight: bold; cursor: pointer;" (click)="changeWeek(-1)">
+      &lt;
+    </div>
+    <div style="float: left; width: calc(100% - 100px); line-height: 50px; text-align: center; color: white">
+     <ion-datetime [(ngModel)]="time" displayFormat="DD/MM/YYYY"></ion-datetime>
+    </div>
+    <div style="float: left; width: 50px; line-height: 50px; text-align: center; color: white; font-weight: bold; cursor: pointer;" (click)="changeWeek(1)">
+      &gt;
+    </div>
+  </div>
+  <iframe *ngIf="preview" [src]="preview" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+</ion-content>

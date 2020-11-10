@@ -1,0 +1,33 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs></ion-col>
+
+      <ion-col size-xs>
+        <div style="text-align: center;">
+          <ion-img [src]="logo" style="width: 250px; margin: 50px auto;"></ion-img>
+          <ion-text color="secondary">
+            <h3> Hệ thống quản lý </h3>
+          </ion-text>
+        </div>
+        <form (ngSubmit)="rest.login(username, password)">
+          <ion-item>
+            <ion-label position="float">
+              <ion-icon name="person-outline"></ion-icon>
+            </ion-label>
+            <ion-input [(ngModel)]="username" name="username" placeholder="Tài khoản"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="float">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+            </ion-label>
+            <ion-input type="password" [(ngModel)]="password" name="password" placeholder="Mật khẩu"></ion-input>
+          </ion-item>
+          <ion-button color="success" expand="block" shape="round" (click)="rest.login(username, password)"> Đăng nhập </ion-button>
+        </form>
+      </ion-col>
+
+      <ion-col size-xs></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

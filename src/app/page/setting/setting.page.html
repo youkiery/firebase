@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="avatar-box">
+    <ion-img src="assets/image/avatar.png"></ion-img>
+    <ion-text> {{rest.user.name}} </ion-text>
+  </div>
+  <ion-list>
+    <ion-list-header> Tài khoản </ion-list-header>
+    <ion-item (click)="password = !password">
+      Đổi mật khẩu
+    </ion-item>
+    <div [hidden]="password">
+      <ion-item>
+        <ion-label position="stacked"> Mật khẩu cũ </ion-label>
+        <ion-input type="password" [(ngModel)]="oldpas"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Mật khẩu mới </ion-label>
+        <ion-input type="password" [(ngModel)]="newpas"> </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked"> Xác nhận mật khẩu mới </ion-label>
+        <ion-input type="password" [(ngModel)]="verpas"> </ion-input>
+      </ion-item>
+      <ion-button color="secondary" fill="solid" expand="block" (click)="changePassword()">
+        Đổi mật khẩu
+      </ion-button>
+    </div>
+    <ion-item (click)="rest.logout()"> 
+      <ion-icon name="exit-outline" color="danger"></ion-icon>
+      Đăng xuất
+    </ion-item>
+  </ion-list>
+</ion-content>

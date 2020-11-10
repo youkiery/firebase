@@ -1,0 +1,38 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="filter()" color="light" fill="clear">
+    Lọc danh sách
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label> Chọn/Bỏ chọn tất cả </ion-label> 
+    <ion-checkbox [(ngModel)]="check" (ionChange)="checkall()"></ion-checkbox>
+  </ion-item>
+  <ion-item (click)="selectEmploy()">
+    <ion-label position="fixed">
+      Nhân viên
+    </ion-label>
+    <ion-input [(ngModel)]="rest.work.userlist" readonly="true"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed"> Từ khóa </ion-label>
+    <ion-input [(ngModel)]="rest.work.filter.keyword"></ion-input>
+  </ion-item>
+  <ion-item (click)="clear()">
+    <ion-label color="danger">
+      Xóa ngày bắt đầu
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed"> Ngày bắt đầu </ion-label>
+    <ion-datetime [(ngModel)]="rest.work.filter.startdate" displayFormat="DD/MM/YYYY"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed"> Hạn chót </ion-label>
+    <ion-datetime [(ngModel)]="rest.work.filter.enddate" displayFormat="DD/MM/YYYY"></ion-datetime>
+  </ion-item>
+</ion-content>

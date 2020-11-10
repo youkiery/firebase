@@ -1,0 +1,29 @@
+ion-thumbnail {
+  display: inline-block !important; 
+  width: 128px;
+  height: 128px;
+}
+
+#image {
+  font-size: 32px;
+  line-height: 64px;
+  color: green;
+  top: 0;
+  left: 0;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}
+
+.box {
+  position: relative;
+  margin: 4px;
+  float: left;
+  width: 128px;
+  height: 128px;
+}
+
+.box-list {
+  margin: auto;
+  text-align: center;
+  width: fit-content;
+}

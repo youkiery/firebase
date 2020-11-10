@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button color="light"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text *ngIf="!rest.work.notify.length"> Không có thông báo nào </ion-text>
+  <div *ngIf="rest.work.notify.length">
+    <ion-card *ngFor="let msg of rest.work.notify" (click)="detail(msg['id'])">
+      <ion-card-content>
+        {{msg.content}}
+      </ion-card-content>
+      <ion-card-subtitle class="notify-time">
+        {{msg.time}}
+      </ion-card-subtitle>
+    </ion-card>
+  </div>
+</ion-content>

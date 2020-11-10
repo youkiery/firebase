@@ -1,0 +1,49 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item *ngIf="!rest.work.role">
+    Nội dung: {{rest.work.edit.content}}
+  </ion-item>
+
+  <ion-item *ngIf="rest.work.role">
+    <ion-label position="fixed"> Nội dung </ion-label>
+    <ion-input [(ngModel)]="rest.work.edit.content"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed"> Tiến độ </ion-label>
+    <ion-input type="number" [(ngModel)]="rest.work.edit.process"></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="rest.work.role">
+    <ion-label position="fixed"> Hạn chót </ion-label>
+    <ion-datetime [(ngModel)]="rest.work.edit.calltime" displayFormat="DD/MM/YYYY"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed"> Lý do </ion-label>
+    <ion-textarea [(ngModel)]="rest.work.edit.note"></ion-textarea>
+  </ion-item>
+
+  <div class="box-list">
+    <label class="box">
+      <ion-thumbnail>
+        <ion-img src="assets/image/insert.png"></ion-img>
+        <input type="file" [(ngModel)]="files" #filechooser style="display: none;" accept="image/*">
+      </ion-thumbnail>
+    </label>
+
+    <ion-label *ngFor="let image of rest.work.edit.image; let i = index">
+      <ion-thumbnail class="box" *ngIf="image.length" (click)="remove(i)">
+        <ion-img [src]="image"></ion-img>
+      </ion-thumbnail>
+    </ion-label>
+  </div>
+</ion-content>

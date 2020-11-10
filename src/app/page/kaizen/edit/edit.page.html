@@ -1,0 +1,25 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="fixed"> Vấn đề </ion-label>
+    <ion-textarea [(ngModel)]="rest.kaizen.edit.problem"></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed"> Giải quyết </ion-label>
+    <ion-textarea [(ngModel)]="rest.kaizen.edit.solution"></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed"> Hiệu quả </ion-label>
+    <ion-textarea [(ngModel)]="rest.kaizen.edit.result"></ion-textarea>
+  </ion-item>
+</ion-content>

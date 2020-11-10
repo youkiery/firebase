@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="rest.kaizen.segment">
+      <ion-segment-button value="undone"> Chưa hoàn thành </ion-segment-button>
+      <ion-segment-button value="done"> Đã hoàn thành </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+ 
+  <div *ngIf="rest.kaizen.list[rest.kaizen.segment].length">
+    <ion-card *ngFor="let item of rest.kaizen.list[rest.kaizen.segment]; let i = index">
+      <ion-card-content> 
+        <div style="float: right;">
+          <ion-button color="secondary" *ngIf="rest.kaizen.role && rest.kaizen.segment === 'undone'" (click)="checker(item.id)" size="small">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="secondary" (click)="edit(false, i)" size="small">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" *ngIf="rest.kaizen.role" (click)="remove(item.id)" size="small">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </div>
+        
+        <p> <b> Vấn đề: </b> {{item.problem}} </p>  
+        <p> <b> Giải quyết: </b> {{item.solution}} </p>  
+        <p> <b> Hiệu quả: </b> {{item.result}} </p>  
+        <p *ngIf="rest.kaizen.role"> <b> Người gửi: </b> {{item.name}} </p>  
+      </ion-card-content>
+      <ion-card-subtitle class="notify-time">
+        {{item.time}}
+      </ion-card-subtitle>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!rest.kaizen.list[rest.kaizen.segment].length">
+    Chưa có giải pháp nào
+  </div>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.router.navigateByUrl('/home')">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="edit(true)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="filterM()">
+        <ion-icon name="filter-outline"></ion-icon>
+        <ion-label> Tìm kiếm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="rest.router.navigateByUrl('/kaizen/notify')">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-label> Thông báo </ion-label>
+        <ion-badge color="danger" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

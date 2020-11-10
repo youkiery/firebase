@@ -1,0 +1,41 @@
+ion-row {
+  border-top: 1px solid #bbb;
+}
+
+ion-row:last-child {
+  border-bottom: 1px solid #bbb;
+}
+
+ion-col {
+  font-size: 0.8em;
+  border-left: 1px solid #bbb;
+}
+
+td {
+  font-size: 0.8em;
+  height: 30px;
+}
+
+ion-col:last-child {
+  border-right: 1px solid #bbb;
+}
+
+.gray {
+  background: lightgray;
+}
+.red {
+  background: pink;
+}
+.blue {
+  background: lightblue;
+}
+.green {
+  background: lightgreen;
+}
+.yellow {
+  background: lightyellow;
+}
+.purple {
+  background: lightslategrey;
+  color: white;
+}
