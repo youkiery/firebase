@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'schedule',
     loadChildren: () => import('./page/schedule/schedule.module').then( m => m.SchedulePageModule)
+  },
+  {
+    path: 'vaccine',
+    loadChildren: () => import('./page/vaccine/vaccine.module').then( m => m.VaccinePageModule)
   }
 ];
 

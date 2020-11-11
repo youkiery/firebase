@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
+import { interval } from 'rxjs';
 import { RestService } from '../../services/rest.service';
 
 @Component({
@@ -34,21 +35,26 @@ export class LoginPage {
     this.rest.check({
       action: 'version'
     }).then(data => {
-      this.rest.defreeze('check')
+      let interval = setInterval(() => {
+        if (Object.keys(this.rest.load).length) {
+          this.rest.defreeze('check')
+          clearInterval(interval)
 
-      if (this.version === data['version']) {
-        this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
-        this.rest.storage.get('userdata').then((val) => {
-          if (val && val['username'] && val['password']) {
-            this.rest.login(val['username'], val['password'])
+          if (this.version === data['version']) {
+            this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
+            this.rest.storage.get('userdata').then((val) => {
+              if (val && val['username'] && val['password']) {
+                this.rest.login(val['username'], val['password'])
+              }
+              this.rest.defreeze('cuser')
+            })
           }
-          this.rest.defreeze('cuser')
-        })
-      }
-      else {
-        this.rest.link = data['link']
-        this.navCtrl.navigateRoot('/update', { animated: true, animationDirection: 'forward' })
-      }
+          else {
+            this.rest.link = data['link']
+            this.navCtrl.navigateRoot('/update', { animated: true, animationDirection: 'forward' })
+          }
+        }
+      }, 300)
     }, () => {
       this.rest.defreeze('check')
     })
