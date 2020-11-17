@@ -8,8 +8,8 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
   providedIn: 'root'
 })
 export class RestService {
-  // public baseurl: string = 'http://localhost/index.php?server=1';
-  public baseurl: string = 'https://vetgroup.petcoffee.com/index.php?server=1';
+  public baseurl: string = 'http://localhost/index.php?server=1';
+  // public baseurl: string = 'https://vetgroup.petcoffee.com/index.php?server=1';
   public user = {
     userid: '0',
     name: '',
@@ -79,6 +79,12 @@ export class RestService {
     },
     role: 0
   }
+  public vaccine = {
+    suggest: '',
+    data: [],
+    filter: '',
+    role: 0
+  }
   toast: any
   load: any = {}
   public today: string = ''
@@ -91,17 +97,53 @@ export class RestService {
     public navCtrl: NavController,
     public toastCtrl: ToastController,
     public loadCtrl: LoadingController
-  ) {  }
-  
+  ) {  } 
+
+  // datestring, datetime, time, dateiso
+  public parseDate(obj: any) {
+    // transform to datetime
+    if (!obj) obj = new Date()
+    else {
+      let datetime = obj.split("T")[0].split('-')
+      if (datetime.length == 3) obj = new Date(datetime[0], Number(datetime[1]) - 1, datetime[2] )
+      else if (Number(obj)) obj = new Date(Number(obj) * 1000)
+      else {
+        let dateobj = obj.split('/')
+        if (dateobj.length == 3) {
+          obj = new Date(dateobj[2], dateobj[1] - 1, dateobj[0])
+        }
+        else obj = new Date()
+      }
+    }
+    // transform time
+    // datestring
+    let datestring = this.timetodate(obj.getTime())
+    // datetime
+    let datetime = obj
+    // dateiso
+    let dateiso = this.todate(datestring)
+    // time
+    let time = obj.getTime()
+    return {
+      'datestring': datestring,
+      'datetime': datetime,
+      'dateiso': dateiso,
+      'time': time
+    }
+  }
+
   public check(param: Object): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.post(this.baseurl + this.buildHttpParam(param), '').toPromise().then((data) => {
+        console.log(data);
+        
         if (data['messenger']) this.notify(data['messenger'])
         if (data['status']) resolve(data)
         else {
           reject(data)
         }
       }, (error) => {
+        console.log(error);
         this.defreeze(null)
         this.notify('Có lỗi xảy ra >.<')
         // this.error = JSON.stringify(error)

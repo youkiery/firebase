@@ -16,5 +16,54 @@
 </ion-header>
 
 <ion-content>
-
+  <table border="1">
+    <thead>
+      <th> Tên thú cưng </th>
+      <th> Số điện thoại </th>
+      <th> Loại vaccine </th>
+      <th> Ngày tái chủng </th>
+    </thead>
+    <tbody *ngFor="let item of rest.vaccine.data" [class]="item.color">
+      <tr>
+        <td> {{item.petname}} </td>
+        <td> {{item.number}} </td>
+        <td> {{item.vaccine}} </td>
+        <td> {{item.calltime.datestring}} </td>
+      </tr>
+      <tr>
+        <td colspan="2"> {{item.note}} </td>
+        <td colspan="2"> 
+          <ion-button color="light" size="small" (click)="changeStatus(id)">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </ion-button>  
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.router.navigateByUrl('/home')">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="rest.router.navigateByUrl('/vaccine/insert')">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="filterM()">
+        <ion-icon name="filter-outline"></ion-icon>
+        <ion-label> Tìm kiếm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button>
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-label> Thông báo </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

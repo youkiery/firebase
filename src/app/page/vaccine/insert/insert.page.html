@@ -1,0 +1,49 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item class="relative">
+    <ion-label position="stacked"> Khách hàng </ion-label>
+    <ion-input [(ngModel)]="customer.name" (keyup)="suggest('name')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Số điện thoại </ion-label>
+    <ion-input [(ngModel)]="customer.phone" (keyup)="suggest('phone')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Thú cưng </ion-label>
+    <ion-select [(ngModel)]="pet">
+      <ion-option *ngFor="let item of pets" [value]="item.id"> {{item.name}} </ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Loại tiêm phòng </ion-label>
+    <ion-select [(ngModel)]="disease">
+      <ion-option *ngFor="let item of diseases" [value]="item.id"> {{item.name}} </ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày tiêm phòng </ion-label>
+    <ion-input [(ngModel)]="time.cometime"></ion-input>
+    <ion-thumbnail slot="end">
+      <img src="assets/image/calendar.png">
+      <ion-datetime [(ngModel)]="picker.cometime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('cometime')">
+      </ion-datetime>
+    </ion-thumbnail>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ngày tái chủng </ion-label>
+    <ion-input [(ngModel)]="time.calltime"></ion-input>
+    <ion-thumbnail slot="end">
+      <img src="assets/image/calendar.png">
+      <ion-datetime [(ngModel)]="picker.calltime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')">
+      </ion-datetime>
+    </ion-thumbnail>
+  </ion-item>
+</ion-content>
