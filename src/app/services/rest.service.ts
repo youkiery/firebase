@@ -82,8 +82,17 @@ export class RestService {
   public vaccine = {
     suggest: '',
     data: [],
-    filter: '',
-    role: 0
+    filter: [],
+    filterKey: '',
+    status: '0',
+    role: 0,
+    suggestList: [],
+    select: {
+      name: '',
+      phone: '',
+      pet: '',
+    },
+    disease: []
   }
   toast: any
   load: any = {}
@@ -94,9 +103,9 @@ export class RestService {
     public http: HttpClient,
     public storage: Storage,
     public router: Router,
-    public navCtrl: NavController,
     public toastCtrl: ToastController,
-    public loadCtrl: LoadingController
+    public loadCtrl: LoadingController,
+    public navCtrl: NavController
   ) {  } 
 
   // datestring, datetime, time, dateiso
@@ -135,15 +144,14 @@ export class RestService {
   public check(param: Object): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.post(this.baseurl + this.buildHttpParam(param), '').toPromise().then((data) => {
-        console.log(data);
-        
+        // console.log(data);
         if (data['messenger']) this.notify(data['messenger'])
         if (data['status']) resolve(data)
         else {
           reject(data)
         }
       }, (error) => {
-        console.log(error);
+        // console.log(error);
         this.defreeze(null)
         this.notify('Có lỗi xảy ra >.<')
         // this.error = JSON.stringify(error)
@@ -180,6 +188,9 @@ export class RestService {
       this.kaizen.unread = data['kaizen']
       this.work.role = data['workrole']
       // this.schedule.role = 0
+      this.vaccine.disease = data['disease']
+      // console.log(this.vaccine.disease);
+      
       this.schedule.role = data['schedulerole']
       this.kaizen.role = data['kaizenrole']
       this.list.employ = data['employ']
@@ -199,7 +210,7 @@ export class RestService {
       this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
       // this.router.navigateByUrl('/home')
     }, (e) => {
-      console.log(e);
+      // console.log(e);
     })
   }
 
@@ -287,8 +298,7 @@ export class RestService {
     let count = 3
     
     let interval = setInterval(() => {
-      console.log(name);
-      
+      // console.log(name);
       count --
       if (this.load[name]) {
         this.load[name].dismiss()

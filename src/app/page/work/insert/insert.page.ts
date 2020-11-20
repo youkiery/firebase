@@ -18,7 +18,7 @@ export class InsertPage {
   ) { }
 
   ionViewWillEnter() {
-    console.log(this.rest.today);
+    // console.log(this.rest.today);
     this.cometime = this.rest.todate(this.rest.today)
     this.calltime = this.rest.todate(this.rest.today)
     this.userid = this.rest.list.employ[0]['userid']
@@ -27,8 +27,7 @@ export class InsertPage {
   public insert() {
     if (!this.content.length) this.rest.notify('Nội dung công việc trống')
     else {
-      console.log(this.cometime, this.calltime);
-      
+      // console.log(this.cometime, this.calltime);
       this.rest.freeze('wi', 'Đang thêm công việc')
       this.rest.check({
         action: 'work-insert',

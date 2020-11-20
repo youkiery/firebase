@@ -26,7 +26,7 @@ export class EditPage {
 
   ionViewDidEnter() {
     this.listenerInputChange();
-    console.log(this.rest.work.edit);
+    // console.log(this.rest.work.edit);
   }
 
   public dismiss() {
@@ -122,7 +122,7 @@ export class EditPage {
           resolve()
         }        
         else {
-          console.log(this.rest.work.edit.image.length);
+          // console.log(this.rest.work.edit.image.length);
           this.rest.work.edit.image.forEach((item) => {
             // check if base64 data
             if (item.length) {
@@ -134,7 +134,7 @@ export class EditPage {
                 item = item.replace(/&/g, '[amp]')
                 item = item.replace(/%2F/g, '[/]')
                 list.push(item)
-                console.log(check);
+                // console.log(check);
                 if (!check) {
                   this.rest.defreeze('wci')
                   resolve()

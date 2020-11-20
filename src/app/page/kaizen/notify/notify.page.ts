@@ -15,14 +15,14 @@ export class NotifyPage implements OnInit {
   ngOnInit() { }
 
   public detail(id: number) {
-    console.log(id);
+    // console.log(id);
   }
 
   ionViewWillEnter() {
     this.rest.check({
       action: 'kaizen-notify'
     }).then(data => {
-      console.log(data);
+      // console.log(data);
       this.rest.kaizen.unread = 0
       this.rest.kaizen.notify = data['list']
     }, (e) => {})

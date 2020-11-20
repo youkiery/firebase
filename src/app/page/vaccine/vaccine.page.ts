@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -10,12 +10,13 @@ import { RestService } from 'src/app/services/rest.service';
 export class VaccinePage implements OnInit {
   constructor(
     public rest: RestService,
+    public alert: AlertController,
     public modal: ModalController
   ) { }
 
   ionViewDidEnter() {
     this.rest.freeze('va', 'Đang tải danh sách')
-    this.filter().then(data => {
+    this.filter().then(() => {
       this.rest.defreeze('va')
     })
   }
@@ -24,6 +25,7 @@ export class VaccinePage implements OnInit {
     return new Promise((resolve) => {
       this.rest.check({
         action: 'vaccine-auto',
+        status: this.rest.vaccine.status
       }).then(response => {
         response.data.forEach((item: any, index: number) => {
           response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
@@ -37,20 +39,69 @@ export class VaccinePage implements OnInit {
   }
 
   public filterM() {
+    this.rest.router.navigateByUrl('/vaccine/filter')
+  }
 
+  public onSegmentChange() {
+    this.rest.freeze('va', 'Đang tải danh sách')
+    this.filter().then(() => {
+      this.rest.defreeze('va')
+    })
   }
 
   public changeStatus(id: number) {
-    this.rest.freeze('Đang thay đổi trạng thái', 'cs')
+    this.rest.freeze('cs', 'Đang thay đổi trạng thái')
     this.rest.check({
-      action: 'vaccine-auto',
-      id: id
+      action: 'vaccine-check',
+      id: id,
+      status: this.rest.vaccine.status
     }).then(response => {
+      this.rest.notify('Đã thay đổi trạng thái')
+      response.data.forEach((item: any, index: number) => {
+        response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
+      });
       this.rest.vaccine.data = response.data
       this.rest.defreeze('cs')
     }, () => {
       this.rest.defreeze('cs')
     })
+  }
+
+  public async note(index: number, id: number, text: string) {
+    let alert = await this.alert.create({
+      message: 'Chỉnh sửa ghi chú',
+      inputs: [
+        {
+          type: 'text',
+          name: 'note',
+          value: text
+        }
+      ],
+      buttons: [
+        {
+          text: 'Bỏ',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'secondary',
+          handler: (e) => {
+            this.rest.freeze('kcheck', 'Đang hoàn thành...')
+            this.rest.check({
+              action: 'vaccine-note',
+              id: id,
+              text: e['note'],
+              status: this.rest.vaccine.status
+            }).then(() => {
+              this.rest.vaccine.data[index].note = e['note']
+              this.rest.defreeze('kcheck')
+            }, () => [
+            ])
+          }
+        }
+      ]
+    })
+    alert.present()
   }
   
   ngOnInit() {}

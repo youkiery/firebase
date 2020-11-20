@@ -3,42 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
-  template: `
-    <ion-item>
-      <ion-label position="stack"> {{tilte[rest.vaccine.suggest]}} <ion-label>
-    </ion-item>
-  `
-})
-export class SuggestComponent {
-  title = {
-    'name': 'Khách hàng',
-    'phone': 'Số điện thoại'
-  }
-  timeout: any
-  value: string
-  suggest_item = []
-  constructor (
-    public rest: RestService
-  ) {}
-
-  public suggest(name: string) {
-    clearTimeout(this.timeout)
-    this.timeout = setTimeout(() => {
-      this.rest.check({
-        action: 'vaccine-suggest',
-        type: name,
-        value: this.value
-      }).then((response) => {
-        this.suggest_item = response.data
-      }, () => {
-
-      })
-    }, 300);
-  }
-}
-
-
-@Component({
   selector: 'app-insert',
   templateUrl: './insert.page.html',
   styleUrls: ['./insert.page.scss'],
@@ -49,7 +13,8 @@ export class InsertPage implements OnInit {
     phone: ''
   }
   public pet: number
-  public disease: number
+  public pets = []
+  public disease: number = 0
   public time = {
     cometime: '', 
     calltime: ''
@@ -65,16 +30,26 @@ export class InsertPage implements OnInit {
 
   ngOnInit() { }
 
+  ionViewDidEnter() {
+    this.time.cometime = this.rest.today
+    this.time.calltime = this.rest.today
+    if (this.rest.vaccine.select.name.length) {
+      this.customer.name = this.rest.vaccine.select.name
+      this.customer.phone = this.rest.vaccine.select.phone
+      this.pets = JSON.parse(this.rest.vaccine.select.pet)
+      this.pet = this.pets[0].id
+    }
+    this.rest.vaccine.select.name = ''
+  }
+
   public dismiss() {
     this.modal.dismiss()
   }
 
   public async suggest(name: string) {
-    this.rest.vaccine.suggest = name
-    let modal = await this.modal.create({
-      component: SuggestComponent
-    })
-    modal.present()
+    this.rest.vaccine.suggest = this.customer[name]
+    this.rest.vaccine.suggestList = [] 
+    this.rest.router.navigateByUrl('/vaccine/suggest')
   }
 
   public datepicker(name: string) {
@@ -83,20 +58,28 @@ export class InsertPage implements OnInit {
   }
 
   public save() {
-    this.rest.freeze('Đang thêm tiêm phòng', 'iv')
-    this.rest.check({
-      action: 'vaccine-insert',
-      customer: this.customer.name,
-      phone: this.customer.phone,
-      pet: this.pet,
-      disease: this.disease,
-      cometime: this.time.cometime,
-      calltime: this.time.calltime
-    }).then((response) => {
-      this.rest.vaccine.data = response.data
-      this.rest.defreeze('iv')
-    }, () => {
-      this.rest.defreeze('iv')
-    })
+    if (!this.customer.name.length) this.rest.notify('Chưa nhập tên khách hàng')
+    else if (!this.customer.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
+    else {
+      this.rest.freeze('iv', 'Đang thêm tiêm phòng')
+      this.rest.check({
+        action: 'vaccine-insert',
+        customer: this.customer.name,
+        phone: this.customer.phone,
+        pet: this.pet,
+        disease: this.rest.vaccine.disease[this.disease].id,
+        cometime: this.time.cometime,
+        calltime: this.time.calltime
+      }).then((response) => {
+        this.customer.name = ''
+        this.customer.phone = ''
+        this.pets = []
+        this.pet = 0
+        this.rest.notify('Đã thêm lịch tiêm vaccine')
+        this.rest.defreeze('iv')
+      }, () => {
+        this.rest.defreeze('iv')
+      })
+    } 
   }
 }

@@ -216,7 +216,7 @@ export class WorkPage implements OnInit {
 
   public async edit(index: number) {
     let current = this.rest.work['list'][this.rest.work['segment']][index]
-    console.log(current);
+    // console.log(current);
     
     this.rest.work.edit = {
       'id': current['id'],

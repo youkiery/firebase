@@ -37,7 +37,7 @@ export class HomePage implements OnInit {
           let file = files[i];
 
           if (file.type.split('/')[0] !== 'image') {
-            console.log('Không hỗ trợ định dạng file')
+            // console.log('Không hỗ trợ định dạng file')
             continue
           }
       
@@ -107,7 +107,7 @@ export class HomePage implements OnInit {
         resolve()
       }        
       else {
-        console.log(this.images.length);
+        // console.log(this.images.length);
         this.images.forEach((item) => {
           // check if base64 data
           if (item.length) {
@@ -119,7 +119,7 @@ export class HomePage implements OnInit {
               item = item.replace(/&/g, '[amp]')
               item = item.replace(/%2F/g, '[/]')
               list.push(item)
-              console.log(check);
+              // console.log(check);
               if (!check) {
                 resolve()
               }
@@ -129,7 +129,7 @@ export class HomePage implements OnInit {
               this.uploadImage(item).then((data: string) => {
                 check --
                 if (data) {
-                  console.log(data);
+                  // console.log(data);
                   data = data.replace(/&/g, '[amp]')
                   data = data.replace(/%2F/g, '[/]')
                   list.push(data)
@@ -148,8 +148,7 @@ export class HomePage implements OnInit {
       }
     }).then((data) => {
       // return 0 if overrange process (0 - 100)
-      console.log(list);
-      
+      // console.log(list);
     })
   }
 

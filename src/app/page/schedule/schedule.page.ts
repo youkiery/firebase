@@ -38,7 +38,7 @@ export class SchedulePage implements OnInit {
     private alert: AlertController
   ) {
     if (!this.rest.schedule.role) this.temp = JSON.parse(JSON.stringify(this.color))
-    console.log(this.rest.schedule.data);
+    // console.log(this.rest.schedule.data);
   }
 
   ngOnInit() { }
@@ -52,7 +52,7 @@ export class SchedulePage implements OnInit {
       action: 'schedule-auto',
       time: this.rest.schedule.filter.time
     }).then(response => {
-      console.log(response['data']);
+      // console.log(response['data']);
       this.rest.schedule.data = response['data']
 
       if (!this.rest.schedule.role) this.parseData()
@@ -114,7 +114,7 @@ export class SchedulePage implements OnInit {
 
   public changeWeek(increaseWeek: number) {
     let time = this.rest.schedule.filter.time + 60 * 60 * 24 * 7 * 1000 * increaseWeek
-    console.log(time);
+    // console.log(time);
     this.rest.freeze('sauto', 'Đang lấy danh sách đăng ký')
     this.rest.check({
       action: 'schedule-auto',
@@ -226,8 +226,7 @@ export class SchedulePage implements OnInit {
   }
 
   public cancel() {
-    console.log(this.rest.schedule.data, this.temp);
-    
+    // console.log(this.rest.schedule.data, this.temp);
     if (this.rest.schedule.role) {
       this.rest.schedule.data = JSON.parse(JSON.stringify(this.temp))
     }
