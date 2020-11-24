@@ -80,12 +80,12 @@ export class RestService {
     role: 0
   }
   public vaccine = {
-    suggest: '',
     data: [],
     filter: [],
     filterKey: '',
     status: '0',
     role: 0,
+    suggest: '',
     suggestList: [],
     select: {
       name: '',
@@ -93,6 +93,21 @@ export class RestService {
       pet: '',
     },
     disease: []
+  }
+  public spa = {
+    select: {
+      name: '',
+      phone: '',
+    },
+    suggest: '',
+    suggestList: [],
+    data: [],
+    edit: {},
+    current: {
+      time: 0,
+      datestring: ''
+    },
+    time: 0
   }
   toast: any
   load: any = {}
@@ -113,6 +128,7 @@ export class RestService {
     // transform to datetime
     if (!obj) obj = new Date()
     else {
+      obj = obj.toString()
       let datetime = obj.split("T")[0].split('-')
       if (datetime.length == 3) obj = new Date(datetime[0], Number(datetime[1]) - 1, datetime[2] )
       else if (Number(obj)) obj = new Date(Number(obj) * 1000)
@@ -145,10 +161,17 @@ export class RestService {
     return new Promise((resolve, reject) => {
       this.http.post(this.baseurl + this.buildHttpParam(param), '').toPromise().then((data) => {
         // console.log(data);
-        if (data['messenger']) this.notify(data['messenger'])
-        if (data['status']) resolve(data)
-        else {
+        if (data['overtime']) {
+          this.notify("Đã hết thời gian sử dụng")
+          this.router.navigateByUrl('/home')
           reject(data)
+        }
+        else {
+          if (data['messenger']) this.notify(data['messenger'])
+          if (data['status']) resolve(data)
+          else {
+            reject(data)
+          }
         }
       }, (error) => {
         // console.log(error);
@@ -196,6 +219,7 @@ export class RestService {
       this.list.employ = data['employ']
       this.list.except = data['except']
       this.today = data['today']
+      this.spa.current = this.parseDate(data['today'])
 
       this.work.filter.enddate = this.todate(data['nextweek'])
       this.schedule.filter.time = this.datetotime(this.today)

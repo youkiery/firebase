@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'vaccine',
     loadChildren: () => import('./page/vaccine/vaccine.module').then( m => m.VaccinePageModule)
+  },
+  {
+    path: 'spa',
+    loadChildren: () => import('./page/spa/spa.module').then( m => m.SpaPageModule)
   }
 ];
 

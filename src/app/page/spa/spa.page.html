@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div>
+    Ngày hiển thị: {{ rest.spa.current.datestring }}
+  </div>
+
+  <table border="1">
+    <thead>  
+      <tr>
+        <th> STT </th>
+        <th> Số điện thoại </th>
+        <th> Khách hàng </th>
+        <th> Thời gian xong </th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of rest.spa.data; let i = index" [class]="item.done > 0 ? 'green' : ''">
+      <tr>
+        <td> {{i + 1}} </td>
+        <td> {{item.phone}} </td>
+        <td> {{item.name}} </td>
+        <td> {{item.time}} </td>
+      </tr>
+      <tr>
+        <td colspan="2"> {{item.note}} </td>
+        <td colspan="2"> 
+          <!-- <ion-button color="light" (click)="detail(item.id)" size="small">
+            xem
+          </ion-button>   -->
+          <ion-button color="light" (click)="done(item.id)" size="small">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </ion-button>  
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.router.navigateByUrl('/home')">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="rest.router.navigateByUrl('/spa/insert')">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm spa </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeDate(-1)">
+        <ion-icon name="play-skip-back-circle-outline"></ion-icon>
+        <ion-label> Hôm trước </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="pickDate()">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label> Chọn ngày </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeDate(1)">
+        <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
+        <ion-label> Hôm sau </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -1,0 +1,23 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item class="relative">
+    <ion-label position="stacked"> Khách hàng </ion-label>
+    <ion-input [(ngModel)]="customer.name" (click)="suggest('name')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Số điện thoại </ion-label>
+    <ion-input [(ngModel)]="customer.phone" (click)="suggest('phone')"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-textarea [(ngModel)]="note"></ion-textarea>
+  </ion-item>
+</ion-content>
