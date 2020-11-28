@@ -23,14 +23,14 @@ export class EditPage {
     public modal: ModalController,
     private storage: AngularFireStorage,
   ) { }
+    
+  public dismiss() {
+    this.modal.dismiss()
+  }
 
   ionViewDidEnter() {
     this.listenerInputChange();
     // console.log(this.rest.work.edit);
-  }
-
-  public dismiss() {
-    this.modal.dismiss()
   }
 
   private listenerInputChange() {

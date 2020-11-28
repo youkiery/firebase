@@ -95,6 +95,12 @@ export class RestService {
     disease: []
   }
   public spa = {
+    edit: {
+      name: '',
+      phone: '',
+      note: '',
+      image: []
+    },
     select: {
       name: '',
       phone: '',
@@ -102,7 +108,6 @@ export class RestService {
     suggest: '',
     suggestList: [],
     data: [],
-    edit: {},
     current: {
       time: 0,
       datestring: ''

@@ -10,14 +10,29 @@
 <ion-content>
   <ion-item class="relative">
     <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="customer.name" (click)="suggest('name')"> </ion-input>
+    <ion-input [(ngModel)]="rest.spa.edit.name" (click)="suggest('name')"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="customer.phone" (click)="suggest('phone')"> </ion-input>
+    <ion-input [(ngModel)]="rest.spa.edit.phone" (click)="suggest('phone')"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ghi chú </ion-label>
-    <ion-textarea [(ngModel)]="note"></ion-textarea>
+    <ion-textarea [(ngModel)]="rest.spa.edit.note"></ion-textarea>
   </ion-item>
+
+  <!-- <div class="box-list">
+    <label class="box">
+      <ion-thumbnail>
+        <ion-img src="assets/image/insert.png"></ion-img>
+        <input type="file" [(ngModel)]="files" #filechooser style="display: none;" accept="image/*">
+      </ion-thumbnail>
+    </label>
+
+    <ion-label *ngFor="let image of rest.work.edit.image; let i = index">
+      <ion-thumbnail class="box" *ngIf="image.length" (click)="remove(i)">
+        <ion-img [src]="image"></ion-img>
+      </ion-thumbnail>
+    </ion-label>
+  </div> -->
 </ion-content>
