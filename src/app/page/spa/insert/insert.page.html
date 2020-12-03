@@ -16,12 +16,16 @@
     <ion-label position="stacked"> Số điện thoại </ion-label>
     <ion-input [(ngModel)]="rest.spa.edit.phone" (click)="suggest('phone')"> </ion-input>
   </ion-item>
+  <ion-item *ngFor="let item of rest.spa.edit.type; let i = index">
+    <ion-label> {{item.name}} </ion-label>
+    <ion-checkbox slot="start" checked="false" [(ngModel)]="rest.spa.edit.type[i].value" checked="item.value">  </ion-checkbox>
+  </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ghi chú </ion-label>
     <ion-textarea [(ngModel)]="rest.spa.edit.note"></ion-textarea>
   </ion-item>
 
-  <!-- <div class="box-list">
+  <div class="box-list">
     <label class="box">
       <ion-thumbnail>
         <ion-img src="assets/image/insert.png"></ion-img>
@@ -29,10 +33,10 @@
       </ion-thumbnail>
     </label>
 
-    <ion-label *ngFor="let image of rest.work.edit.image; let i = index">
+    <ion-label *ngFor="let image of rest.spa.edit.image; let i = index">
       <ion-thumbnail class="box" *ngIf="image.length" (click)="remove(i)">
         <ion-img [src]="image"></ion-img>
       </ion-thumbnail>
     </ion-label>
-  </div> -->
+  </div>
 </ion-content>

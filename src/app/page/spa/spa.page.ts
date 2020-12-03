@@ -40,6 +40,28 @@ export class SpaPage implements OnInit {
     clearInterval(this.interval)
   }
 
+  public insert() {
+    this.rest.spa.edit = {
+      id: 0,
+      name: '',
+      phone: '',
+      note: '',
+      image: [],
+      type: JSON.parse(JSON.stringify(this.rest.spa.type))
+    }
+    this.rest.router.navigateByUrl('/spa/insert')
+  }
+
+  public detail(id: number) {
+    this.rest.check({
+      action: 'spa-get',
+      id: id
+    }).then(response => {
+      this.rest.spa.edit = response.data
+      this.rest.router.navigateByUrl('/spa/insert')
+    })
+  }
+
   public done(id: number) {
     this.rest.freeze('done', 'Đang hoàn thành')
     this.rest.check({
@@ -118,3 +140,4 @@ export class SpaPage implements OnInit {
     })      
   }
 }
+

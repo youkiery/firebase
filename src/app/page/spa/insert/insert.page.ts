@@ -30,6 +30,7 @@ export class InsertPage implements OnInit {
       this.rest.spa.edit.name = this.rest.spa.select.name
       this.rest.spa.edit.phone = this.rest.spa.select.phone
     }
+    this.rest.spa.edit.image = []
     this.rest.spa.select.name = ''
     this.listenerInputChange();
   }
@@ -48,7 +49,7 @@ export class InsertPage implements OnInit {
             this.rest.notify('Không hỗ trợ định dạng file')
             continue
           }
-      
+
           let reader = new FileReader();
           reader.readAsDataURL(file);
 
@@ -87,7 +88,7 @@ export class InsertPage implements OnInit {
     })
   }
 
-  public uploadImage(image: string){
+  public uploadImage(image: string) {
     return new Promise((resolve) => {
       const path = 'images/' + new Date().getTime() + '.jpg';
       let fileRef = this.storage.ref(path);
@@ -95,7 +96,7 @@ export class InsertPage implements OnInit {
       let metadata = {
         contentType: 'image/jpeg',
       };
-    
+
       fileRef.putString(base64, 'base64', metadata).then((response) => {
         fileRef.getDownloadURL().subscribe(url => {
           resolve(url)
@@ -112,29 +113,98 @@ export class InsertPage implements OnInit {
 
   public async suggest(name: string) {
     this.rest.spa.suggest = this.rest.spa.edit[name]
-    this.rest.spa.suggestList = [] 
+    this.rest.spa.suggestList = []
     this.rest.router.navigateByUrl('/spa/suggest')
   }
 
   public save() {
+    let list = []
+    let check = 0
+
     if (!this.rest.spa.edit.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.spa.edit.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
-      this.rest.freeze('iv', 'Đang thêm lịch spa')
-      this.rest.check({
-        action: 'spa-insert',
-        customer: this.rest.spa.edit.name,
-        phone: this.rest.spa.edit.phone,
-        note: this.rest.spa.edit.note
-      }).then(() => {
-        this.rest.spa.edit.name = ''
-        this.rest.spa.edit.phone = ''
-        this.rest.spa.edit.note = ''
-        this.rest.notify('Đã thêm lịch spa')
-        this.rest.defreeze('iv')
-      }, () => {
-        this.rest.defreeze('iv')
+      this.rest.freeze('wci', 'Kiểm tra hình ảnh')
+      new Promise(resolve => {
+        if (!this.rest.spa.edit.image.length) {
+          this.rest.defreeze('wci')
+          resolve()
+        }
+        else {
+          // console.log(this.rest.work.edit.image.length);
+          this.rest.spa.edit.image.forEach((item) => {
+            // check if base64 data
+            if (item.length) {
+              check++
+              // not empty string
+              if (item.length < 200) {
+                // not base64
+                check--
+                item = item.replace(/&/g, '[amp]')
+                item = item.replace(/%2F/g, '[/]')
+                list.push(item)
+                // console.log(check);
+                if (!check) {
+                  this.rest.defreeze('wci')
+                  resolve()
+                }
+              }
+              else {
+                // upload file
+                this.uploadImage(item).then((data: string) => {
+                  check--
+                  if (data) {
+                    console.log(data);
+                    data = data.replace(/&/g, '[amp]')
+                    data = data.replace(/%2F/g, '[/]')
+                    list.push(data)
+                  }
+                  // uncomment if get formated data
+                  if (!check) {
+                    this.rest.defreeze('wci')
+                    resolve()
+                  }
+                })
+              }
+            }
+          });
+          if (!check) {
+            this.rest.defreeze('wci')
+            resolve()
+          }
+        }
+      }).then((data) => {
+        this.rest.spa.edit.image = list
+        let type = []
+        this.rest.spa.edit.type.forEach(item => {
+          if (item.value) type.push(item.id)
+        })
+        this.rest.freeze('iv', 'Đang thêm lịch spa')
+        this.rest.check({
+          action: 'spa-insert',
+          id: this.rest.spa.edit.id,
+          customer: this.rest.spa.edit.name,
+          phone: this.rest.spa.edit.phone,
+          note: this.rest.spa.edit.note,
+          image: list.join(','),
+          type: type.join(',')
+        }).then(() => {
+          if (this.rest.spa.edit.id) {
+            this.rest.navCtrl.pop()
+            this.rest.notify('Đã thêm lịch spa')
+          }
+          else {
+            this.rest.spa.edit.name = ''
+            this.rest.spa.edit.phone = ''
+            this.rest.spa.edit.note = ''
+            this.rest.spa.edit.image = []
+            this.rest.notify('Đã thêm lịch spa')
+          }
+          this.rest.defreeze('iv')
+        }, () => {
+          this.rest.defreeze('iv')
+        })
       })
-    } 
+    }
   }
 }

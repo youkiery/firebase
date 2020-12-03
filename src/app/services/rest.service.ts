@@ -10,6 +10,13 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 export class RestService {
   public baseurl: string = 'http://localhost/index.php?server=1';
   // public baseurl: string = 'https://vetgroup.petcoffee.com/index.php?server=1';
+  // public config = {
+  //   work: 0,
+  //   kaizen: 0,
+  //   schedule: 0,
+  //   vaccine: 0, 
+  //   spa: 0
+  // }
   public user = {
     userid: '0',
     name: '',
@@ -95,10 +102,13 @@ export class RestService {
     disease: []
   }
   public spa = {
+    type: [],
     edit: {
+      id: 0,
       name: '',
       phone: '',
       note: '',
+      type: [],
       image: []
     },
     select: {
@@ -218,7 +228,9 @@ export class RestService {
       // this.schedule.role = 0
       this.vaccine.disease = data['disease']
       // console.log(this.vaccine.disease);
+      this.spa.type = data.type
       
+      // this.config = data.config
       this.schedule.role = data['schedulerole']
       this.kaizen.role = data['kaizenrole']
       this.list.employ = data['employ']

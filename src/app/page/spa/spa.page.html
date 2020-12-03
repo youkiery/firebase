@@ -38,11 +38,11 @@
         <td> {{item.time}} </td>
       </tr>
       <tr>
-        <td colspan="2"> {{item.note}} </td>
+        <td colspan="2"> <span class="red"> {{item.type}} </span> <span class="blue"> {{item.note}} </span> </td>
         <td colspan="2"> 
-          <!-- <ion-button color="light" (click)="detail(item.id)" size="small">
+          <ion-button color="light" (click)="detail(item.id)" size="small">
             xem
-          </ion-button>   -->
+          </ion-button>  
           <ion-button color="light" (click)="done(item.id)" size="small">
             <ion-icon name="checkmark-outline"></ion-icon>
           </ion-button>  
@@ -60,7 +60,7 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="rest.router.navigateByUrl('/spa/insert')">
+      <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm spa </ion-label>
       </ion-tab-button>
