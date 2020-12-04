@@ -124,6 +124,22 @@ export class RestService {
     },
     time: 0
   }
+  public expire = {
+    id: 0,
+    filter: {
+      name: '',
+      time: '7776000'
+    },
+    edit: {
+      id: 0,
+      name: '',
+      rid: 0,
+      number: 0,
+      expire: ''
+    },
+    suggestList: [],
+    list: []
+  }
   toast: any
   load: any = {}
   public today: string = ''

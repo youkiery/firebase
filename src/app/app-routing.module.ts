@@ -42,6 +42,10 @@ const routes: Routes = [
   {
     path: 'spa',
     loadChildren: () => import('./page/spa/spa.module').then( m => m.SpaPageModule)
+  },
+  {
+    path: 'expire',
+    loadChildren: () => import('./page/expire/expire.module').then( m => m.ExpirePageModule)
   }
 ];
 

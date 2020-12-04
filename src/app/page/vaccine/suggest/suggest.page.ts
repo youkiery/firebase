@@ -8,7 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class SuggestPage implements OnInit {
   timeout = null
-  @ViewChild('input') input;
+  @ViewChild('input') input: any;
   constructor (
     public rest: RestService
   ) {}

@@ -1,0 +1,28 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Mặt hàng </ion-label>
+    <ion-input [(ngModel)]="rest.expire.edit.name" (click)="suggest()"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Số lượng </ion-label>
+    <ion-input [(ngModel)]="rest.expire.edit.number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Hạn sử dụng </ion-label>
+    <ion-input [(ngModel)]="rest.expire.edit.expire"></ion-input>
+    <ion-thumbnail slot="end">
+      <img src="assets/image/calendar.png">
+      <ion-datetime [(ngModel)]="time" displayFormat="DD/MM/YYYY" (ionChange)="datepicker()">
+      </ion-datetime>
+    </ion-thumbnail>
+  </ion-item>
+</ion-content>
