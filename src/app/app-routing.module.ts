@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'expire',
     loadChildren: () => import('./page/expire/expire.module').then( m => m.ExpirePageModule)
+  },
+  {
+    path: 'ride',
+    loadChildren: () => import('./page/ride/ride.module').then( m => m.RidePageModule)
   }
 ];
 
