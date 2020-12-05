@@ -9,7 +9,7 @@
     <ion-input [(ngModel)]="rest.spa.suggest" (keyup)="suggest()" #input> </ion-input>
   </ion-item>
   <div *ngIf="rest.spa.suggestList.length">
-    <ion-item *ngFor="let item of rest.spa.suggestList" (click)="select(item.name, item.phone, item.pet)">
+    <ion-item *ngFor="let item of rest.spa.suggestList" (click)="select(item.name, item.phone)">
       {{item.name}} - {{item.phone}}
     </ion-item>
   </div>
