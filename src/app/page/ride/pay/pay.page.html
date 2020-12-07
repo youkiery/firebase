@@ -1,0 +1,19 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Số tiền chi </ion-label>
+    <ion-input [(ngModel)]="rest.ride.edit.amount">  </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Ghi chú </ion-label>
+    <ion-input [(ngModel)]="rest.ride.edit.note">  </ion-input>
+  </ion-item>
+</ion-content>

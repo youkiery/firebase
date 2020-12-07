@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: RidePage
+  },
+  {
+    path: 'col',
+    loadChildren: () => import('./col/col.module').then( m => m.ColPageModule)
+  },
+  {
+    path: 'pay',
+    loadChildren: () => import('./pay/pay.module').then( m => m.PayPageModule)
   }
 ];
 

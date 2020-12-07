@@ -10,7 +10,7 @@
     </ion-buttons>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.pop()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -57,7 +57,7 @@
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.router.navigateByUrl('/home')">
+      <ion-tab-button (click)="rest.navCtrl.pop()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>

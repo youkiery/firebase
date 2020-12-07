@@ -1,9 +1,75 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>ride</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.pop()"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="rest.ride.select">
+      <ion-segment-button value="0"> Phiếu thu </ion-segment-button>
+      <ion-segment-button value="1"> Phiếu chi </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
+  <div [ngSwitch]="rest.ride.select">
+    <div *ngSwitchCase="'0'">
+      <!-- phiếu thu -->
+      <div *ngFor="let item of rest.ride.list[0]">
+
+      </div>
+    </div>
+    <div *ngSwitchCase="'1'">
+      <!-- phiếu chi -->
+      <div *ngFor="let item of rest.ride.list[1]">
+        
+      </div>
+    </div>
+  </div>
+
+  <ion-text *ngIf="!rest.ride.list[rest.ride.select].length" style="text-align: center;">
+    Không có bản ghi
+  </ion-text>
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm phiếu </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeDate(-1)">
+        <ion-icon name="play-skip-back-circle-outline"></ion-icon>
+        <ion-label> Hôm trước </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="pickDate()">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ion-label> Chọn ngày </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="changeDate(1)">
+        <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
+        <ion-label> Hôm sau </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
