@@ -134,17 +134,22 @@ export class RestService {
     list: []
   }
   public ride = {
+    current: {
+      time: 0,
+      datestring: ''
+    },
     selected: '0',
+    clock: 0,
     list: [
       [], []
     ],
     edit: {
       doctorid: '',
-      from: '',
-      end: '',
+      from: '0',
+      end: '0',
       destination: '',
       note: '',
-      amount: 0
+      amount: '0'
     }
   }
   toast: any
@@ -254,12 +259,14 @@ export class RestService {
       this.spa.type = data.type
       
       // this.config = data.config
+      this.ride.clock = data.clock
       this.schedule.role = data['schedulerole']
       this.kaizen.role = data['kaizenrole']
       this.list.employ = data['employ']
       this.list.except = data['except']
       this.today = data['today']
       this.spa.current = this.parseDate(data['today'])
+      this.ride.current = this.parseDate(data['today'])
 
       this.work.filter.enddate = this.todate(data['nextweek'])
       this.schedule.filter.time = this.datetotime(this.today)
@@ -355,6 +362,7 @@ export class RestService {
   }
 
   public defreeze(name: string) {
+    console.log(name);
     if (!name) {
       this.load = {}
       return 0

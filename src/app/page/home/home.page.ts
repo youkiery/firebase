@@ -13,7 +13,9 @@ export class HomePage {
   constructor(
     public rest: RestService,
     public platform: Platform
-  ) {  }
+  ) { 
+    console.log(this.rest);
+  }
 
   ionViewDidEnter(){
     this.subscription = this.platform.backButton.subscribe(()=>{

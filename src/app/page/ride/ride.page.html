@@ -17,28 +17,73 @@
 
 <ion-content>
   <ion-toolbar>
-    <ion-segment [(ngModel)]="rest.ride.select">
+    <ion-segment [(ngModel)]="rest.ride.selected">
       <ion-segment-button value="0"> Phiếu thu </ion-segment-button>
       <ion-segment-button value="1"> Phiếu chi </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
-  <div [ngSwitch]="rest.ride.select">
+  <div>
+    Ngày hiện tại: {{rest.ride.current.datestrin}}
+  </div>
+
+  <div [ngSwitch]="rest.ride.selected">
     <div *ngSwitchCase="'0'">
       <!-- phiếu thu -->
-      <div *ngFor="let item of rest.ride.list[0]">
-
-      </div>
+      <table border="1">
+        <tr>
+          <th> Thời gian </th>
+          <th> Nhân viên </th>
+          <th> Quãng đường </th>
+          <th> Tiền thu </th>
+        </tr>
+        <tbody *ngFor="let item of rest.ride.list[rest.ride.selected]">
+          <tr>
+            <td> {{item.time}} </td>
+            <td> {{item.name}} </td>
+            <td> {{item.clock_from}} - {{item.clock_to}} ({{item.long}}km) </td>
+            <td> {{item.amount}} </td>
+          </tr>
+          <tr>
+            <td colspan="2"> {{item.destination}} </td>
+            <td> {{item.note}} </td> 
+            <td> 
+              <ion-button color="danger" (click)="remove(item.id)" size="small">
+                <ion-icon name="close-outline"></ion-icon>
+              </ion-button>  
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div *ngSwitchCase="'1'">
       <!-- phiếu chi -->
-      <div *ngFor="let item of rest.ride.list[1]">
-        
-      </div>
+      <table border="1">
+        <tr>
+          <th> Thời gian </th>
+          <th> Nhân viên </th>
+          <th> Tiền chi </th>
+        </tr>
+        <tbody *ngFor="let item of rest.ride.list[rest.ride.selected]">
+          <tr>
+            <td> {{item.time}} </td>
+            <td> {{item.name}} </td>
+            <td> {{item.amount}} </td>
+          </tr>
+          <tr>
+            <td colspan="2"> {{item.note}} </td>
+            <td> 
+              <ion-button color="danger" (click)="remove(item.id)" size="small">
+                <ion-icon name="close-outline"></ion-icon>
+              </ion-button>  
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <ion-text *ngIf="!rest.ride.list[rest.ride.select].length" style="text-align: center;">
+  <ion-text *ngIf="!rest.ride.list[rest.ride.selected].length" style="text-align: center;">
     Không có bản ghi
   </ion-text>
 </ion-content>
@@ -56,19 +101,24 @@
         <ion-label> Thêm phiếu </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="changeDate(-1)">
+      <!-- <ion-tab-button (click)="changeDate(-1)">
         <ion-icon name="play-skip-back-circle-outline"></ion-icon>
         <ion-label> Hôm trước </ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
 
       <ion-tab-button (click)="pickDate()">
         <ion-icon name="calendar-outline"></ion-icon>
         <ion-label> Chọn ngày </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="changeDate(1)">
+      <!-- <ion-tab-button (click)="changeDate(1)">
         <ion-icon name="play-skip-forward-circle-outline"></ion-icon>
         <ion-label> Hôm sau </ion-label>
+      </ion-tab-button> -->
+
+      <ion-tab-button (click)="statistic()">
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

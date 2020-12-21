@@ -11,16 +11,16 @@
   <ion-item>
     <ion-label position="stacked"> Bác sĩ đi cùng </ion-label>
     <ion-select [(ngModel)]="rest.ride.edit.doctorid">
-      <ion-select-option *ngFor="let item of rest.list.employ" value="item.userid"></ion-select-option>
+      <ion-select-option *ngFor="let item of rest.list.employ" [value]="item.userid"> {{item.name}} </ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số đầu </ion-label>
-    <ion-input [(ngModel)]="rest.ride.edit.from">  </ion-input>
+    <ion-input [(ngModel)]="rest.ride.edit.from" (ionChange)="parsing('from')">  </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số cuối </ion-label>
-    <ion-input [(ngModel)]="rest.ride.edit.end">  </ion-input>
+    <ion-input [(ngModel)]="rest.ride.edit.end" (ionChange)="parsing('end')">  </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Tiền thu </ion-label>
