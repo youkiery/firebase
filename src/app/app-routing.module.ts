@@ -50,6 +50,10 @@ const routes: Routes = [
   {
     path: 'ride',
     loadChildren: () => import('./page/ride/ride.module').then( m => m.RidePageModule)
+  },
+  {
+    path: 'blood',
+    loadChildren: () => import('./page/blood/blood.module').then( m => m.BloodPageModule)
   }
 ];
 

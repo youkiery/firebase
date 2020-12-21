@@ -83,6 +83,16 @@
       </ion-card>
     </div>
     <div class="col-xs-6 col-sm-3 col-md-3">
+      <ion-card (click)="rest.router.navigateByUrl('/blood')" color="secondary">
+        <ion-card-header>
+          <ion-img src="assets/image/blood.png"></ion-img>
+        </ion-card-header>
+        <ion-card-content class="text-center">
+          Xét nghiệm máu
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <!-- <div class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/ride')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/ride.png"></ion-img>
@@ -91,6 +101,6 @@
           Quản lý lái xe
         </ion-card-content>
       </ion-card>
-    </div>
+    </div> -->
   </div>
 </ion-content>
