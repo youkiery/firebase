@@ -15,6 +15,10 @@ export class RidePage implements OnInit {
   ) { }
 
   ngOnInit() { }
+
+  public statistic() {
+    
+  }
   
   ionViewDidEnter() {
     this.rest.freeze('ra', 'Lấy danh sách...')

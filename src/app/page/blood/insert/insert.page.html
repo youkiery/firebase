@@ -10,7 +10,7 @@
 <ion-content>
   <ion-item>
     <ion-label position="floating"> Số lượng mẫu </ion-label>
-    <ion-input [(ngModel)]="rest.blood.edit.number"></ion-input>
+    <ion-input [(ngModel)]="rest.blood.edit.number" (ionChange)="changeNumber()"></ion-input>
   </ion-item> 
 
   <ion-item>

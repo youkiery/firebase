@@ -8,10 +8,16 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./insert.page.scss'],
 })
 export class InsertPage {
-  content: string = ''
-  userid: any
-  cometime: string
-  calltime: string
+  public content: string = ''
+  public userid: any
+  public time = {
+    cometime: '',
+    calltime: ''
+  }
+  public picker = {
+    cometime: '',
+    calltime: ''
+  }
   constructor(
     public rest: RestService,
     public modal: ModalController
@@ -19,9 +25,14 @@ export class InsertPage {
 
   ionViewWillEnter() {
     // console.log(this.rest.today);
-    this.cometime = this.rest.todate(this.rest.today)
-    this.calltime = this.rest.todate(this.rest.today)
+    this.time.cometime = this.rest.today
+    this.time.calltime = this.rest.today
     this.userid = this.rest.list.employ[0]['userid']
+  }
+
+  public datepicker(name: string) {
+    let datetime = this.rest.parseDate(this.picker[name])
+    this.time[name] = datetime.datestring
   }
 
   public insert() {
@@ -37,8 +48,8 @@ export class InsertPage {
         user: this.rest.work.filter['user'],
         employ: this.userid,
         content: this.content,
-        cometime: this.rest.totime(this.cometime),
-        calltime: this.rest.totime(this.calltime),
+        cometime: this.time.cometime,
+        calltime: this.time.calltime,
       }).then(data => {
         this.rest.work.data = data['data']
         this.rest.work.time = data['time']

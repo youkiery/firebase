@@ -14,5 +14,11 @@ export class InsertPage implements OnInit {
 
   ngOnInit() { }
 
-  
+  public changeNumber() {
+    
+  }
+
+  public save() {
+    
+  }
 }
