@@ -1,0 +1,32 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="this.rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    Lưu
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating"> Số lượng mẫu </ion-label>
+    <ion-input [(ngModel)]="rest.blood.edit.number"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating"> Số đầu </ion-label>
+    <ion-input [(ngModel)]="rest.blood.edit.start" readonly="true"></ion-input>
+    <ion-icon name="enter-outline" slot="end" (click)="this.rest.router.navigateByUrl('/blood/in')"></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating"> Số cuối </ion-label>
+    <ion-input [(ngModel)]="rest.blood.edit.end" readonly="true"></ion-input>
+    <ion-icon name="exit-outline" slot="end" (click)="this.rest.router.navigateByUrl('/blood/out')"></ion-icon>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating"> Mục đích </ion-label>
+    <ion-input [(ngModel)]="rest.blood.edit.target"></ion-input>
+  </ion-item>
+</ion-content>

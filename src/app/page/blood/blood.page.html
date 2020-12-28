@@ -1,9 +1,56 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>blood</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.pop()"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <table border="1">
+    <tr>
+      <th> Thời gian </th>
+      <th> Mẫu </th>
+      <th> Mục đích </th>
+      <th> Người thực hiện </th>
+    </tr>
+    <tbody *ngFor="let item of rest.blood.list">
+      <tr>
+        <td> {{item.time}} </td>
+        <td> {{item.number}} </td>
+        <td> {{item.target}} </td>
+        <td> {{item.doctor}} </td>
+      </tr>
+    </tbody>
+  </table>
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="import()">
+        <ion-icon name="filter-outline"></ion-icon>
+        <ion-label> Nhập hóa chất </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

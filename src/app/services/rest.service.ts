@@ -152,6 +152,17 @@ export class RestService {
       amount: '0'
     }
   }
+  public blood = {
+    list: [],
+    edit: {
+      number: 0,
+      start: 0,
+      end: 0,
+      target: ''
+    },
+    number: [0, 0, 0],
+    total: 0
+  }
   toast: any
   load: any = {}
   public today: string = ''
@@ -270,6 +281,9 @@ export class RestService {
 
       this.work.filter.enddate = this.todate(data['nextweek'])
       this.schedule.filter.time = this.datetotime(this.today)
+
+      this.blood.number = data.number
+      this.blood.total = data.total
 
       this.user = {
         userid: data['userid'],

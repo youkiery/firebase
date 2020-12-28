@@ -104,7 +104,7 @@ export class HomePage implements OnInit {
     
     new Promise(resolve => {
       if (!this.images.length) {
-        resolve()
+        resolve('')
       }        
       else {
         // console.log(this.images.length);
@@ -121,7 +121,7 @@ export class HomePage implements OnInit {
               list.push(item)
               // console.log(check);
               if (!check) {
-                resolve()
+                resolve('')
               }
             }
             else {
@@ -136,14 +136,14 @@ export class HomePage implements OnInit {
                 }
                 // uncomment if get formated data
                 if (!check) {
-                  resolve()
+                  resolve('')
                 }
               })
             }
           }
         });
         if (!check) {
-          resolve()
+          resolve('')
         }
       }
     }).then((data) => {

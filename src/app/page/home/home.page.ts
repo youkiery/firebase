@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 

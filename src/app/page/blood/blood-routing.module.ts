@@ -7,6 +7,30 @@ const routes: Routes = [
   {
     path: '',
     component: BloodPage
+  },
+  {
+    path: 'insert',
+    loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'import',
+    loadChildren: () => import('./import/import.module').then( m => m.ImportPageModule)
+  },
+  {
+    path: 'filter',
+    loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
+    path: 'statistic',
+    loadChildren: () => import('./statistic/statistic.module').then( m => m.StatisticPageModule)
+  },
+  {
+    path: 'in',
+    loadChildren: () => import('./in/in.module').then( m => m.InPageModule)
+  },
+  {
+    path: 'out',
+    loadChildren: () => import('./out/out.module').then( m => m.OutPageModule)
   }
 ];
 

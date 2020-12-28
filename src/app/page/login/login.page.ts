@@ -39,7 +39,6 @@ export class LoginPage {
         if (Object.keys(this.rest.load).length) {
           this.rest.defreeze('check')
           clearInterval(interval)
-
           if (this.version === data['version']) {
             this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
             this.rest.storage.get('userdata').then((val) => {
