@@ -1,9 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>statistic</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="this.rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
 
 <ion-content>
+  <p> Thống kê từ {{rest.blood.statistic.from}} đến {{rest.blood.statistic.end}} </p>
 
+  <ion-item>
+    Tổng số phiếu thử: {{rest.blood.statistic.number}}
+  </ion-item>
+  <ion-item>
+    Tổng số mẫu thử: {{rest.blood.statistic.sample}}
+  </ion-item>
+  <ion-item>
+    Tổng tiền chi: {{rest.blood.statistic.total}}
+  </ion-item>
+
+  <ion-card *ngFor="let item of rest.blood.statistic.list">
+    <ion-card-header>
+      {{item.name}}
+    </ion-card-header>
+    <ion-card-content>
+      <p> Số lần xét nghiệm: {{item.number}} </p>
+      <p> Số mẫu xét nghiệm: {{item.sample}} </p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

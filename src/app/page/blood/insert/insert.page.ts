@@ -15,10 +15,21 @@ export class InsertPage implements OnInit {
   ngOnInit() { }
 
   public changeNumber() {
-    
+    this.rest.blood.edit.start = this.rest.blood.total
+    this.rest.blood.edit.end = this.rest.blood.total - this.rest.blood.edit.number
   }
 
   public save() {
-    
+    this.rest.check({
+      'action': 'blood-insert',
+      'number': this.rest.blood.edit.number,
+      'target': this.rest.blood.edit.target,
+    }).then(response => {
+      this.rest.blood.edit.number = 1
+      this.rest.blood.total = Number(response.number)
+      this.rest.blood.edit.start = this.rest.blood.total
+      this.rest.blood.edit.end = this.rest.blood.total - 1
+      this.rest.blood.edit.target = ''
+    })
   }
 }

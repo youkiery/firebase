@@ -26,14 +26,14 @@
 
   <table border="1">
     <thead>
-      <th> Tên thú cưng </th>
+      <th> Tên chủ </th>
       <th> Số điện thoại </th>
       <th> Loại vaccine </th>
       <th> Ngày tái chủng </th>
     </thead>
     <tbody *ngFor="let item of rest.vaccine.data; let i = index" [class]="rest.vaccine.status != '2' ? item.color : ''">
       <tr>
-        <td> {{item.petname}} </td>
+        <td> {{item.name}} </td>
         <td> {{item.number}} </td>
         <td> {{item.vaccine}} </td>
         <td> {{item.calltime.datestring}} </td>

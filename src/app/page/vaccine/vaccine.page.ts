@@ -31,9 +31,9 @@ export class VaccinePage implements OnInit {
           response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
         });
         this.rest.vaccine.data = response.data
-        resolve()
+        resolve('')
       }, () => {
-        resolve()
+        resolve('')
       })
     })
   }

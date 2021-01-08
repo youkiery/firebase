@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-statistic',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public rest: RestService
+  ) {  }
 
   ngOnInit() {
   }
 
+  ionViewDidEnter() {
+    this.rest.check({
+      'action': 'blood-statistic'
+    }).then(response => {
+      this.rest.blood.statistic = response.statistic
+    })
+  }
 }

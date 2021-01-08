@@ -9,7 +9,7 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public baseurl: string = 'http://localhost/index.php?server=1';
-  // public baseurl: string = 'https://vetgroup.petcoffee.com/index.php?server=1';
+  // public baseurl: string = 'http://vetgroup.petcoffee.com/index.php?server=1';
   public user = {
     userid: '0',
     name: '',
@@ -153,6 +153,7 @@ export class RestService {
     }
   }
   public blood = {
+    statistic: {},
     list: [],
     edit: {
       number: 0,

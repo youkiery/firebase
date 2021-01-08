@@ -27,10 +27,10 @@ export class InPage implements OnInit {
       number3: this.number[3],
       total: this.total,
     }).then(response => {
-      this.rest.blood.number = response.number
-      this.rest.blood.total = response.total
-      this.rest.blood.edit.start = response.total
-      this.rest.blood.edit.end = response.total - this.rest.blood.edit.number
+      this.rest.blood.number = response.total
+      this.rest.blood.total = Number(response.number)
+      this.rest.blood.edit.start = this.rest.blood.total
+      this.rest.blood.edit.end = this.rest.blood.edit.start - this.rest.blood.edit.number
       this.rest.navCtrl.pop()
     })
   }
