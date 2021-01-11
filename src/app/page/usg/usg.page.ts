@@ -25,6 +25,7 @@ export class UsgPage implements OnInit {
     return new Promise((resolve) => {
       this.rest.check({
         action: 'usg-auto',
+        keyword: this.rest.usg.filterKey,
         status: this.rest.usg.status
       }).then(response => {
         this.rest.usg.data = response.data
@@ -51,6 +52,7 @@ export class UsgPage implements OnInit {
     this.rest.check({
       action: 'usg-check',
       id: id,
+      keyword: this.rest.usg.filterKey,
       status: this.rest.usg.status
     }).then(response => {
       this.rest.notify('Đã thay đổi trạng thái')
@@ -59,6 +61,44 @@ export class UsgPage implements OnInit {
     }, () => {
       this.rest.defreeze('cs')
     })
+  }
+
+  public async birth(id: number) {
+    let alert = await this.alert.create({
+      message: 'Số lượng con sinh ra',
+      inputs: [
+        {
+          type: 'number',
+          name: 'number',
+          value: 0
+        }
+      ],
+      buttons: [
+        {
+          text: 'Bỏ',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'secondary',
+          handler: (e) => {
+            this.rest.freeze('kcheck', 'Đang hoàn thành...')
+            this.rest.check({
+              action: 'usg-birth',
+              id: id,
+              number: Number(e['number']),
+              keyword: this.rest.usg.filterKey,
+              status: this.rest.usg.status
+            }).then((response) => {
+              this.rest.usg.data = response.data
+            }, () => {
+              
+            })
+          }
+        }
+      ]
+    })
+    alert.present()
   }
 
   public async note(index: number, id: number, text: string) {
@@ -85,6 +125,7 @@ export class UsgPage implements OnInit {
               action: 'usg-note',
               id: id,
               text: e['note'],
+              keyword: this.rest.usg.filterKey,
               status: this.rest.usg.status
             }).then(() => {
               this.rest.usg.data[index].note = e['note']

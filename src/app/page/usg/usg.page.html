@@ -16,6 +16,14 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label position="floating"> Tìm kiếm </ion-label>
+    <ion-input [(ngModel)]="rest.usg.filterKey">  </ion-input>
+    <ion-button slot="end" color="secondary" (click)="filter()"> 
+      tìm kiếm
+    </ion-button>
+  </ion-item>
+
   <ion-toolbar>
     <ion-segment [(ngModel)]="rest.usg.status" (ionChange)="onSegmentChange()">
       <ion-segment-button value="0"> Chưa gọi </ion-segment-button>
@@ -44,6 +52,9 @@
           <ion-button *ngIf="rest.usg.status != '2'" color="light" size="small" (click)="changeStatus(item.id)">
             <ion-icon name="checkmark-outline"></ion-icon>
           </ion-button>  
+          <ion-button *ngIf="rest.usg.status == '1'" color="light" size="small" (click)="birth(item.id)">
+            Đã sinh
+          </ion-button>  
         </td>
       </tr>
     </tbody>
@@ -63,10 +74,10 @@
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="filterM()">
+      <!-- <ion-tab-button (click)="filterM()">
         <ion-icon name="filter-outline"></ion-icon>
         <ion-label> Tìm kiếm </ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>

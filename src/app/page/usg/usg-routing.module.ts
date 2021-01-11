@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'suggest',
     loadChildren: () => import('./suggest/suggest.module').then( m => m.SuggestPageModule)
+  },
+  {
+    path: 'birth',
+    loadChildren: () => import('./birth/birth.module').then( m => m.BirthPageModule)
   }
 ];
 

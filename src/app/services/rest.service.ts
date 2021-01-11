@@ -192,6 +192,34 @@ export class RestService {
     public navCtrl: NavController
   ) {  } 
 
+  
+  public async freeze(name: string, text: string = 'connecting to server') {
+    // this.load[name] = await this.loadCtrl.create({
+    //   cssClass: 'my-custom-class',
+    //   message: text
+    // })
+    // await this.load[name].present()
+  }
+
+  public defreeze(name: string) {
+    // if (!name) {
+    //   this.load = {}
+    //   return 0
+    // }
+    // let count = 3
+    
+    // let interval = setInterval(() => {
+    //   // console.log(name);
+    //   count --
+    //   if (this.load[name]) {
+    //     this.load[name].dismiss()
+    //     delete this.load[name]
+    //     clearInterval(interval)
+    //   }
+    //   if (!count) clearInterval(interval)
+    // }, 300)
+  }
+
   // datestring, datetime, time, dateiso
   public parseDate(obj: any) {
     // transform to datetime
@@ -380,33 +408,5 @@ export class RestService {
       position: 'bottom'
     })
     this.toast.present()
-  }
-
-  public async freeze(name: string, text: string = 'connecting to server') {
-    this.load[name] = await this.loadCtrl.create({
-      cssClass: 'my-custom-class',
-      message: text
-    })
-    await this.load[name].present()
-  }
-
-  public defreeze(name: string) {
-    console.log(name);
-    if (!name) {
-      this.load = {}
-      return 0
-    }
-    let count = 3
-    
-    let interval = setInterval(() => {
-      // console.log(name);
-      count --
-      if (this.load[name]) {
-        this.load[name].dismiss()
-        delete this.load[name]
-        clearInterval(interval)
-      }
-      if (!count) clearInterval(interval)
-    }, 300)
   }
 }
