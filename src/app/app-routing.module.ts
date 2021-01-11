@@ -54,6 +54,10 @@ const routes: Routes = [
   {
     path: 'blood',
     loadChildren: () => import('./page/blood/blood.module').then( m => m.BloodPageModule)
+  },
+  {
+    path: 'usg',
+    loadChildren: () => import('./page/usg/usg.module').then( m => m.UsgPageModule)
   }
 ];
 

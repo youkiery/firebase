@@ -164,6 +164,20 @@ export class RestService {
     number: [0, 0, 0],
     total: 0
   }
+  public usg = {
+    data: [],
+    filter: [],
+    filterKey: '',
+    status: '0',
+    role: 0,
+    suggest: '',
+    suggestList: [],
+    select: {
+      name: '',
+      phone: '',
+      pet: '',
+    },
+  }
   toast: any
   load: any = {}
   public today: string = ''
