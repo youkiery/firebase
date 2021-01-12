@@ -27,11 +27,14 @@ export class FilterPage implements OnInit {
 
   public filter() {
     this.rest.freeze('kfilter', 'Filtering filter')
+    this.rest.kaizen.page = 1
+
     this.rest.check({
       action: 'kaizen-auto',
       starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
       endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
       keyword: this.rest.kaizen.filter.keyword,
+      page: this.rest.kaizen.page,
       sort: this.rest.kaizen.filter.sort
     }).then(data => {
       this.rest.kaizen.data = data['list']

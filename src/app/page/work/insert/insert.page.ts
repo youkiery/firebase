@@ -45,16 +45,16 @@ export class InsertPage {
         startdate: this.rest.totime(this.rest.work.filter['startdate']),
         enddate: this.rest.totime(this.rest.work.filter['enddate']),
         keyword: this.rest.work.filter['keyword'],
+        page: this.rest.work.page[this.rest.work.segment],
         user: this.rest.work.filter['user'],
         employ: this.userid,
         content: this.content,
         cometime: this.time.cometime,
         calltime: this.time.calltime,
       }).then(data => {
-        this.rest.work.data = data['data']
         this.rest.work.time = data['time']
         this.rest.work.unread = data['unread']
-        this.rest.workParse()
+        this.rest.work.data[this.rest.work.segment] = data['list']
         this.rest.defreeze('wi')
         this.dismiss()
       }, (error) => {

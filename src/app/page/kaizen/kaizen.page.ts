@@ -71,6 +71,7 @@ export class KaizenPage implements OnInit {
               starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
               endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
               keyword: this.rest.kaizen.filter.keyword,
+              page: this.rest.kaizen.page,
               sort: this.rest.kaizen.filter.sort
             }).then(data => {
               this.rest.kaizen.data = data['list']
@@ -94,6 +95,7 @@ export class KaizenPage implements OnInit {
         starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
         endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
         keyword: this.rest.kaizen.filter.keyword,
+        page: this.rest.kaizen.page,
         sort: this.rest.kaizen.filter.sort
       }).then(data => {
         if (data['list']) {
@@ -101,10 +103,10 @@ export class KaizenPage implements OnInit {
           this.rest.kaizen.time = data.time
           this.rest.kaizen.data = data['list']
           this.rest.kaizenParse()
-          resolve()
+          resolve('')
         }
       }, (e) => {
-        resolve()
+        resolve('')
       })
     })
   }
@@ -140,7 +142,7 @@ export class KaizenPage implements OnInit {
     })
     modal.present()
   }
-  
+
   public async remove(id: number) {
     const alert = await this.alert.create({
       header: 'Chú ý!!!',
@@ -161,6 +163,7 @@ export class KaizenPage implements OnInit {
               starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
               endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
               keyword: this.rest.kaizen.filter.keyword,
+              page: this.rest.kaizen.page,
               sort: this.rest.kaizen.filter.sort
             }).then((data) => {
 
@@ -179,5 +182,12 @@ export class KaizenPage implements OnInit {
 
     await alert.present();
   }
+
+  // public loadData(event) {
+  //   this.rest.kaizen.page ++
+  //   this.getKaizenList().then(() => {
+  //     event.target.complete();
+  //   })
+  // }
 }
 

@@ -35,25 +35,20 @@ export class LoginPage {
     this.rest.check({
       action: 'version'
     }).then(data => {
-      let interval = setInterval(() => {
-        if (Object.keys(this.rest.load).length) {
-          this.rest.defreeze('check')
-          clearInterval(interval)
-          if (this.version === data['version']) {
-            this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
-            this.rest.storage.get('userdata').then((val) => {
-              if (val && val['username'] && val['password']) {
-                this.rest.login(val['username'], val['password'])
-              }
-              this.rest.defreeze('cuser')
-            })
+      this.rest.defreeze('check')
+      if (this.version === data['version']) {
+        this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
+        this.rest.storage.get('userdata').then((val) => {
+          if (val && val['username'] && val['password']) {
+            this.rest.login(val['username'], val['password'])
           }
-          else {
-            this.rest.link = data['link']
-            this.navCtrl.navigateRoot('/update', { animated: true, animationDirection: 'forward' })
-          }
-        }
-      }, 300)
+          this.rest.defreeze('cuser')
+        })
+      }
+      else {
+        this.rest.link = data['link']
+        this.navCtrl.navigateRoot('/update', { animated: true, animationDirection: 'forward' })
+      }
     }, () => {
       this.rest.defreeze('check')
     })

@@ -119,7 +119,7 @@ export class EditPage {
       new Promise(resolve => {
         if (!this.rest.work.edit.image.length) {
           this.rest.defreeze('wci')
-          resolve()
+          resolve('')
         }        
         else {
           // console.log(this.rest.work.edit.image.length);
@@ -137,7 +137,7 @@ export class EditPage {
                 // console.log(check);
                 if (!check) {
                   this.rest.defreeze('wci')
-                  resolve()
+                  resolve('')
                 }
               }
               else {
@@ -153,7 +153,7 @@ export class EditPage {
                   // uncomment if get formated data
                   if (!check) {
                     this.rest.defreeze('wci')
-                    resolve()
+                    resolve('')
                   }
                 })
               }
@@ -161,7 +161,7 @@ export class EditPage {
           });
           if (!check) {
             this.rest.defreeze('wci')
-            resolve()
+            resolve('')
           }
         }
       }).then((data) => {
@@ -180,12 +180,12 @@ export class EditPage {
           process: this.rest.work.edit.process,
           calltime: this.rest.totime(this.rest.work.edit.calltime),
           note: this.rest.work.edit.note,
+          page: this.rest.work.page[this.rest.work.segment],
           image: list.join(',')
         }).then(data => {
           this.rest.work.unread = data['unread']
           this.rest.work.time = data['time']
-          this.rest.work.data = data['data']
-          this.rest.workParse()
+          this.rest.work.data[this.rest.work.segment] = data['list']
           this.rest.defreeze('ws')
           this.dismiss()
         }, (error) => {

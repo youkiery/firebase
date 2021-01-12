@@ -23,8 +23,8 @@
     </ion-segment>
   </ion-toolbar>
 
-  <div *ngIf="rest.work.list[rest.work.segment].length">
-    <ion-card *ngFor="let item of rest.work.list[rest.work.segment]; let i = index" [color]="item.color">
+  <div *ngIf="rest.work.data[rest.work.segment].length">
+    <ion-card *ngFor="let item of rest.work.data[rest.work.segment]; let i = index" [color]="item.color">
       <ion-card-content>
         <div style="float: right;">
           <ion-button *ngIf="rest.work.role && rest.work.segment == 'undone'" color="secondary" (click)="done(item['id'])" size="small">
@@ -48,11 +48,20 @@
         <p *ngIf="item.note.length"> Lý do: {{item.note}} </p>
       </ion-card-content>
     </ion-card>
+    
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </div>
 
-  <ion-text *ngIf="!rest.work.list[rest.work.segment].length" style="text-align: center;">
+  <ion-text *ngIf="!rest.work.data[rest.work.segment].length" style="text-align: center;">
     Không có công việc nào
   </ion-text>
+
+
 </ion-content>
 
 <ion-toolbar>

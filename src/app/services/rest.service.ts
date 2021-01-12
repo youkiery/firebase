@@ -21,17 +21,20 @@ export class RestService {
     except: []
   }
   public work = {
+    page: {
+      'undone': 1,
+      'done': 1
+    },
     notify: [],
     time: -1,
     unread: 0,
     segment: 'undone',
     role: 0,
     userlist: '',
-    list: {
+    data: {
       'undone': [],
       'done': []
     },
-    data: [],
     filter: {
       'startdate': '',
       'enddate': '',
@@ -48,6 +51,10 @@ export class RestService {
     }
   }
   public kaizen = {
+    page: {
+      undone: 1,
+      done: 1
+    },
     time: -1,
     unread: 0,
     insert: false,
@@ -153,6 +160,7 @@ export class RestService {
     }
   }
   public blood = {
+    page: 1,
     statistic: {},
     list: [],
     edit: {
@@ -192,7 +200,6 @@ export class RestService {
     public navCtrl: NavController
   ) {  } 
 
-  
   public async freeze(name: string, text: string = 'connecting to server') {
     // this.load[name] = await this.loadCtrl.create({
     //   cssClass: 'my-custom-class',
@@ -360,16 +367,6 @@ export class RestService {
     this.kaizen.data.forEach((item) => {
       if (item['done']) this.kaizen.list.done.push(item)
       else this.kaizen.list.undone.push(item)
-    })
-  }
-
-  public workParse() {
-    this.work.list.done = []
-    this.work.list.undone = []
-
-    this.work.data.forEach(item => {
-      if (item.process >= 100) this.work.list.done.push(item)
-      else this.work.list.undone.push(item)
     })
   }
 

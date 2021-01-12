@@ -17,7 +17,7 @@
 
 <ion-content>
   <ion-toolbar>
-    <ion-segment [(ngModel)]="rest.kaizen.segment">
+    <ion-segment [(ngModel)]="rest.kaizen.segment" (ionChange)="segmentChanged()">
       <ion-segment-button value="undone"> Chưa hoàn thành </ion-segment-button>
       <ion-segment-button value="done"> Đã hoàn thành </ion-segment-button>
     </ion-segment>
@@ -47,6 +47,13 @@
         {{item.time}}
       </ion-card-subtitle>
     </ion-card>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>  
   </div>
 
   <div *ngIf="!rest.kaizen.list[rest.kaizen.segment].length">
