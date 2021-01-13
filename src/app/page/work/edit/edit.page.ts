@@ -184,7 +184,6 @@ export class EditPage {
           image: list.join(',')
         }).then(data => {
           this.rest.work.unread = data['unread']
-          this.rest.work.time = data['time']
           this.rest.work.data[this.rest.work.segment] = data['list']
           this.rest.defreeze('ws')
           this.dismiss()

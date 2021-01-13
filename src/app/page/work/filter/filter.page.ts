@@ -33,16 +33,23 @@ export class FilterPage {
 
   public filter() {
     this.rest.freeze('wf', 'Lọc công việc')
-    this.rest.work.page[this.rest.work.segment] = 1
+    this.rest.work.page = {
+      'undone': 1,
+      'done': 1
+    }
+
     this.rest.check({
-      action: 'get-user-work',
-      'startdate': this.rest.totime(this.rest.work.filter.startdate),
-      'enddate': this.rest.totime(this.rest.work.filter.enddate),
-      'keyword': this.rest.work.filter['keyword'],
-      'user': this.rest.work.filter['user'].join(','),
+      action: 'work-init',
+      startdate: this.rest.totime(this.rest.work.filter.startdate),
+      enddate: this.rest.totime(this.rest.work.filter.enddate),
+      keyword: this.rest.work.filter['keyword'],
+      user: this.rest.work.filter['user'].join(','),
       page: this.rest.work.page[this.rest.work.segment],
+      'status': this.rest.work.segment
     }).then(data => {
-      this.rest.work.data = data['list']
+      this.rest.work.init = 1
+      this.rest.work.unread = data.unread
+      this.rest.work.data = data.list
       this.rest.defreeze('wf')
       this.dismiss()
     }, () => {

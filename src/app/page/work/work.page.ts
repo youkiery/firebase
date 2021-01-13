@@ -13,46 +13,51 @@ import { PrintPage } from './print/print.page';
   styleUrls: ['./work.page.scss'],
 })
 export class WorkPage implements OnInit {
-  public autoupdate: boolean = false
-  public interval: any
   constructor(
     public rest: RestService,
     public modal: ModalController,
     public alert: AlertController
   ) { }
 
-  ionViewWillEnter() {
-    this.interval = setInterval(() => {
-      if (!this.autoupdate) {
-        this.autoupdate = true
-        this.rest.check({
-          action: 'work-auto',
-          'time': this.rest.work['time'],
-          'startdate': this.rest.totime(this.rest.work.filter.startdate),
-          'endate': this.rest.totime(this.rest.work.filter['enddate']),
-          'keyword': this.rest.work.filter['keyword'],
-          'user': this.rest.work.filter['user'].join(','),
-          'page': this.rest.work.page[this.rest.work.segment]
-        }).then(data => {
-          if (data['data']) {
-            this.rest.work['time'] = data['time']
-            this.rest.work.unread = data['unread']
-            this.rest.work.data[this.rest.work.segment] = data['list']
-          }
-          this.autoupdate = false
-        }, (error) => {
-          this.autoupdate = false
-        })
+  ngOnInit() { }
+
+  ionViewDidEnter() {
+    if (this.rest.work.init) this.filter()
+    else {
+      this.rest.work.page = {
+        'undone': 1,
+        'done': 1
       }
-    }, 5000)
+  
+      this.rest.check({
+        action: 'work-init',
+      }).then(data => {
+        this.rest.work.init = 1
+        this.rest.work.unread = data.unread
+        this.rest.work.data = data.list
+      }, (error) => { })
+    }
   }
 
-  ionViewWillLeave() {
-    clearInterval(this.interval)
-  }
-
-  ngOnInit() {
-    this.getUserWork()
+  public filter() {
+    return new Promise(resolve => {
+      this.rest.check({
+        action: 'work-auto',
+        'time': this.rest.work['time'],
+        'startdate': this.rest.totime(this.rest.work.filter.startdate),
+        'endate': this.rest.totime(this.rest.work.filter['enddate']),
+        'keyword': this.rest.work.filter['keyword'],
+        'user': this.rest.work.filter['user'].join(','),
+        'page': this.rest.work.page[this.rest.work.segment],
+        'status': this.rest.work.segment
+      }).then(response => {
+        this.rest.work.unread = response['unread']
+        this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
+        resolve('')
+      }, (error) => { 
+        resolve('')
+      })
+    })
   }
 
   public async print() {
@@ -63,32 +68,10 @@ export class WorkPage implements OnInit {
         enddate: this.rest.totime(this.rest.work.filter['enddate']),
         keyword: this.rest.work.filter['keyword'],
         user: this.rest.work.filter['user'],
-        'page': this.rest.work.page[this.rest.work.segment]
+        page: this.rest.work.page[this.rest.work.segment]
       }
     })
     modal.present()
-  }
-
-  public getUserWork() {
-    this.rest.freeze('workget', 'Loading work list')
-    this.rest.check({
-      action: 'get-user-work',
-      'startdate': this.rest.totime(this.rest.work.filter['startdate']),
-      'enddate': this.rest.totime(this.rest.work.filter['enddate']),
-      'keyword': this.rest.work.filter['keyword'],
-      'user': this.rest.work.filter['user'].join(','),
-      'page': this.rest.work.page[this.rest.work.segment]
-    }).then(data => {
-      this.rest.work['time'] = data['time']
-      this.rest.work.unread = data['unread']
-      this.rest.work.data = data['list']
-      console.log(this.rest.work.data);
-      console.log(data.list);
-      
-      this.rest.defreeze('workget')
-    }, (error) => {
-      this.rest.defreeze('workget')
-    })
   }
 
   public async detail(id: number) {
@@ -140,11 +123,11 @@ export class WorkPage implements OnInit {
               keyword: this.rest.work.filter['keyword'],
               user: this.rest.work.filter['user'],
               'page': this.rest.work.page[this.rest.work.segment],
-              id: id
+              id: id,
+              'status': this.rest.work.segment
             }).then((data) => {
               this.rest.work.unread = data['unread']
               this.rest.work['time'] = data['time']
-              this.rest.work['data'] = data['data']
               this.rest.work.data[this.rest.work.segment] = data['list']
               this.rest.defreeze('wdone')
             }, (error) => {
@@ -179,11 +162,11 @@ export class WorkPage implements OnInit {
               keyword: this.rest.work.filter['keyword'],
               user: this.rest.work.filter['user'],
               'page': this.rest.work.page[this.rest.work.segment],
-              id: id
+              id: id,
+              'status': this.rest.work.segment
             }).then((data) => {
               this.rest.work.unread = data['unread']
               this.rest.work['time'] = data['time']
-              this.rest.work['data'] = data['data']
               this.rest.work.data[this.rest.work.segment] = data['list']
               this.rest.defreeze('wr')
             }, (error) => {
@@ -225,8 +208,7 @@ export class WorkPage implements OnInit {
   }
 
   public async edit(index: number) {
-    let current = this.rest.work['list'][this.rest.work['segment']][index]
-    // console.log(current);
+    let current = this.rest.work.data[this.rest.work['segment']][index]
     
     this.rest.work.edit = {
       'id': current['id'],
@@ -240,30 +222,18 @@ export class WorkPage implements OnInit {
       component: EditPage,
     })
     await modal.present()
-    // kiểm tra, nếu process === 100 thì bỏ khỏi danh sách
-    // nếu không, cập nhật lại danh sách
   }
 
   public async notify() {
     this.rest.router.navigateByUrl('/work/notify')
-    // const modal = await this.modal.create({
-    //   component: NotifyPage,
-    // })
-    // await modal.present()
   }
 
   public loadData(event) {
     this.rest.work.page[this.rest.work.segment] ++
-    this.rest.check({
-      action: 'work-auto',
-      startdate: this.rest.totime(this.rest.work.filter['startdate']),
-      enddate: this.rest.totime(this.rest.work.filter['enddate']),
-      keyword: this.rest.work.filter['keyword'],
-      user: this.rest.work.filter['user'],
-      page: this.rest.work.page[this.rest.work.segment]
-    }).then((response) => {
-      this.rest.vaccine.data = this.rest.vaccine.data.concat(response.data)
+    console.log(this.rest.work.page[this.rest.work.segment]);
+    
+    this.filter().then(() => {
       event.target.complete()
-    }, (error) => { })
+    })
   }
 }

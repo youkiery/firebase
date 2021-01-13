@@ -21,6 +21,7 @@ export class RestService {
     except: []
   }
   public work = {
+    init: 0,
     page: {
       'undone': 1,
       'done': 1

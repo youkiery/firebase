@@ -52,7 +52,6 @@ export class InsertPage {
         cometime: this.time.cometime,
         calltime: this.time.calltime,
       }).then(data => {
-        this.rest.work.time = data['time']
         this.rest.work.unread = data['unread']
         this.rest.work.data[this.rest.work.segment] = data['list']
         this.rest.defreeze('wi')
