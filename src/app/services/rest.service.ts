@@ -61,8 +61,7 @@ export class RestService {
     role: 0,
     segment: 'undone',
     notify: [],
-    data: [],
-    list: {
+    data: {
       'undone': [],
       'done': []
     },
@@ -358,16 +357,6 @@ export class RestService {
     }
     this.storage.remove('userdata')
     this.router.navigateByUrl('/login')
-  }
-
-  public kaizenParse() {
-    this.kaizen.list.done = []    
-    this.kaizen.list.undone = []
-
-    this.kaizen.data.forEach((item) => {
-      if (item['done']) this.kaizen.list.done.push(item)
-      else this.kaizen.list.undone.push(item)
-    })
   }
 
   public todate(datetime: string) {

@@ -16,6 +16,7 @@ export class KaizenPage implements OnInit {
     'undone': 1,
     'done': 0
   }
+  public AUTO = 1
   constructor(
     public alert: AlertController,
     public modal: ModalController,
@@ -23,12 +24,10 @@ export class KaizenPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.rest.kaizen.data.length) {
-      this.rest.freeze('kload', 'Getting data list')
-      this.getKaizenList().then(() => {
-        this.rest.defreeze('kload')
-      })
-    }
+    this.rest.freeze('kload', 'Getting data list')
+    this.getKaizenList().then(() => {
+      this.rest.defreeze('kload')
+    })
   }
 
   ionViewWillEnter() {
@@ -45,7 +44,7 @@ export class KaizenPage implements OnInit {
   public filter() {
     if (!this.autoupdate) {
       this.autoupdate = true
-      this.getKaizenList().then(() => {
+      this.getKaizenList(this.AUTO).then(() => {
         this.autoupdate = false
       })
     }
@@ -71,11 +70,10 @@ export class KaizenPage implements OnInit {
               starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
               endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
               keyword: this.rest.kaizen.filter.keyword,
-              page: this.rest.kaizen.page,
+              page: this.rest.kaizen.page[this.rest.kaizen.segment],
               sort: this.rest.kaizen.filter.sort
             }).then(data => {
-              this.rest.kaizen.data = data['list']
-              this.rest.kaizenParse()
+              this.rest.kaizen.data[this.rest.kaizen.segment] = data['list']
               this.rest.defreeze('kcheck')
             }, () => [
               this.rest.defreeze('kcheck')
@@ -87,7 +85,7 @@ export class KaizenPage implements OnInit {
     alert.present()
   }
 
-  public getKaizenList() {
+  public getKaizenList(auto = 0) {
     return new Promise((resolve) => {
       this.rest.check({
         action: 'kaizen-auto',
@@ -95,14 +93,14 @@ export class KaizenPage implements OnInit {
         starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
         endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
         keyword: this.rest.kaizen.filter.keyword,
-        page: this.rest.kaizen.page,
+        page: this.rest.kaizen.page[this.rest.kaizen.segment],
+        auto: auto,
         sort: this.rest.kaizen.filter.sort
       }).then(data => {
         if (data['list']) {
           this.rest.kaizen.unread = data['unread']
           this.rest.kaizen.time = data.time
-          this.rest.kaizen.data = data['list']
-          this.rest.kaizenParse()
+          this.rest.kaizen.data[this.rest.kaizen.segment] = data['list']
           resolve('')
         }
       }, (e) => {
@@ -129,7 +127,7 @@ export class KaizenPage implements OnInit {
       }
     }
     else {
-      let current = this.rest.kaizen.list[this.rest.kaizen.segment][index]
+      let current = this.rest.kaizen.data[this.rest.kaizen.segment][index]
       this.rest.kaizen.edit = {
         id: current['id'],
         problem: current['problem'],
@@ -163,14 +161,13 @@ export class KaizenPage implements OnInit {
               starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
               endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
               keyword: this.rest.kaizen.filter.keyword,
-              page: this.rest.kaizen.page,
+              page: this.rest.kaizen.page[this.rest.kaizen.segment],
+              type: this.rest.kaizen.segment,
               sort: this.rest.kaizen.filter.sort
             }).then((data) => {
-
               this.rest.kaizen.unread = data['unread']
               this.rest.kaizen.time = data['time']
-              this.rest.kaizen.data = data['list']
-              this.rest.kaizenParse()
+              this.rest.kaizen.data[this.rest.kaizen.segment] = data['list']
               this.rest.defreeze('kremove')
             }, (error) => {
               this.rest.defreeze('kremove')
@@ -183,11 +180,11 @@ export class KaizenPage implements OnInit {
     await alert.present();
   }
 
-  // public loadData(event) {
-  //   this.rest.kaizen.page ++
-  //   this.getKaizenList().then(() => {
-  //     event.target.complete();
-  //   })
-  // }
+  public loadData(event) {
+    this.rest.kaizen.page[this.rest.kaizen.segment] ++
+    this.getKaizenList().then(() => {
+      event.target.complete();
+    })
+  }
 }
 

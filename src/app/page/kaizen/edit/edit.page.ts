@@ -30,12 +30,12 @@ export class EditPage implements OnInit {
       endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
       keyword: this.rest.kaizen.filter.keyword,
       page: this.rest.kaizen.page,
+      type: this.rest.kaizen.segment,
       sort: this.rest.kaizen.filter.sort
     }).then(data => {
-      this.rest.kaizen.data = data['list']
+      this.rest.kaizen.data[this.rest.kaizen.segment] = data['list']
       this.rest.kaizen.time = data['time']
       this.rest.kaizen.unread = data['unread']
-      this.rest.kaizenParse()
       this.rest.defreeze('kedit')
       this.dismiss()
     }, (e) => {

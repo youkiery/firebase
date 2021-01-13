@@ -31,9 +31,14 @@ export class NotifyPage implements OnInit {
   ngOnInit() { }
 
   public async detail(id: number) {
-    let current = this.rest.work.data.filter((item) => {
+    let current = this.rest.work.data.done.filter((item) => {
       return item['id'] === id
     })
+    if (!current) {
+      current = this.rest.work.data.undone.filter((item) => {
+        return item['id'] === id
+      })
+    }
     
     current = current[0]
     if (!current) this.rest.notify('Công việc đã xóa')

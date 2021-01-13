@@ -27,7 +27,7 @@ export class FilterPage implements OnInit {
 
   public filter() {
     this.rest.freeze('kfilter', 'Filtering filter')
-    this.rest.kaizen.page = 1
+    this.rest.kaizen.page[this.rest.kaizen.segment] = 1
 
     this.rest.check({
       action: 'kaizen-auto',
@@ -35,10 +35,10 @@ export class FilterPage implements OnInit {
       endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
       keyword: this.rest.kaizen.filter.keyword,
       page: this.rest.kaizen.page,
+      type: this.rest.kaizen.segment,
       sort: this.rest.kaizen.filter.sort
     }).then(data => {
-      this.rest.kaizen.data = data['list']
-      this.rest.kaizenParse()
+      this.rest.kaizen.data[this.rest.kaizen.segment] = data['list']
       this.rest.defreeze('kfilter')
       this.dismiss()
     }, () => {

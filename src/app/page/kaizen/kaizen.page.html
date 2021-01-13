@@ -17,14 +17,14 @@
 
 <ion-content>
   <ion-toolbar>
-    <ion-segment [(ngModel)]="rest.kaizen.segment" (ionChange)="segmentChanged()">
+    <ion-segment [(ngModel)]="rest.kaizen.segment">
       <ion-segment-button value="undone"> Chưa hoàn thành </ion-segment-button>
       <ion-segment-button value="done"> Đã hoàn thành </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
  
-  <div *ngIf="rest.kaizen.list[rest.kaizen.segment].length">
-    <ion-card *ngFor="let item of rest.kaizen.list[rest.kaizen.segment]; let i = index">
+  <div *ngIf="rest.kaizen.data[rest.kaizen.segment].length">
+    <ion-card *ngFor="let item of rest.kaizen.data[rest.kaizen.segment]; let i = index">
       <ion-card-content> 
         <div style="float: right;">
           <ion-button color="secondary" *ngIf="rest.kaizen.role && rest.kaizen.segment === 'undone'" (click)="checker(item.id)" size="small">
@@ -56,7 +56,7 @@
     </ion-infinite-scroll>  
   </div>
 
-  <div *ngIf="!rest.kaizen.list[rest.kaizen.segment].length">
+  <div *ngIf="!rest.kaizen.data[rest.kaizen.segment].length">
     Chưa có giải pháp nào
   </div>
 </ion-content>
