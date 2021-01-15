@@ -25,11 +25,7 @@ export class BloodPage implements OnInit {
   }
 
   public import() {
-    this.rest.router.navigateByUrl('/blood/import')
-  }
-
-  public filter() {
-    this.rest.router.navigateByUrl('/blood/filter')
+    this.rest.router.navigateByUrl('/blood/in')
   }
 
   public statistic() {
@@ -38,13 +34,37 @@ export class BloodPage implements OnInit {
 
   ionViewDidEnter() {
     this.rest.freeze('auto', 'Đang tải danh sách...')
-    this.rest.check({
-      action: 'blood-auto'
-    }).then(response => {
-      this.rest.blood.list = response.list
-      this.rest.defreeze('auto')
-    }, () => {
-      this.rest.defreeze('auto')
+    if (this.rest.blood.init) this.filter()
+    else {
+      this.rest.check({
+        action: 'blood-init',
+        page: this.rest.blood.page
+      }).then(response => {
+        this.rest.blood.list = response.list
+        this.rest.blood.init = 1
+      }, () => {
+      })
+    }
+  }
+
+  public filter() {
+    return new Promise((resolve) => {
+      this.rest.check({
+        action: 'blood-auto',
+        page: this.rest.blood.page
+      }).then(response => {
+        this.rest.blood.list = this.rest.blood.list.concat(response.list)
+        resolve('')
+      }, () => {
+        resolve('')
+      })
+    })
+  }
+
+  public loadData(event) {
+    this.rest.blood.page ++
+    this.filter().then(() => {
+      event.target.complete();
     })
   }
 }

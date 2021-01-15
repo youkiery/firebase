@@ -164,6 +164,7 @@ export class RestService {
     }
   }
   public blood = {
+    init: 0,
     page: 1,
     statistic: {},
     list: [],

@@ -16,6 +16,15 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-header> Hóa chất </ion-card-header>
+    <ion-card-content>
+      <p> Lyse: {{rest.blood.number[1]}} (ML) </p>
+      <p> Diluent: {{rest.blood.number[2]}} (L) </p>
+      <p> Rinse: {{rest.blood.number[3]}} (L) </p>
+    </ion-card-content>
+  </ion-card>
+
   <table border="1">
     <tr>
       <th> Thời gian </th>
@@ -32,6 +41,11 @@
       </tr>
     </tbody>
   </table>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
 <ion-toolbar>
