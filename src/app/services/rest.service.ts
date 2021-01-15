@@ -8,8 +8,9 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
   providedIn: 'root'
 })
 export class RestService {
-  public baseurl: string = 'http://localhost/index.php?server=1';
-  // public baseurl: string = 'http://vetgroup.petcoffee.com/index.php?server=1';
+  public branch = 'txnhatrang'
+  // public baseurl: string = 'http://localhost/index.php?server=1';
+  public baseurl: string = 'http://vetgroup.petcoffee.com/index.php?server=1';
   public user = {
     userid: '0',
     name: '',
@@ -22,6 +23,10 @@ export class RestService {
   }
   public work = {
     init: 0,
+    reversal: {
+      'undone': 0,
+      'done': 1
+    },
     page: {
       'undone': 1,
       'done': 1
@@ -166,7 +171,14 @@ export class RestService {
   public blood = {
     init: 0,
     page: 1,
-    statistic: {},
+    statistic: {
+      from: '',
+      end: '',
+      number: 0,
+      sample: 0,
+      total: 0,
+      list: []
+    },
     list: [],
     edit: {
       number: 0,
@@ -275,6 +287,11 @@ export class RestService {
           this.router.navigateByUrl('/home')
           reject(data)
         }
+        else if (data['no_branch']) {
+          this.notify("Tài khoản không có trong chi nhánh")
+          this.router.navigateByUrl('/')
+          reject(data)
+        }
         else {
           if (data['messenger']) this.notify(data['messenger'])
           if (data['status']) resolve(data)
@@ -300,7 +317,7 @@ export class RestService {
         param.push(key + '=' + item)
       }
     }
-    if (this.user.userid) param.push('userid='+ this.user.userid)
+    if (this.user.userid) param.push('&branch='+ this.branch +'&userid='+ this.user.userid)
     return param.length ? '&' + param.join('&') : ''
   }
 
@@ -314,7 +331,8 @@ export class RestService {
     else this.check({
       action: 'login',
       username: username,
-      password: password
+      password: password,
+      branch: this.branch
     }).then((data) => {
       this.work.unread = data['work']
       this.kaizen.unread = data['kaizen']

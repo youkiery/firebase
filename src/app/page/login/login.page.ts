@@ -31,26 +31,12 @@ export class LoginPage {
   }
 
   public ngOnInit() {
-    this.rest.freeze('check', 'Kiểm tra phiên bản')
-    this.rest.check({
-      action: 'version'
-    }).then(data => {
-      this.rest.defreeze('check')
-      if (this.version === data['version']) {
-        this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
-        this.rest.storage.get('userdata').then((val) => {
-          if (val && val['username'] && val['password']) {
-            this.rest.login(val['username'], val['password'])
-          }
-          this.rest.defreeze('cuser')
-        })
+    this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
+    this.rest.storage.get('userdata').then((val) => {
+      if (val && val['username'] && val['password']) {
+        this.rest.login(val['username'], val['password'])
       }
-      else {
-        this.rest.link = data['link']
-        this.navCtrl.navigateRoot('/update', { animated: true, animationDirection: 'forward' })
-      }
-    }, () => {
-      this.rest.defreeze('check')
+      this.rest.defreeze('cuser')
     })
   }
 }

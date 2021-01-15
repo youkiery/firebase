@@ -45,7 +45,6 @@ export class FilterPage {
       keyword: this.rest.work.filter['keyword'],
       user: this.rest.work.filter['user'].join(','),
       page: this.rest.work.page[this.rest.work.segment],
-      'status': this.rest.work.segment
     }).then(data => {
       this.rest.work.init = 1
       this.rest.work.unread = data.unread

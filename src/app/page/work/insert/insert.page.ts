@@ -51,6 +51,7 @@ export class InsertPage {
         content: this.content,
         cometime: this.time.cometime,
         calltime: this.time.calltime,
+        status: this.rest.work.reversal[this.rest.work.segment]
       }).then(data => {
         this.rest.work.unread = data['unread']
         this.rest.work.data[this.rest.work.segment] = data['list']

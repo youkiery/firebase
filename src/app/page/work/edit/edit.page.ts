@@ -181,7 +181,8 @@ export class EditPage {
           calltime: this.rest.totime(this.rest.work.edit.calltime),
           note: this.rest.work.edit.note,
           page: this.rest.work.page[this.rest.work.segment],
-          image: list.join(',')
+          image: list.join(','),
+          status: this.rest.work.reversal[this.rest.work.segment]
         }).then(data => {
           this.rest.work.unread = data['unread']
           this.rest.work.data[this.rest.work.segment] = data['list']

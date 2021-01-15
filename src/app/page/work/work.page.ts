@@ -49,7 +49,7 @@ export class WorkPage implements OnInit {
         'keyword': this.rest.work.filter['keyword'],
         'user': this.rest.work.filter['user'].join(','),
         'page': this.rest.work.page[this.rest.work.segment],
-        'status': this.rest.work.segment
+        'status': this.rest.work.reversal[this.rest.work.segment]
       }).then(response => {
         this.rest.work.unread = response['unread']
         this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
@@ -124,11 +124,11 @@ export class WorkPage implements OnInit {
               user: this.rest.work.filter['user'],
               'page': this.rest.work.page[this.rest.work.segment],
               id: id,
-              'status': this.rest.work.segment
+              'status': this.rest.work.reversal[this.rest.work.segment]
             }).then((data) => {
               this.rest.work.unread = data['unread']
               this.rest.work['time'] = data['time']
-              this.rest.work.data[this.rest.work.segment] = data['list']
+              this.rest.work.data = data['list']
               this.rest.defreeze('wdone')
             }, (error) => {
               this.rest.defreeze('wdone')
@@ -163,11 +163,11 @@ export class WorkPage implements OnInit {
               user: this.rest.work.filter['user'],
               'page': this.rest.work.page[this.rest.work.segment],
               id: id,
-              'status': this.rest.work.segment
+              'status': this.rest.work.reversal[this.rest.work.segment]
             }).then((data) => {
               this.rest.work.unread = data['unread']
               this.rest.work['time'] = data['time']
-              this.rest.work.data[this.rest.work.segment] = data['list']
+              this.rest.work.data = data['list']
               this.rest.defreeze('wr')
             }, (error) => {
               this.rest.defreeze('wr')
@@ -230,7 +230,6 @@ export class WorkPage implements OnInit {
 
   public loadData(event) {
     this.rest.work.page[this.rest.work.segment] ++
-    console.log(this.rest.work.page[this.rest.work.segment]);
     
     this.filter().then(() => {
       event.target.complete()
