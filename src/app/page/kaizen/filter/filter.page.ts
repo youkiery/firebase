@@ -9,6 +9,10 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class FilterPage implements OnInit {
   public check: boolean = false
+  public check_reversal_segment = {
+    'undone': 0,
+    'done': 1
+  }
   constructor(
     public rest: RestService,
     public modal: ModalController,
@@ -27,18 +31,20 @@ export class FilterPage implements OnInit {
 
   public filter() {
     this.rest.freeze('kfilter', 'Filtering filter')
-    this.rest.kaizen.page[this.rest.kaizen.segment] = 1
+    this.rest.kaizen.page = {
+      undone: 1,
+      done: 1
+    }
 
     this.rest.check({
-      action: 'kaizen-auto',
+      action: 'kaizen-init',
       starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
       endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
       keyword: this.rest.kaizen.filter.keyword,
-      page: this.rest.kaizen.page,
-      type: this.rest.kaizen.segment,
+      page: 1,
       sort: this.rest.kaizen.filter.sort
     }).then(data => {
-      this.rest.kaizen.data[this.rest.kaizen.segment] = data['list']
+      this.rest.kaizen.data = data['list']
       this.rest.defreeze('kfilter')
       this.dismiss()
     }, () => {

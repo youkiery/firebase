@@ -27,7 +27,6 @@ export class RestService {
       'done': 1
     },
     notify: [],
-    time: -1,
     unread: 0,
     segment: 'undone',
     role: 0,
@@ -52,6 +51,11 @@ export class RestService {
     }
   }
   public kaizen = {
+    init: 0,
+    reversal_segment: {
+      'undone': 0,
+      'done': 1
+    },
     page: {
       undone: 1,
       done: 1
