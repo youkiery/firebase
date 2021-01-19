@@ -8,7 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./schedule.page.scss'],
 })
 export class SchedulePage implements OnInit {
-  day = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật']
+  day = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
   limit = [1, 2, 2, 2, 2, 2, 1]
   color = [
     ['', '', '', ''],

@@ -54,7 +54,7 @@ export class InsertPage {
         status: this.rest.work.reversal[this.rest.work.segment]
       }).then(data => {
         this.rest.work.unread = data['unread']
-        this.rest.work.data[this.rest.work.segment] = data['list']
+        this.rest.work.data = data['list']
         this.rest.defreeze('wi')
         this.dismiss()
       }, (error) => {

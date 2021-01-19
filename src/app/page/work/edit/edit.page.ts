@@ -23,7 +23,7 @@ export class EditPage {
     public modal: ModalController,
     private storage: AngularFireStorage,
   ) { }
-    
+
   public dismiss() {
     this.modal.dismiss()
   }
@@ -47,7 +47,7 @@ export class EditPage {
             this.rest.notify('Không hỗ trợ định dạng file')
             continue
           }
-      
+
           let reader = new FileReader();
           reader.readAsDataURL(file);
 
@@ -112,89 +112,89 @@ export class EditPage {
   // }
 
   public save() {
-      let list = []
-      let check = 0
-      
-      this.rest.freeze('wci', 'Kiểm tra hình ảnh')
-      new Promise(resolve => {
-        if (!this.rest.work.edit.image.length) {
-          this.rest.defreeze('wci')
-          resolve('')
-        }        
-        else {
-          // console.log(this.rest.work.edit.image.length);
-          this.rest.work.edit.image.forEach((item) => {
-            // check if base64 data
-            if (item.length) {
-              check ++
-              // not empty string
-              if (item.length < 200) {
-                // not base64
-                check --
-                item = item.replace(/&/g, '[amp]')
-                item = item.replace(/%2F/g, '[/]')
-                list.push(item)
-                // console.log(check);
+    let list = []
+    let check = 0
+
+    this.rest.freeze('wci', 'Kiểm tra hình ảnh')
+    new Promise(resolve => {
+      if (!this.rest.work.edit.image.length) {
+        this.rest.defreeze('wci')
+        resolve('')
+      }
+      else {
+        // console.log(this.rest.work.edit.image.length);
+        this.rest.work.edit.image.forEach((item) => {
+          // check if base64 data
+          if (item.length) {
+            check++
+            // not empty string
+            if (item.length < 200) {
+              // not base64
+              check--
+              item = item.replace(/&/g, '[amp]')
+              item = item.replace(/%2F/g, '[/]')
+              list.push(item)
+              // console.log(check);
+              if (!check) {
+                this.rest.defreeze('wci')
+                resolve('')
+              }
+            }
+            else {
+              // upload file
+              this.uploadImage(item).then((data: string) => {
+                check--
+                if (data) {
+                  console.log(data);
+                  data = data.replace(/&/g, '[amp]')
+                  data = data.replace(/%2F/g, '[/]')
+                  list.push(data)
+                }
+                // uncomment if get formated data
                 if (!check) {
                   this.rest.defreeze('wci')
                   resolve('')
                 }
-              }
-              else {
-                // upload file
-                this.uploadImage(item).then((data: string) => {
-                  check --
-                  if (data) {
-                    console.log(data);
-                    data = data.replace(/&/g, '[amp]')
-                    data = data.replace(/%2F/g, '[/]')
-                    list.push(data)
-                  }
-                  // uncomment if get formated data
-                  if (!check) {
-                    this.rest.defreeze('wci')
-                    resolve('')
-                  }
-                })
-              }
+              })
             }
-          });
-          if (!check) {
-            this.rest.defreeze('wci')
-            resolve('')
           }
+        });
+        if (!check) {
+          this.rest.defreeze('wci')
+          resolve('')
         }
-      }).then((data) => {
-        // return 0 if overrange process (0 - 100)
-        this.rest.work.edit.process = Number(this.rest.work.edit.process)
-        if (!this.rest.work.edit.process || this.rest.work.edit.process < 0 || this.rest.work.edit.process > 100) this.rest.work.edit.process = 0
-        this.rest.freeze('ws', 'Đang cập nhật...')
-        this.rest.check({
-          action: 'work-save',
-          startdate: this.rest.totime(this.rest.work.filter['startdate']),
-          enddate: this.rest.totime(this.rest.work.filter['enddate']),
-          keyword: this.rest.work.filter['keyword'],
-          user: this.rest.work.filter['user'],
-          id: this.rest.work.edit.id,
-          content: this.rest.work.edit.content,
-          process: this.rest.work.edit.process,
-          calltime: this.rest.totime(this.rest.work.edit.calltime),
-          note: this.rest.work.edit.note,
-          page: this.rest.work.page[this.rest.work.segment],
-          image: list.join(','),
-          status: this.rest.work.reversal[this.rest.work.segment]
-        }).then(data => {
-          this.rest.work.unread = data['unread']
-          this.rest.work.data[this.rest.work.segment] = data['list']
-          this.rest.defreeze('ws')
-          this.dismiss()
-        }, (error) => {
-          this.rest.defreeze('ws')
-        })
+      }
+    }).then((data) => {
+      // return 0 if overrange process (0 - 100)
+      this.rest.work.edit.process = Number(this.rest.work.edit.process)
+      if (!this.rest.work.edit.process || this.rest.work.edit.process < 0 || this.rest.work.edit.process > 100) this.rest.work.edit.process = 0
+      this.rest.freeze('ws', 'Đang cập nhật...')
+      this.rest.check({
+        action: 'work-save',
+        startdate: this.rest.totime(this.rest.work.filter['startdate']),
+        enddate: this.rest.totime(this.rest.work.filter['enddate']),
+        keyword: this.rest.work.filter['keyword'],
+        user: this.rest.work.filter['user'],
+        id: this.rest.work.edit.id,
+        content: this.rest.work.edit.content,
+        process: this.rest.work.edit.process,
+        calltime: this.rest.totime(this.rest.work.edit.calltime),
+        note: this.rest.work.edit.note,
+        page: this.rest.work.page[this.rest.work.segment],
+        image: list.join(','),
+        status: this.rest.work.reversal[this.rest.work.segment]
+      }).then(data => {
+        this.rest.work.unread = data['unread']
+        this.rest.work.data = data['list']
+        this.rest.defreeze('ws')
+        this.dismiss()
+      }, (error) => {
+        this.rest.defreeze('ws')
       })
-    }
+    })
+  }
 
-  public uploadImage(image: string){
+  public uploadImage(image: string) {
     return new Promise((resolve) => {
       const path = 'images/' + new Date().getTime() + '.jpg';
       let fileRef = this.storage.ref(path);
@@ -202,7 +202,7 @@ export class EditPage {
       let metadata = {
         contentType: 'image/jpeg',
       };
-    
+
       fileRef.putString(base64, 'base64', metadata).then((response) => {
         fileRef.getDownloadURL().subscribe(url => {
           resolve(url)

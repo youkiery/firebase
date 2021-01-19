@@ -52,7 +52,7 @@ export class WorkPage implements OnInit {
         'status': this.rest.work.reversal[this.rest.work.segment]
       }).then(response => {
         this.rest.work.unread = response['unread']
-        this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
+        if (response.list) this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
         resolve('')
       }, (error) => { 
         resolve('')
@@ -77,11 +77,11 @@ export class WorkPage implements OnInit {
   public async detail(id: number) {
     this.rest.freeze('detail', 'Getting data')
     let current = this.rest.work.data.undone.filter((item) => {
-      return item['id'] === id
+      return item['id'] == id
     })
-    if (!current) {
+    if (!current.length) {
       current = this.rest.work.data.done.filter((item) => {
-        return item['id'] === id
+        return item['id'] == id
       })
     }
 

@@ -53,7 +53,7 @@ export class BloodPage implements OnInit {
         action: 'blood-auto',
         page: this.rest.blood.page
       }).then(response => {
-        this.rest.blood.list = this.rest.blood.list.concat(response.list)
+        if (response.list) this.rest.blood.list = this.rest.blood.list.concat(response.list)
         resolve('')
       }, () => {
         resolve('')

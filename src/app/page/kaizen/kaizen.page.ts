@@ -58,7 +58,7 @@ export class KaizenPage implements OnInit {
         if (data['list']) {
           this.rest.kaizen.unread = data['unread']
           this.rest.kaizen.time = data.time
-          this.rest.kaizen.data[this.rest.kaizen.segment] = this.rest.kaizen.data[this.rest.kaizen.segment].concat(data.list)
+          if (data.list) this.rest.kaizen.data[this.rest.kaizen.segment] = this.rest.kaizen.data[this.rest.kaizen.segment].concat(data.list)
           resolve('')
         }
       }, (e) => {
@@ -160,7 +160,7 @@ export class KaizenPage implements OnInit {
             }).then((data) => {
               this.rest.kaizen.unread = data['unread']
               this.rest.kaizen.time = data['time']
-              this.rest.kaizen.data[this.rest.kaizen.segment] = data['list']
+              this.rest.kaizen.data = data['list']
               this.rest.defreeze('kremove')
             }, (error) => {
               this.rest.defreeze('kremove')
