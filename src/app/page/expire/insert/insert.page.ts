@@ -31,6 +31,7 @@ export class InsertPage implements OnInit {
         this.rest.expire.edit.rid = 0 
         this.rest.expire.edit.expire = '' 
         this.rest.expire.edit.number = 0 
+        this.rest.expire.list = response.list
         this.rest.defreeze('ei')
       }, () => {
        this.rest.defreeze('ei')

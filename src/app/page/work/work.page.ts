@@ -22,21 +22,18 @@ export class WorkPage implements OnInit {
   ngOnInit() { }
 
   ionViewDidEnter() {
-    if (this.rest.work.init) this.filter()
-    else {
-      this.rest.work.page = {
-        'undone': 1,
-        'done': 1
-      }
-  
-      this.rest.check({
-        action: 'work-init',
-      }).then(data => {
-        this.rest.work.init = 1
-        this.rest.work.unread = data.unread
-        this.rest.work.data = data.list
-      }, (error) => { })
+    this.rest.work.page = {
+      'undone': 1,
+      'done': 1
     }
+
+    this.rest.check({
+      action: 'work-init',
+    }).then(data => {
+      this.rest.work.init = 1
+      this.rest.work.unread = data.unread
+      this.rest.work.data = data.list
+    }, (error) => { })
   }
 
   public filter() {
@@ -52,7 +49,7 @@ export class WorkPage implements OnInit {
         'status': this.rest.work.reversal[this.rest.work.segment]
       }).then(response => {
         this.rest.work.unread = response['unread']
-        if (response.list) this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
+        if (response.list.length) this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
         resolve('')
       }, (error) => { 
         resolve('')

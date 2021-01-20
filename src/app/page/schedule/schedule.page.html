@@ -24,7 +24,8 @@
     <ion-row>
       <ion-col> Thứ </ion-col>
       <ion-col> Ngày </ion-col>
-      <ion-col> Trực chiều </ion-col>
+      <ion-col> Trực sáng </ion-col>
+      <ion-col> Trực tối </ion-col>
       <ion-col> Nghỉ sáng </ion-col>
       <ion-col> Nghỉ chiều </ion-col>
     </ion-row>
@@ -34,6 +35,9 @@
       </ion-col>
       <ion-col>
         {{ data['time'] }}
+      </ion-col>
+      <ion-col (click)="reg(i, 0)" [class]="color[i][0]">
+        {{ data.data[0].join(', ') }}
       </ion-col>
       <ion-col (click)="reg(i, 1)" [class]="color[i][1]">
         {{ data.data[1].join(', ') }}

@@ -21,7 +21,7 @@ export class BloodPage implements OnInit {
       end: this.rest.blood.total - 1,
       target: ''
     },
-    this.rest.router.navigateByUrl('/blood/insert')
+      this.rest.router.navigateByUrl('/blood/insert')
   }
 
   public import() {
@@ -34,17 +34,14 @@ export class BloodPage implements OnInit {
 
   ionViewDidEnter() {
     this.rest.freeze('auto', 'Đang tải danh sách...')
-    if (this.rest.blood.init) this.filter()
-    else {
-      this.rest.check({
-        action: 'blood-init',
-        page: this.rest.blood.page
-      }).then(response => {
-        this.rest.blood.list = response.list
-        this.rest.blood.init = 1
-      }, () => {
-      })
-    }
+    this.rest.check({
+      action: 'blood-init',
+      page: this.rest.blood.page
+    }).then(response => {
+      this.rest.blood.list = response.list
+      this.rest.blood.init = 1
+    }, () => {
+    })
   }
 
   public filter() {
@@ -62,7 +59,7 @@ export class BloodPage implements OnInit {
   }
 
   public loadData(event) {
-    this.rest.blood.page ++
+    this.rest.blood.page++
     this.filter().then(() => {
       event.target.complete();
     })

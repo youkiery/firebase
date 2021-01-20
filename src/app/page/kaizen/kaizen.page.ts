@@ -21,27 +21,24 @@ export class KaizenPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter() {
-    if (this.rest.kaizen.init) this.filter()
-    else {
-      this.rest.kaizen.page = {
-        undone: 1,
-        done: 1
-      }
-  
-      this.rest.check({
-        action: 'kaizen-init',
-        starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
-        endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
-        keyword: this.rest.kaizen.filter.keyword,
-        type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
-        page: this.rest.kaizen.page[this.rest.kaizen.segment],
-        sort: this.rest.kaizen.filter.sort
-      }).then(data => {
-        this.rest.kaizen.init = 1
-        this.rest.kaizen.unread = data.unread
-        this.rest.kaizen.data = data.list
-      }, (error) => { })
+    this.rest.kaizen.page = {
+      undone: 1,
+      done: 1
     }
+
+    this.rest.check({
+      action: 'kaizen-init',
+      starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
+      endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
+      keyword: this.rest.kaizen.filter.keyword,
+      type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
+      page: this.rest.kaizen.page[this.rest.kaizen.segment],
+      sort: this.rest.kaizen.filter.sort
+    }).then(data => {
+      this.rest.kaizen.init = 1
+      this.rest.kaizen.unread = data.unread
+      this.rest.kaizen.data = data.list
+    }, (error) => { })
   }
 
   public filter() {

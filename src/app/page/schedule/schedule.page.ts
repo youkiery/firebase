@@ -79,7 +79,7 @@ export class SchedulePage implements OnInit {
         this.color[index] = ['gray', 'gray', 'gray', 'gray']
       }
       else {
-        for (let i = 1; i <= 3; i++) {        
+        for (let i = 0; i <= 3; i++) {        
           if (data.data[i].indexOf(this.rest.user.name) >= 0) {
             // registed
             this.color[index][i] = 'blue'
@@ -182,7 +182,7 @@ export class SchedulePage implements OnInit {
     }
     else {
       this.color.forEach((data, index) => {
-        for (let i = 1; i <= 3; i++) {        
+        for (let i = 0; i <= 3; i++) {        
           if (data[i] == 'yellow' || data[i] == 'purple') {
             list.push({a: index, b: i, c: this.colorAction[data[i]]})
           } 

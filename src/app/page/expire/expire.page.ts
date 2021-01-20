@@ -52,7 +52,6 @@ export class ExpirePage implements OnInit {
     }
     this.rest.router.navigateByUrl('expire/insert')
   }
-
   
   public async remove(id: number) {
     let alert = await this.alert.create({
