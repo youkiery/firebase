@@ -16,29 +16,12 @@
 </ion-header>
 
 <ion-content>
-  <table border="1">
-    <tr>
-      <th> Mặt hàng </th>
-      <th> Số lượng </th>
-      <th> Hạn sử dụng </th>
-      <th></th>
-    </tr>
-    <tbody *ngFor="let item of rest.expire.list" [class]="item.color">
-      <tr>
-        <td> {{item.name}} </td>
-        <td> {{item.number}} </td>
-        <td> {{item.time}} </td>
-        <td>
-          <!-- <ion-button color="secondary" size="small" (click)="edit(item.id)">
-            xem
-          </ion-button> -->
-          <ion-button color="danger" size="small" (click)="remove(item.id)">
-            xóa
-          </ion-button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <ion-list>
+    <ion-item *ngFor="let item of rest.drug.list; let i = index" (click)="detail(i)">
+      Mã: {{item.code}} <br>
+      Tên: {{item.name}}
+    </ion-item>
+  </ion-list>
 </ion-content>
 
 <ion-toolbar>
@@ -49,12 +32,12 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="edit(0)">
+      <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="filterM()">
+      <ion-tab-button (click)="filter()">
         <ion-icon name="filter-outline"></ion-icon>
         <ion-label> Tìm kiếm </ion-label>
       </ion-tab-button>

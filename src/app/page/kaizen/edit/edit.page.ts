@@ -29,7 +29,8 @@ export class EditPage implements OnInit {
       starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
       endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
       keyword: this.rest.kaizen.filter.keyword,
-      page: this.rest.kaizen.page[this.rest.kaizen.segment],
+      page1: this.rest.kaizen.page.undone,
+      page2: this.rest.kaizen.page.done,
       type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
       sort: this.rest.kaizen.filter.sort
     }).then(data => {

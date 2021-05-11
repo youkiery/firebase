@@ -9,9 +9,8 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  // public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = 'https://app.petcoffee.info/server/index.php?';
-  public baseurl: string = 'http://localhost/index.php?server=1';
+  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'server/index.php?';
   public user = {
     userid: '0',
     name: '',
@@ -203,6 +202,15 @@ export class RestService {
       phone: '',
       pet: '',
     },
+  }
+  public drug = {
+    list: [],
+    index: 0,
+    filter: {
+      name: '',
+      effect: '',
+      target: ''
+    }
   }
   toast: any
   load: any = {}

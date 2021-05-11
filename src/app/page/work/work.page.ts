@@ -29,6 +29,13 @@ export class WorkPage implements OnInit {
 
     this.rest.check({
       action: 'work-init',
+      time: this.rest.work['time'],
+      startdate: this.rest.totime(this.rest.work.filter.startdate),
+      endate: this.rest.totime(this.rest.work.filter['enddate']),
+      keyword: this.rest.work.filter['keyword'],
+      user: this.rest.work.filter['user'].join(','),
+      page1: this.rest.work.page.undone,
+      page2: this.rest.work.page.done,
     }).then(data => {
       this.rest.work.init = 1
       this.rest.work.unread = data.unread
@@ -40,13 +47,13 @@ export class WorkPage implements OnInit {
     return new Promise(resolve => {
       this.rest.check({
         action: 'work-auto',
-        'time': this.rest.work['time'],
-        'startdate': this.rest.totime(this.rest.work.filter.startdate),
-        'endate': this.rest.totime(this.rest.work.filter['enddate']),
-        'keyword': this.rest.work.filter['keyword'],
-        'user': this.rest.work.filter['user'].join(','),
-        'page': this.rest.work.page[this.rest.work.segment],
-        'status': this.rest.work.reversal[this.rest.work.segment]
+        time: this.rest.work['time'],
+        startdate: this.rest.totime(this.rest.work.filter.startdate),
+        endate: this.rest.totime(this.rest.work.filter['enddate']),
+        keyword: this.rest.work.filter['keyword'],
+        user: this.rest.work.filter['user'].join(','),
+        page: this.rest.work.page[this.rest.work.segment],
+        status: this.rest.work.reversal[this.rest.work.segment]
       }).then(response => {
         this.rest.work.unread = response['unread']
         if (response.list.length) this.rest.work.data[this.rest.work.segment] = this.rest.work.data[this.rest.work.segment].concat(response.list)
@@ -119,9 +126,10 @@ export class WorkPage implements OnInit {
               enddate: this.rest.totime(this.rest.work.filter['enddate']),
               keyword: this.rest.work.filter['keyword'],
               user: this.rest.work.filter['user'],
-              'page': this.rest.work.page[this.rest.work.segment],
+              page1: this.rest.work.page.undone,
+              page2: this.rest.work.page.done,
               id: id,
-              'status': this.rest.work.reversal[this.rest.work.segment]
+              status: this.rest.work.reversal[this.rest.work.segment]
             }).then((data) => {
               this.rest.work.unread = data['unread']
               this.rest.work['time'] = data['time']
@@ -158,9 +166,10 @@ export class WorkPage implements OnInit {
               enddate: this.rest.totime(this.rest.work.filter['enddate']),
               keyword: this.rest.work.filter['keyword'],
               user: this.rest.work.filter['user'],
-              'page': this.rest.work.page[this.rest.work.segment],
+              page1: this.rest.work.page.undone,
+              page2: this.rest.work.page.done,
               id: id,
-              'status': this.rest.work.reversal[this.rest.work.segment]
+              status: this.rest.work.reversal[this.rest.work.segment]
             }).then((data) => {
               this.rest.work.unread = data['unread']
               this.rest.work['time'] = data['time']

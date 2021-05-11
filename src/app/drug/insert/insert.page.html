@@ -1,0 +1,35 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="this.modal.dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="insert()" color="light" fill="clear">
+    Thêm thuốc
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Mã thuốc </ion-label>
+    <ion-input [(ngModel)]="code"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Tên thuốc </ion-label>
+    <ion-input [(ngModel)]="name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Điều trị bệnh </ion-label>
+    <ion-input [(ngModel)]="disease"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Hiệu quả với </ion-label>
+    <ion-input [(ngModel)]="effective"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Cách dùng </ion-label>
+    <ion-input [(ngModel)]="limit"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Công dụng </ion-label>
+    <ion-input [(ngModel)]="effect"></ion-input>
+  </ion-item>
+</ion-content>

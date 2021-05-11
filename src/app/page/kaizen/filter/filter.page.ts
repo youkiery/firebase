@@ -41,7 +41,8 @@ export class FilterPage implements OnInit {
       starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
       endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
       keyword: this.rest.kaizen.filter.keyword,
-      page: 1,
+      page1: this.rest.kaizen.page.undone,
+      page2: this.rest.kaizen.page.done,
       sort: this.rest.kaizen.filter.sort
     }).then(data => {
       this.rest.kaizen.data = data['list']

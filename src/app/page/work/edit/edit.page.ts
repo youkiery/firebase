@@ -180,7 +180,8 @@ export class EditPage {
         process: this.rest.work.edit.process,
         calltime: this.rest.totime(this.rest.work.edit.calltime),
         note: this.rest.work.edit.note,
-        page: this.rest.work.page[this.rest.work.segment],
+        page1: this.rest.work.page.undone,
+        page2: this.rest.work.page.done,
         image: list.join(','),
         status: this.rest.work.reversal[this.rest.work.segment]
       }).then(data => {

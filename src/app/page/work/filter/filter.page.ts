@@ -44,7 +44,8 @@ export class FilterPage {
       enddate: this.rest.totime(this.rest.work.filter.enddate),
       keyword: this.rest.work.filter['keyword'],
       user: this.rest.work.filter['user'].join(','),
-      page: this.rest.work.page[this.rest.work.segment],
+      page1: this.rest.work.page.undone,
+      page2: this.rest.work.page.done,
     }).then(data => {
       this.rest.work.init = 1
       this.rest.work.unread = data.unread

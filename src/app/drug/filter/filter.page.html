@@ -1,0 +1,23 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="this.modal.dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="filter()" color="light" fill="clear">
+    Lọc danh sách
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Tên thuốc </ion-label>
+    <ion-input [(ngModel)]="rest.drug.filter.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Công dụng </ion-label>
+    <ion-input [(ngModel)]="rest.drug.filter.effect"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Chỉ tiêu </ion-label>
+    <ion-input [(ngModel)]="rest.drug.filter.target"></ion-input>
+  </ion-item>
+</ion-content>

@@ -32,7 +32,8 @@ export class KaizenPage implements OnInit {
       endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
       keyword: this.rest.kaizen.filter.keyword,
       type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
-      page: this.rest.kaizen.page[this.rest.kaizen.segment],
+      page1: this.rest.kaizen.page.undone,
+      page2: this.rest.kaizen.page.done,
       sort: this.rest.kaizen.filter.sort
     }).then(data => {
       this.rest.kaizen.init = 1
@@ -84,7 +85,8 @@ export class KaizenPage implements OnInit {
               starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
               endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
               keyword: this.rest.kaizen.filter.keyword,
-              page: this.rest.kaizen.page[this.rest.kaizen.segment],
+              page1: this.rest.kaizen.page.undone,
+              page2: this.rest.kaizen.page.done,
               sort: this.rest.kaizen.filter.sort
             }).then(data => {
               this.rest.kaizen.data = data['list']
@@ -171,7 +173,8 @@ export class KaizenPage implements OnInit {
   }
 
   public loadData(event) {
-    this.rest.kaizen.page[this.rest.kaizen.segment] ++
+    this.rest.kaizen.page[this.rest.kaizen.segment] += 1
+    
     this.filter().then(() => {
       event.target.complete();
     })
