@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.pop()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-list>
+    <ion-item *ngFor="let item of rest.target.list; #i = index">
+      <ion-label [class]="(item.number >= 4 ? 'red' : '' )"> {{item.name}}: {{item.number >= 4 ? 4 : item.number}} </ion-label>
+      <ion-button slot="end" (click)="update(i)">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" (click)="reset(i)">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list> -->
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

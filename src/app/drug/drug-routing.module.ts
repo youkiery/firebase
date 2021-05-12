@@ -9,12 +9,12 @@ const routes: Routes = [
     component: DrugPage
   },
   {
-    path: 'filter',
-    loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
-  },
-  {
     path: 'insert',
     loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./detail/detail.module').then( m => m.DetailPageModule)
   }
 ];
 

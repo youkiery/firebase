@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FilterPageRoutingModule } from './filter-routing.module';
+import { DetailPageRoutingModule } from './detail-routing.module';
 
-import { FilterPage } from './filter.page';
+import { DetailPage } from './detail.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FilterPageRoutingModule
+    DetailPageRoutingModule
   ],
-  declarations: [FilterPage]
+  declarations: [DetailPage]
 })
-export class FilterPageModule {}
+export class DetailPageModule {}

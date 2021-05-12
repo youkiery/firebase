@@ -1,35 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { RestService } from '../services/rest.service';
-import { FilterPage } from '../drug/filter/filter.page';
+import { DetailPage } from './detail/detail.page';
 import { InsertPage } from './insert/insert.page';
-
-@Component({
-  template: `
-  <ion-toolbar color="success">
-    <ion-button color="light" fill="clear" (click)="this.modal.dismiss()">
-      <ion-icon name="chevron-back-outline"></ion-icon>
-    </ion-button>
-  </ion-toolbar>
-
-  <ion-content>
-    <div class="pad">
-      <p> Tên: {{rest.drug.list[rest.drug.index].name}} </p>
-      <p> Điều trị bệnh: {{rest.drug.list[rest.drug.index].disease}} </p>
-      <p> Hiệu quả với: {{rest.drug.list[rest.drug.index].effective}} </p>
-      <p> Liều dùng: {{rest.drug.list[rest.drug.index].limit}} </p>
-      <p> Công dụng: {{rest.drug.list[rest.drug.index].effect}} </p>
-    </div>
-  </ion-content>`
-})
-export class DrugDetail {
-  constructor(
-    public modal: ModalController,
-    public rest: RestService,
-  ) {
-
-  }
-}
 
 @Component({
   selector: 'app-drug',
@@ -47,11 +20,20 @@ export class DrugPage implements OnInit {
     
   }
 
-  async filter() {
-    const modal = await this.modalCtrl.create({
-      component: FilterPage,
+  filter() {
+    this.rest.freeze('filter', 'Đang lọc thuốc')
+    this.rest.check({
+      action: 'drug-filter',
+      name: this.rest.drug.filter.name,
+      effect: this.rest.drug.filter.effect,
+      target: this.rest.drug.filter.target
+    }).then(response => {
+      this.rest.drug.list = response.data
+      this.rest.defreeze('filter')
+    }, (response) => {
+      this.rest.notify(response.messenger)
+      this.rest.defreeze('filter')
     })
-    return await modal.present()
   }
 
   async insert() {
@@ -64,7 +46,7 @@ export class DrugPage implements OnInit {
   async detail(index: number) {
     this.rest.drug.index = index
     const modal = await this.modalCtrl.create({
-      component: DrugDetail,
+      component: DetailPage,
     })
     return await modal.present()
   }

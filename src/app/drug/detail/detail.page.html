@@ -1,0 +1,15 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="this.modal.dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <div class="pad">
+    <p> Tên: {{rest.drug.list[rest.drug.index].name}} </p>
+    <p> Điều trị bệnh: {{rest.drug.list[rest.drug.index].disease}} </p>
+    <p> Hiệu quả với: {{rest.drug.list[rest.drug.index].effective}} </p>
+    <p> Liều dùng: {{rest.drug.list[rest.drug.index].limit}} </p>
+    <p> Công dụng: {{rest.drug.list[rest.drug.index].effect}} </p>
+  </div>
+</ion-content>
