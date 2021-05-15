@@ -1,15 +1,32 @@
 <ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="this.modal.dismiss()">
+  <ion-button color="light" fill="clear" (click)="this.rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="update()" color="light" fill="clear">
+    Cập nhật
   </ion-button>
 </ion-toolbar>
 
 <ion-content>
   <div class="pad">
-    <p> Tên: {{rest.drug.list[rest.drug.index].name}} </p>
-    <p> Điều trị bệnh: {{rest.drug.list[rest.drug.index].disease}} </p>
-    <p> Hiệu quả với: {{rest.drug.list[rest.drug.index].effective}} </p>
-    <p> Liều dùng: {{rest.drug.list[rest.drug.index].limit}} </p>
-    <p> Công dụng: {{rest.drug.list[rest.drug.index].effect}} </p>
+    <div class="endline-text">
+      <b>Tên:</b>  {{rest.drug.list[rest.drug.index].name}}
+    </div>
+    <div class="endline-text">
+      <b>Liều dùng:</b> <br>
+      {{rest.drug.list[rest.drug.index].limits}}
+    </div>
+    <div class="endline-text">
+      <b> Công dụng: </b> <br>
+      {{rest.drug.list[rest.drug.index].effect}}
+    </div>
+    <div class="endline-text">
+      <b> Tác dụng phụ: </b> <br>
+      {{rest.drug.list[rest.drug.index].sideeffect}}
+    </div>
+    <div class="endline-text end">
+      <b> Cơ chế hoạt động: </b> <br>
+      {{rest.drug.list[rest.drug.index].mechanic}}
+    </div>
   </div>
 </ion-content>

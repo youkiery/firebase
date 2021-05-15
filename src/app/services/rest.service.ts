@@ -10,6 +10,7 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 export class RestService {
   public branch = 'test'
   // public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public user = {
     userid: '0',
@@ -204,16 +205,18 @@ export class RestService {
     },
   }
   public drug = {
+    role: 0,
     list: [],
     index: 0,
+    update: false,
     filter: {
       name: '',
-      effect: '',
-      target: ''
+      effect: ''
     }
   }
   public target = {
-    list: []
+    list: [],
+    init: false
   }
   toast: any
   load: any = {}
@@ -314,7 +317,8 @@ export class RestService {
       }, (error) => {
         // console.log(error);
         this.defreeze(null)
-        this.notify('Có lỗi xảy ra >.<')
+        if (error['messenger']) this.notify(error['messenger'])
+        else this.notify('Có lỗi xảy ra >.<')
         // this.error = JSON.stringify(error)
         // this.rest.notify(JSON.stringify(error))
       })

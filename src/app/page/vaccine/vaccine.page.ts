@@ -49,22 +49,41 @@ export class VaccinePage implements OnInit {
     })
   }
 
-  public changeStatus(id: number) {
-    this.rest.freeze('cs', 'Đang thay đổi trạng thái')
-    this.rest.check({
-      action: 'vaccine-check',
-      id: id,
-      status: this.rest.vaccine.status
-    }).then(response => {
-      this.rest.notify('Đã thay đổi trạng thái')
-      response.data.forEach((item: any, index: number) => {
-        response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
-      });
-      this.rest.vaccine.data = response.data
-      this.rest.defreeze('cs')
-    }, () => {
-      this.rest.defreeze('cs')
-    })
+  
+  public async changeStatus(id: number) {
+    const alert = await this.alert.create({
+      header: 'Chú ý!!!',
+      message: 'Vaccine sẽ chuyển sang tab khác',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'danger',
+          handler: () => {
+            this.rest.freeze('cs', 'Đang thay đổi trạng thái')
+            this.rest.check({
+              action: 'vaccine-check',
+              id: id,
+              status: this.rest.vaccine.status
+            }).then(response => {
+              this.rest.notify('Đã thay đổi trạng thái')
+              response.data.forEach((item: any, index: number) => {
+                response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
+              });
+              this.rest.vaccine.data = response.data
+              this.rest.defreeze('cs')
+            }, () => {
+              this.rest.defreeze('cs')
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public async note(index: number, id: number, text: string) {

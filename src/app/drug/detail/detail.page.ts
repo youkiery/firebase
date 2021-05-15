@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { InsertPage } from '../insert/insert.page';
 
 @Component({
   selector: 'app-detail',
@@ -17,4 +18,16 @@ export class DetailPage implements OnInit {
   ngOnInit() {
   }
 
+  async update() {
+    if (!this.rest.drug.role) this.rest.notify('Không có quyền truy cập')
+    else {
+      this.rest.drug.update = true
+      const modal = await this.modal.create({
+        component: InsertPage,
+      })
+      await modal.present()
+    }
+    // this.rest.navCtrl.pop()
+  }
 }
+

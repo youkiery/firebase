@@ -58,15 +58,15 @@ const routes: Routes = [
   {
     path: 'usg',
     loadChildren: () => import('./page/usg/usg.module').then( m => m.UsgPageModule)
-  },  {
+  },
+  {
     path: 'drug',
     loadChildren: () => import('./drug/drug.module').then( m => m.DrugPageModule)
   },
   {
     path: 'target',
     loadChildren: () => import('./target/target.module').then( m => m.TargetPageModule)
-  }
-
+  },
 ];
 
 @NgModule({
