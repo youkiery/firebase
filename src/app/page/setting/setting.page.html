@@ -43,6 +43,9 @@
         Đổi mật khẩu
       </ion-button>
     </div>
+    <ion-item *ngIf="rest.admin" (click)="rest.router.navigateByUrl('admin')"> 
+      Phân quyền
+    </ion-item>
     <ion-item (click)="rest.logout()"> 
       <ion-icon name="exit-outline" color="danger"></ion-icon>
       Đăng xuất

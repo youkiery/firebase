@@ -9,9 +9,10 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
+  // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
+  public admin = 0
   public user = {
     userid: '0',
     name: '',
@@ -218,6 +219,7 @@ export class RestService {
     list: [],
     init: false
   }
+  public config = {}
   toast: any
   load: any = {}
   public today: string = ''
@@ -367,6 +369,8 @@ export class RestService {
       this.today = data['today']
       this.spa.current = this.parseDate(data['today'])
       this.ride.current = this.parseDate(data['today'])
+      this.config = data['config']
+      this.admin = data['admin']
 
       this.work.filter.enddate = this.todate(data['nextweek'])
       this.schedule.filter.time = this.datetotime(this.today)
@@ -386,6 +390,10 @@ export class RestService {
     }, (e) => {
       // console.log(e);
     })
+  }
+
+  public isNumber(number: number) {
+    return isFinite(number)
   }
 
   public logout() {

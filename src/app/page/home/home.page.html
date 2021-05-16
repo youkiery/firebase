@@ -17,7 +17,7 @@
 
 <ion-content>
   <div class="row">
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.work)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/work')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/work.png"></ion-img>
@@ -28,7 +28,7 @@
         </ion-card-content>
       </ion-card>
     </div>
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.kaizen)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/kaizen')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/kaizen.png"></ion-img>
@@ -39,7 +39,7 @@
         </ion-card-content>
       </ion-card>
     </div>
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.schedule)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/schedule')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/schedule.png"></ion-img>
@@ -49,7 +49,7 @@
         </ion-card-content>
       </ion-card>
     </div>
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.vaccine)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/vaccine')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/vaccine.png"></ion-img>
@@ -62,7 +62,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.spa)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/spa')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/spa.png"></ion-img>
@@ -72,7 +72,7 @@
         </ion-card-content>
       </ion-card>
     </div>
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.expire)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/expire')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/expire.png"></ion-img>
@@ -82,7 +82,7 @@
         </ion-card-content>
       </ion-card>
     </div>
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.blood)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/blood')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/blood.png"></ion-img>
@@ -92,7 +92,7 @@
         </ion-card-content>
       </ion-card>
     </div>
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.usg)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/usg')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/usg.png"></ion-img>
@@ -105,7 +105,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.drug)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/drug')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/drug.png"></ion-img>
@@ -116,7 +116,7 @@
       </ion-card>
     </div>
 
-    <div class="col-xs-6 col-sm-3 col-md-3">
+    <div *ngIf="rest.isNumber(rest.config.target)" class="col-xs-6 col-sm-3 col-md-3">
       <ion-card (click)="rest.router.navigateByUrl('/target')" color="secondary">
         <ion-card-header>
           <ion-img src="assets/image/target.png"></ion-img>
