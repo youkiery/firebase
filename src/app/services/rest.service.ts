@@ -12,7 +12,14 @@ export class RestService {
   public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
-  public admin = 0
+  public admin = {
+    type: 0,
+    index: 0,
+    users: [],
+    select: {
+
+    }
+  }
   public user = {
     userid: '0',
     name: '',
@@ -369,8 +376,12 @@ export class RestService {
       this.today = data['today']
       this.spa.current = this.parseDate(data['today'])
       this.ride.current = this.parseDate(data['today'])
-      this.config = data['config']
-      this.admin = data['admin']
+      for (const key in data['config']) {
+        if (Object.prototype.hasOwnProperty.call(data['config'], key)) {
+          this.config[key] = Number(data['config'][key])
+        }
+      }
+      this.admin.type = Number(data['admin'])
 
       this.work.filter.enddate = this.todate(data['nextweek'])
       this.schedule.filter.time = this.datetotime(this.today)
@@ -386,6 +397,7 @@ export class RestService {
       }
       this.storage.set('userdata', this.user)
       this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
+      console.log(this.config);
       // this.router.navigateByUrl('/home')
     }, (e) => {
       // console.log(e);

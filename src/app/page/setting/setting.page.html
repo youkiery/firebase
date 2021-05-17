@@ -11,7 +11,7 @@
   
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.pop()"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -43,7 +43,7 @@
         Đổi mật khẩu
       </ion-button>
     </div>
-    <ion-item *ngIf="rest.admin" (click)="rest.router.navigateByUrl('admin')"> 
+    <ion-item *ngIf="rest.admin.type" (click)="rest.router.navigateByUrl('admin')"> 
       Phân quyền
     </ion-item>
     <ion-item (click)="rest.logout()"> 

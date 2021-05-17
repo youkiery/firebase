@@ -8,123 +8,83 @@
         <ion-icon slot="end" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-  
+
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.pop()"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="row">
-    <div *ngIf="rest.isNumber(rest.config.work)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/work')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/work.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Quản lý công việc 
-          <ion-badge color="danger" slot="end" *ngIf="rest.work.unread"> {{rest.work.unread}} </ion-badge>
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="rest.isNumber(rest.config.kaizen)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/kaizen')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/kaizen.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Chiến lược Kaizen
-          <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="rest.isNumber(rest.config.schedule)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/schedule')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/schedule.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Đăng ký lịch
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="rest.isNumber(rest.config.vaccine)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/vaccine')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/vaccine.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Quản lý vaccine
-        </ion-card-content>
-      </ion-card>
+  <div *ngIf="rest.config.work > 0" class="box" (click)="rest.router.navigateByUrl('work')">
+    <ion-img src="assets/image/work.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý công việc
+      <ion-badge color="danger" slot="end" *ngIf="rest.work.unread"> {{rest.work.unread}} </ion-badge>
     </div>
   </div>
 
-  <div class="row">
-    <div *ngIf="rest.isNumber(rest.config.spa)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/spa')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/spa.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Danh sách spa
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="rest.isNumber(rest.config.expire)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/expire')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/expire.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Quản lý hạn sử dụng
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="rest.isNumber(rest.config.blood)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/blood')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/blood.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Xét nghiệm máu
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngIf="rest.isNumber(rest.config.usg)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/usg')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/usg.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Quản lý siêu âm
-        </ion-card-content>
-      </ion-card>
+  <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('kaizen')">
+    <ion-img src="assets/image/kaizen.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Chiến lược Kaizen
+      <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
     </div>
   </div>
 
-  <div class="row">
-    <div *ngIf="rest.isNumber(rest.config.drug)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/drug')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/drug.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Tra cứu thuốc
-        </ion-card-content>
-      </ion-card>
+  <div *ngIf="rest.config.schedule > 0" class="box" (click)="rest.router.navigateByUrl('schedule')">
+    <ion-img src="assets/image/schedule.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Đăng ký lịch
     </div>
+  </div>
 
-    <div *ngIf="rest.isNumber(rest.config.target)" class="col-xs-6 col-sm-3 col-md-3">
-      <ion-card (click)="rest.router.navigateByUrl('/target')" color="secondary">
-        <ion-card-header>
-          <ion-img src="assets/image/target.png"></ion-img>
-        </ion-card-header>
-        <ion-card-content class="text-center">
-          Hóa chất xét nghiệm
-        </ion-card-content>
-      </ion-card>
+  <div *ngIf="rest.config.vaccine > 0" class="box" (click)="rest.router.navigateByUrl('vaccine')">
+    <ion-img src="assets/image/vaccine.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý vaccine
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.spa > 0" class="box" (click)="rest.router.navigateByUrl('spa')">
+    <ion-img src="assets/image/spa.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Danh sách spa
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.expire > 0" class="box" (click)="rest.router.navigateByUrl('expire')">
+    <ion-img src="assets/image/expire.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý hạn sử dụng
+    </div>
+  </div>
+  
+  <div *ngIf="rest.config.blood > 0" class="box" (click)="rest.router.navigateByUrl('blood')">
+    <ion-img src="assets/image/blood.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Xét nghiệm máu
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.usg > 0" class="box" (click)="rest.router.navigateByUrl('usg')">
+    <ion-img src="assets/image/usg.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý siêu âm
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.drug > 0" class="box" (click)="rest.router.navigateByUrl('drug')">
+    <ion-img src="assets/image/drug.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Tra cứu thuốc
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.target > 0" class="box" (click)="rest.router.navigateByUrl('target')">
+    <ion-img src="assets/image/target.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Hóa chất xét nghiệm
     </div>
   </div>
 </ion-content>

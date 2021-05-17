@@ -8,17 +8,17 @@
         <ion-icon slot="end" name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-
+    
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.navCtrl.pop()"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let user of users" (click)="detail(user.userid)">
-      username
+    <ion-item *ngFor="let user of rest.admin.users; let i = index" (click)="detail(i)">
+      {{user.username}}
     </ion-item>
   </ion-list>
 </ion-content>
