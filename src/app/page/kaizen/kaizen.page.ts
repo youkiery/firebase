@@ -102,20 +102,30 @@ export class KaizenPage implements OnInit {
   }
 
   public async filterM() {
-    let modal = await this.modal.create({
-      component: FilterPage
-    })
-    modal.present()
+    if (this.rest.config.kaizen < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      let modal = await this.modal.create({
+        component: FilterPage
+      })
+      modal.present()
+    }
   }
 
   public async edit(insert = false, index: number = 0) {
     this.rest.kaizen.insert = insert
     if (insert) {
-      this.rest.kaizen.edit = {
-        id: 0,
-        problem: '',
-        solution: '',
-        result: '',
+      if (this.rest.config.kaizen < 2) this.rest.notify('Chưa cấp quyền truy cập')
+      else {
+        this.rest.kaizen.edit = {
+          id: 0,
+          problem: '',
+          solution: '',
+          result: '',
+        }
+        let modal = await this.modal.create({
+          component: EditPage
+        })
+        modal.present()    
       }
     }
     else {
@@ -126,11 +136,11 @@ export class KaizenPage implements OnInit {
         solution: current['solution'],
         result: current['result']
       }
+      let modal = await this.modal.create({
+        component: EditPage
+      })
+      modal.present()  
     }
-    let modal = await this.modal.create({
-      component: EditPage
-    })
-    modal.present()
   }
 
   public async remove(id: number) {
