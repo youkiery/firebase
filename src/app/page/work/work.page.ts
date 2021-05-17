@@ -65,17 +65,20 @@ export class WorkPage implements OnInit {
   }
 
   public async print() {
-    const modal = await this.modal.create({
-      component: PrintPage,
-      componentProps: {
-        startdate: this.rest.totime(this.rest.work.filter['startdate']),
-        enddate: this.rest.totime(this.rest.work.filter['enddate']),
-        keyword: this.rest.work.filter['keyword'],
-        user: this.rest.work.filter['user'],
-        page: this.rest.work.page[this.rest.work.segment]
-      }
-    })
-    modal.present()
+    if (this.rest.config['work'] < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const modal = await this.modal.create({
+        component: PrintPage,
+        componentProps: {
+          startdate: this.rest.totime(this.rest.work.filter['startdate']),
+          enddate: this.rest.totime(this.rest.work.filter['enddate']),
+          keyword: this.rest.work.filter['keyword'],
+          user: this.rest.work.filter['user'],
+          page: this.rest.work.page[this.rest.work.segment]
+        }
+      })
+      modal.present()
+    }
   }
 
   public async detail(id: number) {
@@ -187,7 +190,7 @@ export class WorkPage implements OnInit {
   }
 
   public async filterM() {
-    if (!this.rest.work.role) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config['work'] < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const modal = await this.modal.create({
         component: FilterPage,
@@ -204,7 +207,7 @@ export class WorkPage implements OnInit {
   }
 
   public async insert() {
-    if (!this.rest.work.role) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config['work'] < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const modal = await this.modal.create({
         component: InsertPage,

@@ -9,16 +9,16 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class AdminDetail {
   public module = {
-    work: false,
-    kaizen: false,
-    schedule: false,
-    vaccine: false,
-    spa: false,
-    expire: false,
-    blood: false,
-    usg: false,
-    drug: false,
-    target: false,
+    work: 0,
+    kaizen: 0,
+    schedule: 0,
+    vaccine: 0,
+    spa: 0,
+    expire: 0,
+    blood: 0,
+    usg: 0,
+    drug: 0,
+    target: 0,
   }
   public list = [
     {name: 'Quản lý công việc', module: 'work'},

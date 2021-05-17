@@ -226,7 +226,18 @@ export class RestService {
     list: [],
     init: false
   }
-  public config = {}
+  public config = {
+    work: 0,
+    kaizen: 0,
+    schedule: 0,
+    vaccine: 0,
+    spa: 0,
+    expire: 0,
+    blood: 0,
+    usg: 0,
+    drug: 0,
+    target: 0
+  }
   toast: any
   load: any = {}
   public today: string = ''
