@@ -87,4 +87,11 @@
       Hóa chất xét nghiệm
     </div>
   </div>
+
+  <div *ngIf="rest.config.profile > 0" class="box" (click)="rest.router.navigateByUrl('profile')">
+    <ion-img src="assets/image/profile.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Hồ sơ xét nghiệm
+    </div>
+  </div>
 </ion-content>

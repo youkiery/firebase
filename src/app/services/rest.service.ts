@@ -236,7 +236,8 @@ export class RestService {
     blood: 0,
     usg: 0,
     drug: 0,
-    target: 0
+    target: 0,
+    profile: 0,
   }
   toast: any
   load: any = {}

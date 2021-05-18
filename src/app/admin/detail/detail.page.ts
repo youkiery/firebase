@@ -19,6 +19,7 @@ export class AdminDetail {
     usg: 0,
     drug: 0,
     target: 0,
+    profile: 0,
   }
   public list = [
     {name: 'Quản lý công việc', module: 'work'},
@@ -30,7 +31,8 @@ export class AdminDetail {
     {name: 'Quản lý xét nghiệm', module: 'blood'},
     {name: 'Quản lý siêu âm', module: 'usg'},
     {name: 'Tra cứu thuốc', module: 'drug'},
-    {name: 'Hóa chất xét nghiệm', module: 'target'}
+    {name: 'Hóa chất xét nghiệm', module: 'target'},
+    {name: 'Hồ sơ xét nghiệm', module: 'profile'},
   ]
   public level = {
     '-1': '',
@@ -62,6 +64,7 @@ export class AdminDetail {
       'usg': this.module.usg,
       'drug': this.module.drug,
       'target': this.module.target,
+      'profile': this.module.profile,
       'id': this.rest.admin.users[this.rest.admin.index].userid
     }).then(response => {
       this.rest.admin.users[this.rest.admin.index].module = response.data
