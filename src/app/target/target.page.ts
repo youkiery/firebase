@@ -30,7 +30,7 @@ export class TargetPage implements OnInit {
     }
   }
 
-  async insert() {
+  public async insert() {
     if (this.rest.config.target < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const alert = await this.alertCtrl.create({
