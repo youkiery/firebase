@@ -15,21 +15,30 @@ export class BloodPage implements OnInit {
   ngOnInit() { }
 
   public insert() {
-    this.rest.blood.edit = {
-      number: 1,
-      start: this.rest.blood.total,
-      end: this.rest.blood.total - 1,
-      target: ''
-    },
+    if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      this.rest.blood.edit = {
+        number: 1,
+        start: this.rest.blood.total,
+        end: this.rest.blood.total - 1,
+        target: ''
+      }
       this.rest.router.navigateByUrl('/blood/insert')
+    }
   }
 
   public import() {
-    this.rest.router.navigateByUrl('/blood/in')
+    if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      this.rest.router.navigateByUrl('/blood/in')
+    }
   }
 
   public statistic() {
-    this.rest.router.navigateByUrl('/blood/statistic')
+    if (this.rest.config.blood < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      this.rest.router.navigateByUrl('/blood/statistic')
+    }
   }
 
   ionViewDidEnter() {

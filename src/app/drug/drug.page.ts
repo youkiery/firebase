@@ -40,7 +40,7 @@ export class DrugPage implements OnInit {
   }
 
   public async insert() {
-    if (!this.rest.drug.role) this.rest.notify('Không có quyền truy cập')
+    if (this.rest.config.drug < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       this.rest.drug.update = false
       const modal = await this.modalCtrl.create({
@@ -56,7 +56,7 @@ export class DrugPage implements OnInit {
   }
 
   public async remove(id: number) {
-    if (!this.rest.drug.role) this.rest.notify('Không có quyền truy cập')
+    if (this.rest.config.drug < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const alert = await this.alertCtrl.create({
         header: 'Xóa thuốc',

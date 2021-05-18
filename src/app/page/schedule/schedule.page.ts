@@ -37,7 +37,7 @@ export class SchedulePage implements OnInit {
     public rest: RestService,
     private alert: AlertController
   ) {
-    if (!this.rest.schedule.role) this.temp = JSON.parse(JSON.stringify(this.color))
+    if (this.rest.config.schedule < 2) this.temp = JSON.parse(JSON.stringify(this.color))
     // console.log(this.rest.schedule.data);
   }
 
@@ -55,7 +55,7 @@ export class SchedulePage implements OnInit {
       // console.log(response['data']);
       this.rest.schedule.data = response['data']
 
-      if (!this.rest.schedule.role) this.parseData()
+      if (this.rest.config.schedule < 2) this.parseData()
       else this.temp = JSON.parse(JSON.stringify(response['data']))
       this.rest.defreeze('sget')
     }, () => {
@@ -75,7 +75,7 @@ export class SchedulePage implements OnInit {
   public parseData() {
     this.color = JSON.parse(JSON.stringify(this.temp)) // default color
     this.rest.schedule.data.forEach((data: any, index: number) => {
-      if (!(this.rest.schedule.role || (this.cmpdate(data.time)))) {
+      if (!(this.rest.config.schedule > 1 || (this.cmpdate(data.time)))) {
         this.color[index] = ['gray', 'gray', 'gray', 'gray']
       }
       else {
@@ -121,7 +121,7 @@ export class SchedulePage implements OnInit {
       time: time
     }).then(response => {
       this.rest.schedule.data = response['data']
-      if (!this.rest.schedule.role) this.parseData()
+      if (this.rest.config.schedule < 2) this.parseData()
       else this.temp = JSON.parse(JSON.stringify(response['data']))
       this.rest.schedule.filter.time = time
       this.rest.defreeze('sauto')
@@ -132,7 +132,7 @@ export class SchedulePage implements OnInit {
 
   public async register() {
     let list = []
-    if (this.rest.schedule.role) {
+    if (this.rest.config.schedule > 1) {
       this.rest.schedule.data.forEach((data) => {
         data.day.forEach((days: any, id: number) => {
           for (let i = 2; i <= 3; i++) {
@@ -227,7 +227,7 @@ export class SchedulePage implements OnInit {
 
   public cancel() {
     // console.log(this.rest.schedule.data, this.temp);
-    if (this.rest.schedule.role) {
+    if (this.rest.config.schedule > 1) {
       this.rest.schedule.data = JSON.parse(JSON.stringify(this.temp))
     }
     else {

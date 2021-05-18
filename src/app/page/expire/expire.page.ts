@@ -28,59 +28,65 @@ export class ExpirePage implements OnInit {
   }
 
   public edit(id: number) {
-    this.rest.expire.id = id
-    if (id) {
-      this.rest.freeze('ee', 'Đang lấy thông tin')
-      this.rest.check({
-        action: 'expire-get',
-        id: id
-      }).then(response => {
-        this.rest.expire.edit = response.data
-        this.rest.defreeze('ee')
-      }, () => {
-        this.rest.defreeze('ee')
-      })
-    }
+    if (this.rest.config.expire < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
-      this.rest.expire.edit = {
-        id: 0,
-        name: '',
-        rid: 0,
-        number: 0,
-        expire: this.rest.today
+      this.rest.expire.id = id
+      if (id) {
+        this.rest.freeze('ee', 'Đang lấy thông tin')
+        this.rest.check({
+          action: 'expire-get',
+          id: id
+        }).then(response => {
+          this.rest.expire.edit = response.data
+          this.rest.defreeze('ee')
+        }, () => {
+          this.rest.defreeze('ee')
+        })
       }
+      else {
+        this.rest.expire.edit = {
+          id: 0,
+          name: '',
+          rid: 0,
+          number: 0,
+          expire: this.rest.today
+        }
+      }
+      this.rest.router.navigateByUrl('expire/insert')
     }
-    this.rest.router.navigateByUrl('expire/insert')
   }
   
   public async remove(id: number) {
-    let alert = await this.alert.create({
-      message: 'Xóa hạn sử dụng',
-      buttons: [
-        {
-          text: 'Bỏ',
-          role: 'cancel',
-          cssClass: 'default'
-        }, {
-          text: 'Xác nhận',
-          cssClass: 'secondary',
-          handler: (e) => {
-            this.rest.freeze('kcheck', 'Đang xóa hạn sử dụng...')
-            this.rest.check({
-              action: 'expire-remove',
-              id: id,
-              status: this.rest.vaccine.status
-            }).then((response) => {
-              this.rest.expire.list = response.list
-              this.rest.defreeze('kcheck')
-            }, () => {
-              this.rest.defreeze('kcheck')
-            })
+    if (this.rest.config.expire < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      let alert = await this.alert.create({
+        message: 'Xóa hạn sử dụng',
+        buttons: [
+          {
+            text: 'Bỏ',
+            role: 'cancel',
+            cssClass: 'default'
+          }, {
+            text: 'Xác nhận',
+            cssClass: 'secondary',
+            handler: (e) => {
+              this.rest.freeze('kcheck', 'Đang xóa hạn sử dụng...')
+              this.rest.check({
+                action: 'expire-remove',
+                id: id,
+                status: this.rest.vaccine.status
+              }).then((response) => {
+                this.rest.expire.list = response.list
+                this.rest.defreeze('kcheck')
+              }, () => {
+                this.rest.defreeze('kcheck')
+              })
+            }
           }
-        }
-      ]
-    })
-    alert.present()
+        ]
+      })
+      alert.present()
+    }
   }
 
   public filterM() {

@@ -31,73 +31,79 @@ export class TargetPage implements OnInit {
   }
 
   async insert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Thêm chỉ tiêu',
-      inputs: [
-        {
-          type: 'text',
-          name: 'name',
-          placeholder: 'Tên chỉ tiêu'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-          cssClass: 'default'
-        }, {
-          text: 'Xác nhận',
-          cssClass: 'primary',
-          handler: (e) => {
-            this.rest.freeze('cs', 'Đang thêm chỉ tiêu...')
-            this.rest.check({
-              action: 'target-insert',
-              name: e['name'],
-            }).then(response => {
-              this.rest.notify('Đã thêm chỉ tiêu')
-              this.rest.target.list = response.list
-              this.rest.defreeze('cs')
-            }, () => {
-              this.rest.defreeze('cs')
-            })
+    if (this.rest.config.target < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const alert = await this.alertCtrl.create({
+        header: 'Thêm chỉ tiêu',
+        inputs: [
+          {
+            type: 'text',
+            name: 'name',
+            placeholder: 'Tên chỉ tiêu'
           }
-        }
-      ]
-    });
+        ],
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+            cssClass: 'default'
+          }, {
+            text: 'Xác nhận',
+            cssClass: 'primary',
+            handler: (e) => {
+              this.rest.freeze('cs', 'Đang thêm chỉ tiêu...')
+              this.rest.check({
+                action: 'target-insert',
+                name: e['name'],
+              }).then(response => {
+                this.rest.notify('Đã thêm chỉ tiêu')
+                this.rest.target.list = response.list
+                this.rest.defreeze('cs')
+              }, () => {
+                this.rest.defreeze('cs')
+              })
+            }
+          }
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    }
   }
 
   public async remove(i: number) {
-    const alert = await this.alertCtrl.create({
-      header: 'Xóa chỉ tiêu',
-      message: 'Sau khi xác nhận, chỉ tiêu sẽ bị xóa',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-          cssClass: 'default'
-        }, {
-          text: 'Xác nhận',
-          cssClass: 'danger',
-          handler: () => {
-            this.rest.freeze('cs', 'Đang xóa chỉ tiêu...')
-            this.rest.check({
-              action: 'target-remove',
-              id: this.rest.target.list[i].id,
-            }).then(response => {
-              this.rest.notify('Đã xóa chỉ tiêu')
-              this.rest.target.list = response.list
-              this.rest.defreeze('cs')
-            }, () => {
-              this.rest.defreeze('cs')
-            })
+    if (this.rest.config.target < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const alert = await this.alertCtrl.create({
+        header: 'Xóa chỉ tiêu',
+        message: 'Sau khi xác nhận, chỉ tiêu sẽ bị xóa',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+            cssClass: 'default'
+          }, {
+            text: 'Xác nhận',
+            cssClass: 'danger',
+            handler: () => {
+              this.rest.freeze('cs', 'Đang xóa chỉ tiêu...')
+              this.rest.check({
+                action: 'target-remove',
+                id: this.rest.target.list[i].id,
+              }).then(response => {
+                this.rest.notify('Đã xóa chỉ tiêu')
+                this.rest.target.list = response.list
+                this.rest.defreeze('cs')
+              }, () => {
+                this.rest.defreeze('cs')
+              })
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    }
   }
 
   public async update(index: number) {

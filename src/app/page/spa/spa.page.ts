@@ -23,7 +23,7 @@ export class SpaPage implements OnInit {
       this.rest.freeze('sa', 'Lấy danh sách spa')
       this.filter().then(() => {
         this.rest.defreeze('sa')
-        resolve()
+        resolve(true)
       })      
     }).then(() => {
       // auto refresh every 5 second
@@ -41,15 +41,18 @@ export class SpaPage implements OnInit {
   }
 
   public insert() {
-    this.rest.spa.edit = {
-      id: 0,
-      name: '',
-      phone: '',
-      note: '',
-      image: [],
-      type: JSON.parse(JSON.stringify(this.rest.spa.type))
+    if (this.rest.config.spa < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      this.rest.spa.edit = {
+        id: 0,
+        name: '',
+        phone: '',
+        note: '',
+        image: [],
+        type: JSON.parse(JSON.stringify(this.rest.spa.type))
+      }
+      this.rest.router.navigateByUrl('/spa/insert')
     }
-    this.rest.router.navigateByUrl('/spa/insert')
   }
 
   public detail(id: number) {
@@ -63,18 +66,21 @@ export class SpaPage implements OnInit {
   }
 
   public done(id: number) {
-    this.rest.freeze('done', 'Đang hoàn thành')
-    this.rest.check({
-      action: 'spa-done',
-      id: id,
-      current: this.rest.spa.current.time
-    }).then((response) => {
-      this.rest.spa.time = response.time
-      this.rest.spa.data = response.data
-      this.rest.defreeze('done')
-    }, () => {
-      this.rest.defreeze('done')
-    })
+    if (this.rest.config.spa < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      this.rest.freeze('done', 'Đang hoàn thành')
+      this.rest.check({
+        action: 'spa-done',
+        id: id,
+        current: this.rest.spa.current.time
+      }).then((response) => {
+        this.rest.spa.time = response.time
+        this.rest.spa.data = response.data
+        this.rest.defreeze('done')
+      }, () => {
+        this.rest.defreeze('done')
+      })
+    }
   }
 
   public async pickDate() {
@@ -123,10 +129,10 @@ export class SpaPage implements OnInit {
           this.rest.spa.time = response.time
         }
         this.checked = false
-        resolve()
+        resolve(true)
       }, () => {
         this.checked = false
-        resolve()
+        resolve(true)
       })
     })
   }

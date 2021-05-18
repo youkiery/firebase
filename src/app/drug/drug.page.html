@@ -34,7 +34,7 @@
       <ion-button slot="end" color="secondary" (click)="detail(i)">
         <ion-icon name="information-circle-outline"></ion-icon>
       </ion-button>
-      <ion-button slot="end" color="danger" (click)="remove(item.id)">
+      <ion-button slot="end" *ngIf="rest.config.drug > 1" color="danger" (click)="remove(item.id)">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>

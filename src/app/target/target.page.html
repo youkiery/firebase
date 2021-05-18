@@ -25,7 +25,7 @@
       <ion-button slot="end" (click)="reset(i)">
         <ion-icon name="refresh-outline"></ion-icon>
       </ion-button>
-      <ion-button slot="end" color="danger" (click)="remove(i)">
+      <ion-button slot="end" *ngIf="rest.config.target > 1" color="danger" (click)="remove(i)">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>
