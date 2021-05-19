@@ -13,10 +13,6 @@
     <ion-input [(ngModel)]="customer">  </ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="stacked"> SampleID </ion-label>
-    <ion-input [(ngModel)]="sampleid">  </ion-input>
-  </ion-item>
-  <ion-item>
     <ion-label position="stacked"> Địa chỉ </ion-label>
     <ion-input [(ngModel)]="address">  </ion-input>
   </ion-item>
@@ -26,35 +22,52 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Trọng lượng </ion-label>
-    <ion-input [(ngModel)]="weight">  </ion-input>
+    <ion-input type="number" [(ngModel)]="weight">  </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Tuổi </ion-label>
-    <ion-input [(ngModel)]="age">  </ion-input>
+    <ion-input type="number" [(ngModel)]="age">  </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Giới tính </ion-label>
-    <ion-input [(ngModel)]="gender">  </ion-input>
+    <ion-select [(ngModel)]="gender">
+      <ion-select-option value="0">
+        Đực
+      </ion-select-option>
+      <ion-select-option value="1">
+        Cái
+      </ion-select-option>
+    </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Loài động vật </ion-label>
-    <ion-input [(ngModel)]="type">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Mẫu xét nghiệm </ion-label>
-    <ion-input [(ngModel)]="sampleid2">  </ion-input>
+    <ion-select [(ngModel)]="type">
+      <ion-select-option *ngFor="let type of rest.profile.type" [value]="type.id">
+        {{type.name}}
+      </ion-select-option>
+    </ion-select>
+    <ion-button slot="end" (click)="insertSelect('type')">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số Serial </ion-label>
-    <ion-input [(ngModel)]="serial">  </ion-input>
+    <ion-input type="number" [(ngModel)]="serial">  </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Loại mẫu </ion-label>
-    <ion-input [(ngModel)]="sampletype">  </ion-input>
+    <ion-select [(ngModel)]="sampletype">
+      <ion-select-option *ngFor="let type of rest.profile.sampletype" [value]="type.id">
+        {{type.name}}
+      </ion-select-option>
+    </ion-select>
+    <ion-button slot="end" (click)="insertSelect('sampletype')">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số mẫu </ion-label>
-    <ion-input [(ngModel)]="samplenumber">  </ion-input>
+    <ion-input type="number" [(ngModel)]="samplenumber">  </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ký hiệu mẫu </ion-label>
@@ -62,65 +75,20 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Tình trạng mẫu </ion-label>
-    <ion-input [(ngModel)]="samplestatus">  </ion-input>
+    <ion-select [(ngModel)]="samplestatus">
+      <ion-select-option value="1">
+        Đạt
+      </ion-select-option>
+      <ion-select-option value="0">
+        Không đạt
+      </ion-select-option>
+    </ion-select>
   </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu SGOT </ion-label>
-    <ion-input [(ngModel)]="sgot">  </ion-input>
+  <ion-item *ngFor="let item of rest.target.list">
+    <ion-label position="stacked"> Chỉ tiêu {{item.name}} </ion-label>
+    <ion-input type="number" [(ngModel)]="target[item.id]"></ion-input>
   </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu SGPT </ion-label>
-    <ion-input [(ngModel)]="sgpt">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu URE </ion-label>
-    <ion-input [(ngModel)]="ure">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu CRE </ion-label>
-    <ion-input [(ngModel)]="cre">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu ALB </ion-label>
-    <ion-input [(ngModel)]="alb">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu PRO </ion-label>
-    <ion-input [(ngModel)]="pro">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu BILI-T </ion-label>
-    <ion-input [(ngModel)]="bilit">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu BILI-D </ion-label>
-    <ion-input [(ngModel)]="bilid">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu ALP </ion-label>
-    <ion-input [(ngModel)]="alp">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu LIPASE </ion-label>
-    <ion-input [(ngModel)]="lipase">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu AMY </ion-label>
-    <ion-input [(ngModel)]="amy">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu CK-MB </ion-label>
-    <ion-input [(ngModel)]="ckmb">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu CANXI </ion-label>
-    <ion-input [(ngModel)]="canxi">  </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Chỉ tiêu A/G </ion-label>
-    <ion-input [(ngModel)]="ag">  </ion-input>
-  </ion-item>
-  <ion-button expand="full" (click)="insert()">
-    Thêm hồ sơ
+  <ion-button expand="full" (click)="insertTarget()">
+    Thêm chỉ tiêu
   </ion-button>
 </ion-content>

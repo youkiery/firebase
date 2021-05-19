@@ -17,4 +17,7 @@ export class DetailPage implements OnInit {
   ngOnInit() {
   }
 
+  public print() {
+    console.log('print');
+  }
 }

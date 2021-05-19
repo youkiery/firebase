@@ -227,8 +227,12 @@ export class RestService {
     init: false
   }
   public profile = {
+    type: [],
+    sampletype: [],
+    target: [],
     data: {},
     list: [],
+    serial: 0,
     filter: {
       keyword: '',
       page: 1
@@ -409,6 +413,11 @@ export class RestService {
 
       this.blood.number = data.number
       this.blood.total = data.total
+
+      this.profile.serial = Number(data.serial)
+      this.profile.type = data.type
+      this.profile.sampletype = data.sampletype
+      this.target.list = data.target
 
       this.user = {
         userid: data['userid'],

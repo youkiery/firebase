@@ -2,36 +2,25 @@
   <ion-button color="light" fill="clear" (click)="modal.dismiss()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
+  <ion-button slot="end" (click)="print()" color="light" fill="clear">
+    <ion-icon name="print-outline"></ion-icon>
+  </ion-button>
 </ion-toolbar>
 
 <ion-content>
-  <p> Chủ nuôi: {{rest.profile.data.customer}} </p>
-  <p> SampleID: {{rest.profile.data.sampleid}} </p>
-  <p> Địa chỉ: {{rest.profile.data.address}} </p>
-  <p> Tên thú cưng: {{rest.profile.data.name}} </p>
-  <p> Cân nặng: {{rest.profile.data.weight}} </p>
-  <p> Tuổi: {{rest.profile.data.age}} </p>
-  <p> Giới tính: {{rest.profile.data.gender}} </p>
-  <p> Loài thú cưng: {{rest.profile.data.type}} </p>
-  <p> Mẫu xét nghiệm: {{rest.profile.data.id}} </p>
-  <p> Số serial: {{rest.profile.data.serial}} </p>
-  <p> Loại mẫu: {{rest.profile.data.sampletype}} </p>
-  <p> Kỹ hiệu mẫu: {{rest.profile.data.samplesymbol}} </p>
-  <p> Tình trạng mẫu: {{rest.profile.data.samplestatus}} </p>
-  <p> Bác sĩ: {{rest.profile.data.doctor}} </p>
-  <p> Ngày kiểm tra: {{rest.timetodate((rest.profile.data.time))}} </p>
-  <p> SGOT: {{rest.profile.data.sgot}} </p>
-  <p> SGPT: {{rest.profile.data.sgpt}} </p>
-  <p> URE: {{rest.profile.data.ure}} </p>
-  <p> CRE: {{rest.profile.data.cre}} </p>
-  <p> ALB: {{rest.profile.data.alb}} </p>
-  <p> PRO: {{rest.profile.data.pro}} </p>
-  <p> BILI-T: {{rest.profile.data.bilit}} </p>
-  <p> BILI-D: {{rest.profile.data.bilid}} </p>
-  <p> ALP: {{rest.profile.data.alp}} </p>
-  <p> LIPASE: {{rest.profile.data.lipase}} </p>
-  <p> AMY: {{rest.profile.data.amy}} </p>
-  <p> CK-MB: {{rest.profile.data.ckmb}} </p>
-  <p> CANXI: {{rest.profile.data.canxi}} </p>
-  <p> A/G: {{rest.profile.data.ag}} </p>
+  <ion-item> Chủ nuôi: {{rest.profile.data.customer}} </ion-item>
+  <ion-item> Địa chỉ: {{rest.profile.data.address}} </ion-item>
+  <ion-item> Tên thú cưng: {{rest.profile.data.name}} </ion-item>
+  <ion-item> Cân nặng: {{rest.profile.data.weight}} </ion-item>
+  <ion-item> Tuổi: {{rest.profile.data.age}} </ion-item>
+  <ion-item> Giới tính: {{rest.profile.data.gender}} </ion-item>
+  <ion-item> Loài thú cưng: {{rest.profile.data.type}} </ion-item>
+  <ion-item> SampleID: {{rest.profile.data.id}} </ion-item>
+  <ion-item> Số serial: {{rest.profile.data.serial}} </ion-item>
+  <ion-item> Loại mẫu: {{rest.profile.data.sampletype}} </ion-item>
+  <ion-item> Kỹ hiệu mẫu: {{rest.profile.data.samplesymbol}} </ion-item>
+  <ion-item> Tình trạng mẫu: {{rest.profile.data.samplestatus}} </ion-item>
+  <ion-item> Bác sĩ: {{rest.profile.data.doctor}} </ion-item>
+  <ion-item> Ngày kiểm tra: {{rest.timetodate((rest.profile.data.time))}} </ion-item>
+  <ion-item *ngFor="let item of rest.profile.data.target"> Chỉ tiêu {{item.name}}: {{item.value}} </ion-item>
 </ion-content>

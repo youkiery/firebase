@@ -22,6 +22,10 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  public print(id: number) {
+    console.log(id)
+  }
+
   public async insert() {
     let modal = await this.modal.create({
       component: InsertProfile
@@ -45,9 +49,11 @@ export class ProfilePage implements OnInit {
     modal.present()
   }
 
-  public loadData(event: any) {
+  public async loadData(event: any) {
     this.rest.profile.filter.page ++
-    this.getData()
+    this.getData().then(() => {
+      event.target.complete ()
+    })
   }
 
   public filter() {
@@ -56,17 +62,21 @@ export class ProfilePage implements OnInit {
     this.getData()
   }
 
-  public getData() {
-    this.rest.check({
-      action: 'profile-init',
-      keyword: this.rest.profile.filter.keyword,
-      page: this.rest.profile.filter.page,
-    }).then(response => {
-      this.rest.profile.list = this.rest.profile.list.concat(response.list)
-      this.rest.profile.init = true
-      this.rest.defreeze('load')
-    }, () => {
-      this.rest.defreeze('load')
-    })
+  public async getData() {
+    return new Promise(resolve => {
+      this.rest.check({
+        action: 'profile-init',
+        keyword: this.rest.profile.filter.keyword,
+        page: this.rest.profile.filter.page,
+      }).then(response => {
+        this.rest.profile.list = this.rest.profile.list.concat(response.list)
+        this.rest.profile.init = true
+        this.rest.defreeze('load')
+        resolve(true)
+      }, () => {
+        this.rest.defreeze('load')
+        resolve(true)
+      })
+    }) 
   }
 }

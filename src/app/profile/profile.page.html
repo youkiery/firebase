@@ -27,6 +27,9 @@
       <ion-button slot="end" color="secondary" (click)="detail(item.id)">
         <ion-icon name="information-circle-outline"></ion-icon>
       </ion-button>
+      <ion-button slot="end" color="secondary" (click)="print(item.id)">
+        <ion-icon name="print-outline"></ion-icon>
+      </ion-button>
       <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(item.id)">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
