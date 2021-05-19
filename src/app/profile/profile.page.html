@@ -16,5 +16,44 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-card *ngFor="let item of rest.profile.list">
+    <ion-card-content>
+      <p>
+        {{item.name}}
+      </p>
+      <p>
+        {{item.customer}}
+      </p>
+      <ion-button slot="end" color="secondary" (click)="detail(item.id)">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(item.id)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+      <p class="time"> {{rest.timetodate(item.time)}} </p>
+    </ion-card-content>
+  </ion-card>
+      
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm hồ sơ </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

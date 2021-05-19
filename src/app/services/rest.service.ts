@@ -226,6 +226,15 @@ export class RestService {
     list: [],
     init: false
   }
+  public profile = {
+    data: {},
+    list: [],
+    filter: {
+      keyword: '',
+      page: 1
+    },
+    init: false
+  }
   public config = {
     work: 0,
     kaizen: 0,
@@ -444,7 +453,7 @@ export class RestService {
   }
 
   public timetodate(time: number) {
-    let datetime = new Date(time)
+    let datetime = new Date(Number(time))
     let date = datetime.getDate().toString()
     date = (Number(date) < 10 ? '0' + date : date)
     let month = (datetime.getMonth() + 1).toString()

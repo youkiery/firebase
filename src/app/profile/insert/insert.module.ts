@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { InsertPageRoutingModule } from './insert-routing.module';
+import { InsertProfileRoutingModule } from './insert-routing.module';
 
-import { InsertPage } from './insert.page';
+import { InsertProfile } from './insert.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    InsertPageRoutingModule
+    InsertProfileRoutingModule
   ],
-  declarations: [InsertPage]
+  declarations: [InsertProfile]
 })
-export class InsertPageModule {}
+export class InsertProfileModule {}

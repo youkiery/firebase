@@ -237,7 +237,7 @@ export class WorkPage implements OnInit {
     this.rest.router.navigateByUrl('/work/notify')
   }
 
-  public loadData(event) {
+  public loadData(event: any) {
     this.rest.work.page[this.rest.work.segment] ++
     
     this.filter().then(() => {

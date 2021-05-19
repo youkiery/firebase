@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-detail',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public rest: RestService,
+    public modal: ModalController
+  ) { }
 
   ngOnInit() {
   }

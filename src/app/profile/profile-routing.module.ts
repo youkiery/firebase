@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'insert',
-    loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./insert/insert.module').then( m => m.InsertProfileModule)
   }
 ];
 
