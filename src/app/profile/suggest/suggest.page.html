@@ -1,0 +1,19 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-input [(ngModel)]="rest.profile.suggest.key" (keyup)="suggest()" #input> </ion-input>
+    <ion-button slot="end" (click)="selectThis()">
+      Chọn
+    </ion-button>
+  </ion-item>
+  <div *ngIf="rest.profile.suggest.list.length">
+    <ion-item *ngFor="let item of rest.profile.suggest.list" (click)="select(item.name, item.phone, item.address)">
+      {{item.name}} - {{item.phone}}
+    </ion-item>
+  </div>
+</ion-content>

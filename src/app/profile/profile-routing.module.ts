@@ -15,7 +15,11 @@ const routes: Routes = [
   {
     path: 'insert',
     loadChildren: () => import('./insert/insert.module').then( m => m.InsertProfileModule)
+  },  {
+    path: 'suggest',
+    loadChildren: () => import('./suggest/suggest.module').then( m => m.SuggestPageModule)
   }
+
 ];
 
 @NgModule({

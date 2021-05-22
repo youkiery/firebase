@@ -1,5 +1,5 @@
 <ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="modal.dismiss()">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
   <ion-button slot="end" (click)="insert()" color="light" fill="clear">
@@ -8,8 +8,12 @@
 </ion-toolbar>
 
 <ion-content>
+  <ion-item (click)="suggest()">
+    <ion-label position="stacked"> Số điện thoại </ion-label>
+    <ion-input [(ngModel)]="phone">  </ion-input>
+  </ion-item>
   <ion-item>
-    <ion-label position="stacked"> Tên chủ nuôi </ion-label>
+    <ion-label position="stacked"> Tên chủ </ion-label>
     <ion-input [(ngModel)]="customer">  </ion-input>
   </ion-item>
   <ion-item>
@@ -83,6 +87,10 @@
         Không đạt
       </ion-select-option>
     </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Triệu chứng </ion-label>
+    <ion-input type="number" [(ngModel)]="symptom">  </ion-input>
   </ion-item>
   <ion-item *ngFor="let item of rest.target.list">
     <ion-label position="stacked"> Chỉ tiêu {{item.name}} </ion-label>

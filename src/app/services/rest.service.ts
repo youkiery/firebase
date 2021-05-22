@@ -227,10 +227,39 @@ export class RestService {
     init: false
   }
   public profile = {
+    id: 0,
     type: [],
     sampletype: [],
     target: [],
-    data: {},
+    print: '',
+    suggest: {
+      select: {
+        customer: '',
+        address: '',
+        phone: ''
+      },
+      list: [],
+      key: ''
+    },
+    data: {
+      id: 0,
+      customer: '',
+      address: '',
+      name: '',
+      weight: '',
+      age: '',
+      gender: '0',
+      type: 0,
+      sampleid: '',
+      serial: 0,
+      sampletype: 0,
+      samplenumber: '',
+      samplesymbol: '',
+      samplestatus: 1,
+      doctor: '',
+      time: 0,
+      target: []
+    },
     list: [],
     serial: 0,
     filter: {

@@ -1,14 +1,18 @@
 <ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="modal.dismiss()">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
   <ion-button slot="end" (click)="print()" color="light" fill="clear">
     <ion-icon name="print-outline"></ion-icon>
   </ion-button>
+  <ion-button slot="end" (click)="download()" color="light" fill="clear">
+    <ion-icon name="cloud-download-outline"></ion-icon>
+  </ion-button>
 </ion-toolbar>
 
 <ion-content>
-  <ion-item> Chủ nuôi: {{rest.profile.data.customer}} </ion-item>
+  <div [innerHTML]="rest.profile.print"></div>
+  <!-- <ion-item> Chủ nuôi: {{rest.profile.data.customer}} </ion-item>
   <ion-item> Địa chỉ: {{rest.profile.data.address}} </ion-item>
   <ion-item> Tên thú cưng: {{rest.profile.data.name}} </ion-item>
   <ion-item> Cân nặng: {{rest.profile.data.weight}} </ion-item>
@@ -22,5 +26,5 @@
   <ion-item> Tình trạng mẫu: {{rest.profile.data.samplestatus}} </ion-item>
   <ion-item> Bác sĩ: {{rest.profile.data.doctor}} </ion-item>
   <ion-item> Ngày kiểm tra: {{rest.timetodate((rest.profile.data.time))}} </ion-item>
-  <ion-item *ngFor="let item of rest.profile.data.target"> Chỉ tiêu {{item.name}}: {{item.value}} </ion-item>
+  <ion-item *ngFor="let item of rest.profile.data.target"> Chỉ tiêu {{item.name}}: {{item.value}} </ion-item> -->
 </ion-content>

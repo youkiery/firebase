@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { InsertProfile } from './insert/insert.page';
 import { RestService } from '../services/rest.service';
 import { DetailPage } from './detail/detail.page';
@@ -13,7 +13,8 @@ export class ProfilePage implements OnInit {
 
   constructor(
     public rest: RestService,
-    public modal: ModalController
+    public modal: ModalController,
+    public alert: AlertController,
   ) { }
 
   ngOnInit() {
@@ -23,30 +24,71 @@ export class ProfilePage implements OnInit {
   }
 
   public print(id: number) {
-    console.log(id)
+    this.rest.check({
+      action: 'profile-print',
+      id: id
+    }).then(response => {
+      let html = response.html
+      let winPrint = window.open();
+      winPrint.focus()
+      winPrint.document.write(html);
+      // if (!prev) {
+      setTimeout(() => {
+        winPrint.print()
+        winPrint.close()
+      }, 300)
+    this.rest.defreeze('load')
+    }, () => {
+      this.rest.defreeze('load')
+    })
+  }
+
+  public async remove(id: number) {
+    const alert = await this.alert.create({
+      header: 'Chú ý!!!',
+      message: 'Hồ sơ sẽ bị xóa vĩnh viễn',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.rest.check({
+              action: 'profile-remove',
+              id: id,
+              keyword: this.rest.profile.filter.keyword,
+              page: this.rest.profile.filter.page
+            }).then(response => {
+              this.rest.profile.list = response.list
+              this.rest.defreeze('load')
+            }, () => {
+              this.rest.defreeze('load')
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public async insert() {
-    let modal = await this.modal.create({
-      component: InsertProfile
-    })
-    modal.present()
+    this.rest.router.navigateByUrl('/profile/insert')
   }
 
   public async detail(id: number) {
     this.rest.check({
-      action: 'profile-get',
+      action: 'profile-print',
       id: id
     }).then(response => {
-      this.rest.profile.data = response.data
+      this.rest.profile.id = id
+      this.rest.profile.print = response.html
+      this.rest.router.navigateByUrl('profile/detail')
       this.rest.defreeze('load')
     }, () => {
       this.rest.defreeze('load')
     })
-    let modal = await this.modal.create({
-      component: DetailPage
-    })
-    modal.present()
   }
 
   public async loadData(event: any) {

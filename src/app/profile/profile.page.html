@@ -16,23 +16,29 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm theo số điện thoại, tên khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.profile.filter.keyword"></ion-input>
+  </ion-item>
+  <ion-button color="secondary" expand="full" (click)="filter()">
+    Lọc danh sách
+  </ion-button>
+
   <ion-card *ngFor="let item of rest.profile.list">
     <ion-card-content>
-      <p>
-        {{item.name}}
-      </p>
-      <p>
-        {{item.customer}}
-      </p>
-      <ion-button slot="end" color="secondary" (click)="detail(item.id)">
-        <ion-icon name="information-circle-outline"></ion-icon>
-      </ion-button>
-      <ion-button slot="end" color="secondary" (click)="print(item.id)">
-        <ion-icon name="print-outline"></ion-icon>
-      </ion-button>
-      <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(item.id)">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
+      <b> Chủ: </b> {{item.customer}} <br>
+      <b> Số điện thoại: </b> {{item.name}}
+      <div class="button-group">
+        <ion-button slot="end" size="small" color="secondary" (click)="detail(item.id)">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" color="secondary" (click)="print(item.id)">
+          <ion-icon name="print-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" size="small" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(item.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </div>
       <p class="time"> {{rest.timetodate(item.time)}} </p>
     </ion-card-content>
   </ion-card>
