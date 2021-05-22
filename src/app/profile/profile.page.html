@@ -16,41 +16,81 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="stacked"> Tìm kiếm theo số điện thoại, tên khách hàng </ion-label>
-    <ion-input [(ngModel)]="rest.profile.filter.keyword"></ion-input>
-  </ion-item>
-  <ion-button color="secondary" expand="full" (click)="filter()">
-    Lọc danh sách
-  </ion-button>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="1"> Trả kết quả </ion-segment-button>
+      <ion-segment-button value="2"> Tra cứu chỉ tiêu </ion-segment-button>
+      <ion-segment-button value="3"> Quản lý hóa chất </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
-  <ion-card *ngFor="let item of rest.profile.list">
-    <ion-card-content>
-      <b> Chủ: </b> {{item.customer}} <br>
-      <b> Số điện thoại: </b> {{item.name}}
-      <div class="button-group">
-        <ion-button slot="end" size="small" color="secondary" (click)="detail(item.id)">
+  <div *ngIf="segment == 1">
+    <ion-item>
+      <ion-label position="stacked"> Tìm kiếm theo số điện thoại, tên khách hàng </ion-label>
+      <ion-input [(ngModel)]="rest.profile.filter.keyword"></ion-input>
+    </ion-item>
+    <ion-button color="secondary" expand="full" (click)="filter()">
+      Lọc danh sách
+    </ion-button>
+  
+    <ion-card *ngFor="let item of rest.profile.list">
+      <ion-card-content>
+        <b> Chủ: </b> {{item.customer}} <br>
+        <b> Số điện thoại: </b> {{item.name}}
+        <div class="button-group">
+          <ion-button slot="end" size="small" color="secondary" (click)="detail(item.id)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" size="small" color="secondary" (click)="print(item.id)">
+            <ion-icon name="print-outline"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" size="small" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(item.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <p class="time"> {{rest.timetodate(item.time)}} </p>
+      </ion-card-content>
+    </ion-card>
+        
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <div *ngIf="segment == 2">
+    <ion-list>
+      <ion-item *ngFor="let item of rest.profile.list; let i = index">
+        <ion-label> {{item.name}}</ion-label>
+        <ion-button slot="end" (click)="info(i)">
           <ion-icon name="information-circle-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" size="small" color="secondary" (click)="print(item.id)">
-          <ion-icon name="print-outline"></ion-icon>
-        </ion-button>
-        <ion-button slot="end" size="small" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(item.id)">
+        <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(i)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
-      </div>
-      <p class="time"> {{rest.timetodate(item.time)}} </p>
-    </ion-card-content>
-  </ion-card>
-      
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-</ion-content>
+      </ion-item>
+    </ion-list>  
+  </div>
 
+  <div *ngIf="segment == 3">
+    <ion-list>
+      <ion-item *ngFor="let item of rest.profile.list; let i = index">
+        <ion-label [class]="(item.number >= 4 ? 'red' : '' )"> {{item.name}}: {{item.number >= 4 ? 4 : item.number}} </ion-label>
+        <ion-button slot="end" (click)="update(i)">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" (click)="reset(i)">
+          <ion-icon name="refresh-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(i)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
 
 <ion-toolbar>
   <ion-tabs>
@@ -62,6 +102,10 @@
       <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm hồ sơ </ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="insertTarget()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm chỉ tiêu </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

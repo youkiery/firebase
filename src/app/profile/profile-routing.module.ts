@@ -18,6 +18,10 @@ const routes: Routes = [
   },  {
     path: 'suggest',
     loadChildren: () => import('./suggest/suggest.module').then( m => m.SuggestPageModule)
+  },
+  {
+    path: 'info',
+    loadChildren: () => import('./info/info.module').then( m => m.InfoPageModule)
   }
 
 ];

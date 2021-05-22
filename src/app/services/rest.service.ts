@@ -241,6 +241,17 @@ export class RestService {
       list: [],
       key: ''
     },
+    data2: {
+      id: '',
+      name: '',
+      intro: '',
+      unit: '',
+      flag: '',
+      up: '',
+      down: '',
+      disease: '',
+      aim: ''
+    },
     data: {
       id: 0,
       customer: '',

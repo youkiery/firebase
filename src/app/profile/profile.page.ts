@@ -10,7 +10,7 @@ import { DetailPage } from './detail/detail.page';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
+  public segment = '1'
   constructor(
     public rest: RestService,
     public modal: ModalController,
@@ -21,6 +21,142 @@ export class ProfilePage implements OnInit {
     if (!this.rest.target.init) {
       this.getData()
     }
+  }
+
+  public async insertTarget() {
+    if (this.rest.config.target < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const alert = await this.alert.create({
+        header: 'Thêm chỉ tiêu',
+        inputs: [
+          {
+            type: 'text',
+            name: 'name',
+            placeholder: 'Tên chỉ tiêu'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+            cssClass: 'default'
+          }, {
+            text: 'Xác nhận',
+            cssClass: 'primary',
+            handler: (e) => {
+              this.rest.freeze('cs', 'Đang thêm chỉ tiêu...')
+              this.rest.check({
+                action: 'target-insert',
+                name: e['name'],
+              }).then(response => {
+                this.rest.notify('Đã thêm chỉ tiêu')
+                this.rest.target.list = response.list
+                this.rest.defreeze('cs')
+              }, () => {
+                this.rest.defreeze('cs')
+              })
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
+  }
+
+  public async removeTarget(i: number) {
+    if (this.rest.config.target < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const alert = await this.alert.create({
+        header: 'Xóa chỉ tiêu',
+        message: 'Sau khi xác nhận, chỉ tiêu sẽ bị xóa',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+            cssClass: 'default'
+          }, {
+            text: 'Xác nhận',
+            cssClass: 'danger',
+            handler: () => {
+              this.rest.freeze('cs', 'Đang xóa chỉ tiêu...')
+              this.rest.check({
+                action: 'target-remove',
+                id: this.rest.target.list[i].id,
+              }).then(response => {
+                this.rest.notify('Đã xóa chỉ tiêu')
+                this.rest.target.list = response.list
+                this.rest.defreeze('cs')
+              }, () => {
+                this.rest.defreeze('cs')
+              })
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
+  }
+
+  public async update(index: number) {
+    const alert = await this.alert.create({
+      header: 'Tăng số chỉ tiêu',
+      message: 'Sau khi xác nhận, chỉ tiêu sẽ tăng thêm',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.rest.freeze('load', 'Cập nhật...')
+            this.rest.check({
+              action: 'target-update',
+              id: this.rest.target.list[index].id
+            }).then(response => {
+              this.rest.target.list[index].number = Number(this.rest.target.list[index].number) + 1
+              this.rest.defreeze('load')
+            }, () => {
+              this.rest.defreeze('load')
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async reset(index: number) {
+    const alert = await this.alert.create({
+      header: 'Cài lại chỉ tiêu',
+      message: 'Sau khi xác nhận, chỉ tiêu bằng 0',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.rest.freeze('load', 'Cài lại...')
+            this.rest.check({
+              action: 'target-reset',
+              id: this.rest.target.list[index].id
+            }).then(response => {
+              this.rest.target.list[index].number = 0
+              this.rest.defreeze('load')
+            }, () => {
+              this.rest.defreeze('load')
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   public print(id: number) {
@@ -71,6 +207,11 @@ export class ProfilePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  public info(index: number) {
+    this.rest.profile.data2 = this.rest.target.list[index]
+    this.rest.router.navigateByUrl('/profile/info')
   }
 
   public async insert() {

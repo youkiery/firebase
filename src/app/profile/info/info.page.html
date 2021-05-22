@@ -1,0 +1,51 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="rest.config.profile > 1" slot="end" (click)="update()" color="light" fill="clear">
+    Cập nhật
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Chỉ tiêu </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.name">  </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Mô tả </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.intro">  </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Đơn vị </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.unit">  </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Trường giá trị </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.flag">  </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Trường hợp tăng </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.up">  </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Trường hợp giảm </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.down">  </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Cá bệnh liên quan </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.disease">  </ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked"> Hướng điều trị </ion-label>
+    <ion-textarea autoGrow="true" [(ngModel)]="rest.profile.data2.aim">  </ion-textarea>
+  </ion-item>
+</ion-content>
+name
+intro
+unit
+flag
+up
+down
+disease
+aim
