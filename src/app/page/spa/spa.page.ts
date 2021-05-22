@@ -103,7 +103,7 @@ export class SpaPage implements OnInit {
           text: 'Chọn ngày',
           cssClass: 'secondary',
           handler: (e) => {
-            console.log(e);
+            // console.log(e);
             this.rest.spa.current = this.rest.parseDate(e.date)
             this.rest.freeze('sa', 'Lấy danh sách spa')
             this.filter().then(() => {

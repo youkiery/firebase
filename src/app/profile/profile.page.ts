@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { InsertProfile } from './insert/insert.page';
 import { RestService } from '../services/rest.service';
-import { DetailPage } from './detail/detail.page';
 
 @Component({
   selector: 'app-profile',
@@ -18,54 +16,45 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.rest.target.init) {
+    if (!this.rest.profile.init) {
       this.getData()
+      this.rest.profile.filter.page ++
+    }
+  }
+
+  public info(index: number) {
+    this.rest.profile.data2 = this.rest.profile.target[index]
+    this.rest.router.navigateByUrl('/profile/info')
+  }
+
+  public updateTarget(index: number) {
+    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      this.rest.profile.data2 = this.rest.profile.target[index]
+      this.rest.router.navigateByUrl('/profile/update')
     }
   }
 
   public async insertTarget() {
-    if (this.rest.config.target < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
-      const alert = await this.alert.create({
-        header: 'Thêm chỉ tiêu',
-        inputs: [
-          {
-            type: 'text',
-            name: 'name',
-            placeholder: 'Tên chỉ tiêu'
-          }
-        ],
-        buttons: [
-          {
-            text: 'Trở về',
-            role: 'cancel',
-            cssClass: 'default'
-          }, {
-            text: 'Xác nhận',
-            cssClass: 'primary',
-            handler: (e) => {
-              this.rest.freeze('cs', 'Đang thêm chỉ tiêu...')
-              this.rest.check({
-                action: 'target-insert',
-                name: e['name'],
-              }).then(response => {
-                this.rest.notify('Đã thêm chỉ tiêu')
-                this.rest.target.list = response.list
-                this.rest.defreeze('cs')
-              }, () => {
-                this.rest.defreeze('cs')
-              })
-            }
-          }
-        ]
-      });
-
-      await alert.present();
+      this.rest.profile.data2 = {
+        id: 0,
+        name: '',
+        intro: '',
+        unit: '',
+        flag: '0 - 1',
+        up: '',
+        down: '',
+        disease: '',
+        aim: ''
+      }
+      this.rest.router.navigateByUrl('profile/update')
     }
   }
 
   public async removeTarget(i: number) {
-    if (this.rest.config.target < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       const alert = await this.alert.create({
         header: 'Xóa chỉ tiêu',
@@ -82,10 +71,11 @@ export class ProfilePage implements OnInit {
               this.rest.freeze('cs', 'Đang xóa chỉ tiêu...')
               this.rest.check({
                 action: 'target-remove',
-                id: this.rest.target.list[i].id,
+                id: this.rest.profile.target[i].id,
+                key: this.rest.profile.filter.key
               }).then(response => {
                 this.rest.notify('Đã xóa chỉ tiêu')
-                this.rest.target.list = response.list
+                this.rest.profile.target = response.list
                 this.rest.defreeze('cs')
               }, () => {
                 this.rest.defreeze('cs')
@@ -114,9 +104,9 @@ export class ProfilePage implements OnInit {
             this.rest.freeze('load', 'Cập nhật...')
             this.rest.check({
               action: 'target-update',
-              id: this.rest.target.list[index].id
+              id: this.rest.profile.target[index].id
             }).then(response => {
-              this.rest.target.list[index].number = Number(this.rest.target.list[index].number) + 1
+              this.rest.profile.target[index].number = Number(this.rest.profile.target[index].number) + 1
               this.rest.defreeze('load')
             }, () => {
               this.rest.defreeze('load')
@@ -144,9 +134,10 @@ export class ProfilePage implements OnInit {
             this.rest.freeze('load', 'Cài lại...')
             this.rest.check({
               action: 'target-reset',
-              id: this.rest.target.list[index].id
+              id: this.rest.profile.target[index].id,
+              key: this.rest.profile.filter.key
             }).then(response => {
-              this.rest.target.list[index].number = 0
+              this.rest.profile.target[index].number = 0
               this.rest.defreeze('load')
             }, () => {
               this.rest.defreeze('load')
@@ -179,42 +170,50 @@ export class ProfilePage implements OnInit {
     })
   }
 
-  public async remove(id: number) {
-    const alert = await this.alert.create({
-      header: 'Chú ý!!!',
-      message: 'Hồ sơ sẽ bị xóa vĩnh viễn',
-      buttons: [
-        {
-          text: 'Trở về',
-          role: 'cancel',
-        }, {
-          text: 'Xác nhận',
-          handler: () => {
-            this.rest.check({
-              action: 'profile-remove',
-              id: id,
-              keyword: this.rest.profile.filter.keyword,
-              page: this.rest.profile.filter.page
-            }).then(response => {
-              this.rest.profile.list = response.list
-              this.rest.defreeze('load')
-            }, () => {
-              this.rest.defreeze('load')
-            })
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+  public search() {
+    this.rest.check({
+      action: 'target-search',
+      key: this.rest.profile.filter.key
+    }).then((response) => {
+      this.rest.profile.target = response.list
+    }, () => { })
   }
 
-  public info(index: number) {
-    this.rest.profile.data2 = this.rest.target.list[index]
-    this.rest.router.navigateByUrl('/profile/info')
+  public async remove(id: number) {
+    if (this.rest.config.profile < 2) this.rest.notify('Chưa cấp quyền truy cập')
+    else {
+      const alert = await this.alert.create({
+        header: 'Chú ý!!!',
+        message: 'Hồ sơ sẽ bị xóa vĩnh viễn',
+        buttons: [
+          {
+            text: 'Trở về',
+            role: 'cancel',
+          }, {
+            text: 'Xác nhận',
+            handler: () => {
+              this.rest.check({
+                action: 'profile-remove',
+                id: id,
+                keyword: this.rest.profile.filter.keyword,
+                page: this.rest.profile.filter.page
+              }).then(response => {
+                this.rest.profile.list = response.list
+                this.rest.defreeze('load')
+              }, () => {
+                this.rest.defreeze('load')
+              })
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
   }
 
   public async insert() {
+    this.rest.profile.suggest.select.phone = ''
     this.rest.router.navigateByUrl('/profile/insert')
   }
 
@@ -253,7 +252,7 @@ export class ProfilePage implements OnInit {
         page: this.rest.profile.filter.page,
       }).then(response => {
         this.rest.profile.list = this.rest.profile.list.concat(response.list)
-        this.rest.profile.init = true
+        this.rest.profile.init = 1
         this.rest.defreeze('load')
         resolve(true)
       }, () => {

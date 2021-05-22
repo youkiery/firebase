@@ -19,12 +19,12 @@
   <ion-toolbar>
     <ion-segment [(ngModel)]="segment">
       <ion-segment-button value="1"> Trả kết quả </ion-segment-button>
-      <ion-segment-button value="2"> Tra cứu chỉ tiêu </ion-segment-button>
-      <ion-segment-button value="3"> Quản lý hóa chất </ion-segment-button>
+      <ion-segment-button value="2"> Chỉ tiêu </ion-segment-button>
+      <ion-segment-button value="3"> Hóa chất </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 
-  <div *ngIf="segment == 1">
+  <div *ngIf="segment == '1'">
     <ion-item>
       <ion-label position="stacked"> Tìm kiếm theo số điện thoại, tên khách hàng </ion-label>
       <ion-input [(ngModel)]="rest.profile.filter.keyword"></ion-input>
@@ -36,7 +36,7 @@
     <ion-card *ngFor="let item of rest.profile.list">
       <ion-card-content>
         <b> Chủ: </b> {{item.customer}} <br>
-        <b> Số điện thoại: </b> {{item.name}}
+        <b> Số điện thoại: </b> {{item.phone}}
         <div class="button-group">
           <ion-button slot="end" size="small" color="secondary" (click)="detail(item.id)">
             <ion-icon name="information-circle-outline"></ion-icon>
@@ -60,23 +60,42 @@
     </ion-infinite-scroll>
   </div>
 
-  <div *ngIf="segment == 2">
+  <div *ngIf="segment == '2'">
+    <ion-item>
+      <ion-label position="stacked"> Tìm kiếm tên chỉ tiêu </ion-label>
+      <ion-input [(ngModel)]="rest.profile.filter.key"></ion-input>
+    </ion-item>
+    <ion-button color="secondary" expand="full" (click)="search()">
+      Tìm kiếm
+    </ion-button>
+
     <ion-list>
-      <ion-item *ngFor="let item of rest.profile.list; let i = index">
+      <ion-item *ngFor="let item of rest.profile.target; let i = index">
         <ion-label> {{item.name}}</ion-label>
         <ion-button slot="end" (click)="info(i)">
-          <ion-icon name="information-circle-outline"></ion-icon>
+          <ion-icon name="eye-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(i)">
+        <ion-button slot="end" (click)="updateTarget(i)">
+          <ion-icon name="refresh-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="removeTarget(i)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-list>  
   </div>
 
-  <div *ngIf="segment == 3">
+  <div *ngIf="segment == '3'">
+    <ion-item>
+      <ion-label position="stacked"> Tìm kiếm tên chỉ tiêu </ion-label>
+      <ion-input [(ngModel)]="rest.profile.filter.key"></ion-input>
+    </ion-item>
+    <ion-button color="secondary" expand="full" (click)="search()">
+      Tìm kiếm
+    </ion-button>
+
     <ion-list>
-      <ion-item *ngFor="let item of rest.profile.list; let i = index">
+      <ion-item *ngFor="let item of rest.profile.target; let i = index">
         <ion-label [class]="(item.number >= 4 ? 'red' : '' )"> {{item.name}}: {{item.number >= 4 ? 4 : item.number}} </ion-label>
         <ion-button slot="end" (click)="update(i)">
           <ion-icon name="add-outline"></ion-icon>
@@ -84,7 +103,7 @@
         <ion-button slot="end" (click)="reset(i)">
           <ion-icon name="refresh-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="remove(i)">
+        <ion-button slot="end" *ngIf="rest.config.profile > 1" color="danger" (click)="removeTarget(i)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-button>
       </ion-item>

@@ -9,9 +9,9 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
+  public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
     type: 0,
     index: 0,
@@ -222,15 +222,12 @@ export class RestService {
       effect: ''
     }
   }
-  public target = {
-    list: [],
-    init: false
-  }
   public profile = {
     id: 0,
     type: [],
     sampletype: [],
     target: [],
+    init: 0,
     print: '',
     suggest: {
       select: {
@@ -242,7 +239,7 @@ export class RestService {
       key: ''
     },
     data2: {
-      id: '',
+      id: 0,
       name: '',
       intro: '',
       unit: '',
@@ -274,10 +271,10 @@ export class RestService {
     list: [],
     serial: 0,
     filter: {
+      key: '',
       keyword: '',
       page: 1
     },
-    init: false
   }
   public config = {
     work: 0,
@@ -457,7 +454,7 @@ export class RestService {
       this.profile.serial = Number(data.serial)
       this.profile.type = data.type
       this.profile.sampletype = data.sampletype
-      this.target.list = data.target
+      this.profile.target = data.target
 
       this.user = {
         userid: data['userid'],
@@ -467,7 +464,7 @@ export class RestService {
       }
       this.storage.set('userdata', this.user)
       this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
-      console.log(this.config);
+      // console.log(this.config);
       // this.router.navigateByUrl('/home')
     }, (e) => {
       // console.log(e);

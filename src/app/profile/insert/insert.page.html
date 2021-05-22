@@ -92,11 +92,8 @@
     <ion-label position="stacked"> Triệu chứng </ion-label>
     <ion-input type="number" [(ngModel)]="symptom">  </ion-input>
   </ion-item>
-  <ion-item *ngFor="let item of rest.target.list">
+  <ion-item *ngFor="let item of rest.profile.target">
     <ion-label position="stacked"> Chỉ tiêu {{item.name}} </ion-label>
     <ion-input type="number" [(ngModel)]="target[item.id]"></ion-input>
   </ion-item>
-  <ion-button expand="full" (click)="insertTarget()">
-    Thêm chỉ tiêu
-  </ion-button>
 </ion-content>

@@ -32,7 +32,6 @@ export class InsertProfile implements OnInit {
 
   ngOnInit() {
     console.log(this.rest);
-    
     this.serial = this.rest.profile.serial
   }
 
@@ -45,16 +44,15 @@ export class InsertProfile implements OnInit {
   }
 
   public log() {
-    console.log(this.target)
+    // console.log(this.target)
   }
 
   public insert() {
     let msg = ''
+    
     if (!this.customer.length) msg = 'Chưa điền tên chủ'
     else if (!this.phone.length) msg = 'Chưa điền số điện thoại'
     else if (!this.name.length) msg = 'Chưa điền tên vật nuôi'
-    else if (!this.type) msg = 'Chưa chọn loài'
-    else if (!this.sampletype) msg = 'Chưa chọn loại mẫu'
     else if (!this.samplesymbol) msg = 'Chưa nhập ký hiệu mẫu'
     if (msg.length) {
       this.rest.notify(msg)
@@ -83,7 +81,7 @@ export class InsertProfile implements OnInit {
       doctor: this.doctor,
       symptom: this.symptom
     }
-    this.rest.target.list.forEach(target => {
+    this.rest.profile.target.forEach(target => {
       if (!this.target[target.id]) this.target[target.id] = 0
       data[target.id] = this.target[target.id]
     });
@@ -91,7 +89,7 @@ export class InsertProfile implements OnInit {
     this.rest.check(data).then(response => {
       let data = [response.data]
       this.rest.profile.list = data.concat(this.rest.profile.list)
-      this.rest.profile.serial = response.serail
+      this.rest.profile.serial = response.serial
       this.rest.navCtrl.pop()
       this.rest.defreeze('load')
     }, () => {
@@ -168,8 +166,7 @@ export class InsertProfile implements OnInit {
                 name: e['name'],
               }).then(response => {
                 this.rest.notify('Đã thêm chỉ tiêu')
-                this.rest.target.list = response.list
-                this.rest.target.list = response.list
+                this.rest.profile.target = response.list
                 this.rest.defreeze('cs')
               }, () => {
                 this.rest.defreeze('cs')
