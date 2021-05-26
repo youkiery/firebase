@@ -11,20 +11,117 @@
 </ion-toolbar>
 
 <ion-content>
-  <div [innerHTML]="rest.profile.print"></div>
-  <!-- <ion-item> Chủ nuôi: {{rest.profile.data.customer}} </ion-item>
-  <ion-item> Địa chỉ: {{rest.profile.data.address}} </ion-item>
-  <ion-item> Tên thú cưng: {{rest.profile.data.name}} </ion-item>
-  <ion-item> Cân nặng: {{rest.profile.data.weight}} </ion-item>
-  <ion-item> Tuổi: {{rest.profile.data.age}} </ion-item>
-  <ion-item> Giới tính: {{rest.profile.data.gender}} </ion-item>
-  <ion-item> Loài thú cưng: {{rest.profile.data.type}} </ion-item>
-  <ion-item> SampleID: {{rest.profile.data.id}} </ion-item>
-  <ion-item> Số serial: {{rest.profile.data.serial}} </ion-item>
-  <ion-item> Loại mẫu: {{rest.profile.data.sampletype}} </ion-item>
-  <ion-item> Kỹ hiệu mẫu: {{rest.profile.data.samplesymbol}} </ion-item>
-  <ion-item> Tình trạng mẫu: {{rest.profile.data.samplestatus}} </ion-item>
-  <ion-item> Bác sĩ: {{rest.profile.data.doctor}} </ion-item>
-  <ion-item> Ngày kiểm tra: {{rest.timetodate((rest.profile.data.time))}} </ion-item>
-  <ion-item *ngFor="let item of rest.profile.data.target"> Chỉ tiêu {{item.name}}: {{item.value}} </ion-item> -->
+  <div id="printable">
+    <div [innerHTML]="html" ></div>
+  </div>
+  <!-- <div class="underline">
+    <div class="col-9">
+      Chủ nuôi: {{rest.profile.data.customer}}
+    </div>
+    <div class="col-3">
+      Sample ID: {{rest.profile.data.id}}
+    </div>
+  </div>
+
+  <div class="underline">
+    Địa chỉ: <b> {{rest.profile.data.address}} </b>
+  </div>
+
+  <div class="underline">
+    <div class="col-8">
+      Tên thú cưng: {{rest.profile.data.name}}
+    </div>
+    <div class="col-3">
+      Cân nặng: {{rest.profile.data.weight}}
+    </div>
+  </div>
+
+  <div class="underline">
+    <div class="col-8">
+      Tuổi: {{rest.profile.data.age}}
+    </div>
+    <div class="col-4">
+      Giới tính: {{rest.profile.data.gender}}
+    </div>
+  </div>
+
+  <div class="underline">
+    <div class="col-8">
+      Loài thú cưng: {{rest.profile.data.type}}
+    </div>
+    <div class="col-4">
+      SampleID: {{rest.profile.data.id}}
+    </div>
+  </div>
+
+  <div class="underline">
+    <div class="col-8">
+      Số serial: {{rest.profile.data.serial}}
+    </div>
+    <div class="col-4">
+      Loại mẫu: {{rest.profile.data.sampletype}}
+    </div>
+  </div>
+
+  <div class="underline">
+    Số mẫu: <b> {{rest.profile.data.samplenumber}} </b>
+  </div>
+
+  <div class="underline">
+    <div class="col-8">
+      Kỹ hiệu mẫu: {{rest.profile.data.samplesymbol}}
+    </div>
+    <div class="col-4">
+      Tình trạng mẫu: {{rest.profile.data.samplestatus}}
+    </div>
+  </div>
+
+  <div class="underline">
+    Bác sĩ: {{rest.profile.data.doctor}}
+  </div>
+
+  <div class="underline">
+    Ngày kiểm tra: {{rest.timetodate((rest.profile.data.time))}}
+  </div>
+
+  <div style="margin-top: 10px;"></div>
+
+  <div class="underline">
+    Kết quả
+  </div>
+  
+  <div class="underline">
+    <div class="col-3">
+      Chỉ tiêu
+    </div>
+    <div class="col-2">
+      Kết quả
+    </div>
+    <div class="col-2">
+      Đơn vị
+    </div>
+    <div class="col-2">
+      Flag
+    </div>
+    <div class="col-3">
+      Ref Range
+    </div>
+  </div>
+  <div class="underline" *ngFor="let item of rest.profile.data.target">
+    <div class="col-3">
+      {{item.name}}
+    </div>
+    <div class="col-2">
+      {{item.value}}
+    </div>
+    <div class="col-2">
+      {{item.unit}}
+    </div>
+    <div class="col-2">
+      {{item.tick}}
+    </div>
+    <div class="col-3">
+      {{item.flag}}
+    </div>
+  </div> -->
 </ion-content>

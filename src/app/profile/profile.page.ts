@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, Platform } from '@ionic/angular';
 import { RestService } from '../services/rest.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class ProfilePage implements OnInit {
     public rest: RestService,
     public modal: ModalController,
     public alert: AlertController,
+    public platform: Platform
   ) { }
 
   ngOnInit() {
@@ -151,23 +152,29 @@ export class ProfilePage implements OnInit {
   }
 
   public print(id: number) {
-    this.rest.check({
-      action: 'profile-print',
-      id: id
-    }).then(response => {
-      let html = response.html
-      let winPrint = window.open();
-      winPrint.focus()
-      winPrint.document.write(html);
-      // if (!prev) {
-      setTimeout(() => {
-        winPrint.print()
-        winPrint.close()
-      }, 300)
-    this.rest.defreeze('load')
-    }, () => {
+    if (this.platform.platforms().indexOf('mobile') >= 0) {
+      // mobile
+      this.rest.notify('Không tìm thấy máy in')
+    }
+    else {
+      this.rest.check({
+        action: 'profile-print',
+        id: id
+      }).then(response => {
+        let html = response.html
+        let winPrint = window.open();
+        winPrint.focus()
+        winPrint.document.write(html);
+        // if (!prev) {
+        setTimeout(() => {
+          winPrint.print()
+          winPrint.close()
+        }, 300)
       this.rest.defreeze('load')
-    })
+      }, () => {
+        this.rest.defreeze('load')
+      })
+    }
   }
 
   public search() {
@@ -219,10 +226,12 @@ export class ProfilePage implements OnInit {
 
   public async detail(id: number) {
     this.rest.check({
+      // action: 'profile-get',
       action: 'profile-print',
       id: id
     }).then(response => {
       this.rest.profile.id = id
+      // this.rest.profile.data = response.data
       this.rest.profile.print = response.html
       this.rest.router.navigateByUrl('profile/detail')
       this.rest.defreeze('load')

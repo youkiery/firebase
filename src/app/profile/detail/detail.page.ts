@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+// import { Printer } from '@ionic-native/printer';
+// import { Printer, PrintOptions } from '@ionic-native/printer/ngx';
 
 @Component({
   selector: 'app-detail',
@@ -8,24 +11,37 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./detail.page.scss'],
 })
 export class DetailPage implements OnInit {
-
+  html: SafeHtml = ''
   constructor(
     public rest: RestService,
-    public modal: ModalController
+    public modal: ModalController,
+    public dom: DomSanitizer,
+    public platform: Platform,
+    // public printer: Printer
   ) { }
 
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    this.html = this.dom.bypassSecurityTrustHtml(this.rest.profile.print)
+  }
+
   public print() {
-    let winPrint = window.open();
-    winPrint.focus()
-    winPrint.document.write(this.rest.profile.print);
-    // if (!prev) {
-    setTimeout(() => {
-      winPrint.print()
-      winPrint.close()
-    }, 300)
+    if (this.platform.platforms().indexOf('mobile') >= 0) {
+      // mobile
+      this.rest.notify('Không tìm thấy máy in')
+    }
+    else {
+      // browser
+      let winPrint = window.open();
+      winPrint.focus()
+      winPrint.document.write(this.rest.profile.print);
+      setTimeout(() => {
+        winPrint.print()
+        winPrint.close()
+      }, 300)
+    }
   }
 
   public download() {
