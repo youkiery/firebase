@@ -35,11 +35,11 @@ export class InsertPage {
     this.time[name] = datetime.datestring
   }
 
-  public insert() {
+  public async insert() {
     if (!this.content.length) this.rest.notify('Nội dung công việc trống')
     else {
       // console.log(this.cometime, this.calltime);
-      this.rest.freeze('wi', 'Đang thêm công việc')
+      await this.rest.freeze('Đang thêm công việc')
       this.rest.check({
         action: 'work-insert',
         startdate: this.rest.totime(this.rest.work.filter['startdate']),
@@ -56,10 +56,10 @@ export class InsertPage {
       }).then(data => {
         this.rest.work.unread = data['unread']
         this.rest.work.data = data['list']
-        this.rest.defreeze('wi')
+        this.rest.defreeze()
         this.dismiss()
       }, (error) => {
-        this.rest.defreeze('wi')
+        this.rest.defreeze()
       })
     }
   }

@@ -25,10 +25,10 @@ export class FilterPage implements OnInit {
 
   ionViewDidEnter() { }
 
-  public filter() {
+  public async filter() {
     if (this.rest.vaccine.filterKey.length < 4) this.rest.notify('Nhập từ khóa ít nhất 4 ký tự')
     else {
-      this.rest.freeze('vf', 'Đang tìm kiếm khách hàng')
+      await this.rest.freeze('Đang tìm kiếm khách hàng')
       this.rest.check({
         action: 'vaccine-filter',
         keyword: this.rest.vaccine.filterKey
@@ -37,9 +37,9 @@ export class FilterPage implements OnInit {
           response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
         });
         this.rest.vaccine.filter = response.data
-        this.rest.defreeze('vf')
+        this.rest.defreeze()
       }, () => {
-        this.rest.defreeze('vf')
+        this.rest.defreeze()
       })
     }
   }

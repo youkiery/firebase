@@ -13,6 +13,7 @@ import { PrintPage } from './print/print.page';
   styleUrls: ['./work.page.scss'],
 })
 export class WorkPage implements OnInit {
+  public id = 0
   constructor(
     public rest: RestService,
     public modal: ModalController,
@@ -82,7 +83,7 @@ export class WorkPage implements OnInit {
   }
 
   public async detail(id: number) {
-    this.rest.freeze('detail', 'Getting data')
+    await this.rest.freeze('Getting data')
     let current = this.rest.work.data.undone.filter((item) => {
       return item['id'] == id
     })
@@ -105,7 +106,7 @@ export class WorkPage implements OnInit {
       component: DetailPage
     })
     await modal.present().then(() => {
-      this.rest.defreeze('detail')
+      this.rest.defreeze()
     })
   }
 
@@ -122,31 +123,36 @@ export class WorkPage implements OnInit {
           text: 'Xác nhận',
           cssClass: 'danger',
           handler: () => {
-            this.rest.freeze('wdone', 'Đang hoàn thành')
-            this.rest.check({
-              action: 'work-done',
-              startdate: this.rest.totime(this.rest.work.filter['startdate']),
-              enddate: this.rest.totime(this.rest.work.filter['enddate']),
-              keyword: this.rest.work.filter['keyword'],
-              user: this.rest.work.filter['user'],
-              page1: this.rest.work.page.undone,
-              page2: this.rest.work.page.done,
-              id: id,
-              status: this.rest.work.reversal[this.rest.work.segment]
-            }).then((data) => {
-              this.rest.work.unread = data['unread']
-              this.rest.work['time'] = data['time']
-              this.rest.work.data = data['list']
-              this.rest.defreeze('wdone')
-            }, (error) => {
-              this.rest.defreeze('wdone')
-            })
+            this.id = id
+            this.doneSubmit()
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async doneSubmit() {
+    await this.rest.freeze('Đang hoàn thành')
+    this.rest.check({
+      action: 'work-done',
+      startdate: this.rest.totime(this.rest.work.filter['startdate']),
+      enddate: this.rest.totime(this.rest.work.filter['enddate']),
+      keyword: this.rest.work.filter['keyword'],
+      user: this.rest.work.filter['user'],
+      page1: this.rest.work.page.undone,
+      page2: this.rest.work.page.done,
+      id: this.id,
+      status: this.rest.work.reversal[this.rest.work.segment]
+    }).then((data) => {
+      this.rest.work.unread = data['unread']
+      this.rest.work['time'] = data['time']
+      this.rest.work.data = data['list']
+      this.rest.defreeze()
+    }, (error) => {
+      this.rest.defreeze()
+    })
   }
 
   public async remove(id: number) {
@@ -162,31 +168,36 @@ export class WorkPage implements OnInit {
           text: 'Xác nhận',
           cssClass: 'danger',
           handler: () => {
-            this.rest.freeze('wr', 'Đang xóa công việc')
-            this.rest.check({
-              action: 'work-remove',
-              startdate: this.rest.totime(this.rest.work.filter['startdate']),
-              enddate: this.rest.totime(this.rest.work.filter['enddate']),
-              keyword: this.rest.work.filter['keyword'],
-              user: this.rest.work.filter['user'],
-              page1: this.rest.work.page.undone,
-              page2: this.rest.work.page.done,
-              id: id,
-              status: this.rest.work.reversal[this.rest.work.segment]
-            }).then((data) => {
-              this.rest.work.unread = data['unread']
-              this.rest.work['time'] = data['time']
-              this.rest.work.data = data['list']
-              this.rest.defreeze('wr')
-            }, (error) => {
-              this.rest.defreeze('wr')
-            })
+            this.id = id
+            this.removeSubmit()
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async removeSubmit() {
+    await this.rest.freeze('Đang xóa công việc')
+    this.rest.check({
+      action: 'work-remove',
+      startdate: this.rest.totime(this.rest.work.filter['startdate']),
+      enddate: this.rest.totime(this.rest.work.filter['enddate']),
+      keyword: this.rest.work.filter['keyword'],
+      user: this.rest.work.filter['user'],
+      page1: this.rest.work.page.undone,
+      page2: this.rest.work.page.done,
+      id: this.id,
+      status: this.rest.work.reversal[this.rest.work.segment]
+    }).then((data) => {
+      this.rest.work.unread = data['unread']
+      this.rest.work['time'] = data['time']
+      this.rest.work.data = data['list']
+      this.rest.defreeze()
+    }, (error) => {
+      this.rest.defreeze()
+    })
   }
 
   public async filterM() {

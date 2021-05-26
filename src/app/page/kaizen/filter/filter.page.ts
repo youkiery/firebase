@@ -29,8 +29,8 @@ export class FilterPage implements OnInit {
     this.rest.kaizen.filter[name] = ''
   }
 
-  public filter() {
-    this.rest.freeze('kfilter', 'Filtering filter')
+  public async filter() {
+    await this.rest.freeze('Filtering filter')
     this.rest.kaizen.page = {
       undone: 1,
       done: 1
@@ -46,10 +46,10 @@ export class FilterPage implements OnInit {
       sort: this.rest.kaizen.filter.sort
     }).then(data => {
       this.rest.kaizen.data = data['list']
-      this.rest.defreeze('kfilter')
+      this.rest.defreeze()
       this.dismiss()
     }, () => {
-      this.rest.defreeze('kfilter')
+      this.rest.defreeze()
     })
   }
 }

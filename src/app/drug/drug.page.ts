@@ -10,6 +10,7 @@ import { InsertPage } from './insert/insert.page';
   styleUrls: ['./drug.page.scss'],
 })
 export class DrugPage implements OnInit {
+  public id = 0
   constructor(
     public modalCtrl: ModalController,
     public rest: RestService,
@@ -17,25 +18,21 @@ export class DrugPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.rest.check({
-      action: 'drug-init',
-    }).then(response => {
-      this.rest.drug.role = response.role
-    }, () => { })
+
   }
 
-  public filter() {
-    this.rest.freeze('filter', 'Đang lọc thuốc')
+  public async filter() {
+    await this.rest.freeze('Đang lọc thuốc')
     this.rest.check({
       action: 'drug-filter',
       key_name: this.rest.drug.filter.name,
       key_effect: this.rest.drug.filter.effect
     }).then(response => {
       this.rest.drug.list = response.data
-      this.rest.defreeze('filter')
+      this.rest.defreeze()
     }, (response) => {
       this.rest.notify(response.messenger)
-      this.rest.defreeze('filter')
+      this.rest.defreeze()
     })
   }
 
@@ -70,19 +67,8 @@ export class DrugPage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'danger',
             handler: () => {
-              this.rest.freeze('cs', 'Đang xóa chỉ tiêu...')
-              this.rest.check({
-                action: 'drug-remove',
-                id: id,
-                key_name: this.rest.drug.filter.name,
-                key_effect: this.rest.drug.filter.effect
-              }).then(response => {
-                this.rest.notify('Đã xóa thuốc')
-                this.rest.drug.list = response.data
-                this.rest.defreeze('cs')
-              }, () => {
-                this.rest.defreeze('cs')
-              })
+              this.removeSubmit()
+              this.id = id
             }
           }
         ]
@@ -91,5 +77,20 @@ export class DrugPage implements OnInit {
       await alert.present();
     }
   }
-}
 
+  public async removeSubmit() {
+    await this.rest.freeze('Đang xóa chỉ tiêu...')
+    this.rest.check({
+      action: 'drug-remove',
+      id: this.id,
+      key_name: this.rest.drug.filter.name,
+      key_effect: this.rest.drug.filter.effect
+    }).then(response => {
+      this.rest.notify('Đã xóa thuốc')
+      this.rest.drug.list = response.data
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+}

@@ -15,16 +15,16 @@ export class NotifyPage implements OnInit {
     public modal: ModalController,
   ) { }
 
-  ionViewWillEnter() {
-    this.rest.freeze('wn', 'Đang lấy thông báo')
+  public async ionViewWillEnter() {
+    await this.rest.freeze('Đang lấy thông báo')
     this.rest.check({
       action: 'work-notify'
     }).then(data => {
       this.rest.work.notify = data.notify
       this.rest.work.unread = 0
-      this.rest.defreeze('wn')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('wn')
+      this.rest.defreeze()
     })
   }
 

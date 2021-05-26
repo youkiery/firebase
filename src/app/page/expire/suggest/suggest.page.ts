@@ -43,18 +43,18 @@ export class SuggestPage implements OnInit {
     this.rest.navCtrl.pop()
   }
 
-  public pick() {
-    this.rest.freeze('ep', 'Xin đợi một chút')
+  public async pick() {
+    await this.rest.freeze('Xin đợi một chút')
     this.rest.check({
       action: 'expire-pick',
       name: this.name
     }).then(response => {
       this.rest.expire.edit.rid = response.rid
       this.rest.expire.edit.name = this.name
-      this.rest.defreeze('ep')
+      this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {
-      this.rest.defreeze('ep')
+      this.rest.defreeze()
     })
   }
 } 

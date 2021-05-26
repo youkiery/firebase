@@ -19,13 +19,13 @@ export class SettingPage {
     public router: Router
   ) { }
 
-  public changePassword() {
+  public async changePassword() {
     if (!this.oldpas.length) this.rest.notify('Mật khẩu cũ trống')
     else if (!this.newpas.length) this.rest.notify('Mật khẩu mới trống')
     else if (!this.verpas.length) this.rest.notify('Mật khẩu xác nhận trống')
     else if (this.newpas !== this.verpas) this.rest.notify('Mật khẩu xác nhận không trùng nhau')
     else {
-      this.rest.freeze('changepass', 'Đang đổi mật khẩu')
+      await this.rest.freeze('Đang đổi mật khẩu')
       this.rest.check({
         action: 'user-change-password',
         old: this.oldpas,
@@ -36,9 +36,9 @@ export class SettingPage {
         this.oldpas = ''
         this.newpas = ''
         this.verpas = ''
-        this.rest.defreeze('changepass')
+        this.rest.defreeze()
       }, () => {
-        this.rest.defreeze('changepass')
+        this.rest.defreeze()
       })
     }
   }

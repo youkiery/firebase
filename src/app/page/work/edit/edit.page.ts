@@ -89,7 +89,7 @@ export class EditPage {
   // public save() {
   //     this.rest.work.edit.process = Number(this.rest.work.edit.process)
   //     if (!this.rest.work.edit.process || this.rest.work.edit.process < 0 || this.rest.work.edit.process > 100) this.rest.work.edit.process = 0
-  //     this.rest.freeze()
+  //     await this.rest.freeze()
   //     this.rest.check({
   //       action: 'work-save',
   //       startdate: this.rest.totime(this.rest.work.filter['startdate']),
@@ -111,14 +111,14 @@ export class EditPage {
   //     }, (error) => { })
   // }
 
-  public save() {
+  public async save() {
     let list = []
     let check = 0
 
-    this.rest.freeze('wci', 'Kiểm tra hình ảnh')
+    await this.rest.freeze('Kiểm tra hình ảnh')
     new Promise(resolve => {
       if (!this.rest.work.edit.image.length) {
-        this.rest.defreeze('wci')
+        this.rest.defreeze()
         resolve('')
       }
       else {
@@ -136,7 +136,7 @@ export class EditPage {
               list.push(item)
               // console.log(check);
               if (!check) {
-                this.rest.defreeze('wci')
+                this.rest.defreeze()
                 resolve('')
               }
             }
@@ -152,7 +152,7 @@ export class EditPage {
                 }
                 // uncomment if get formated data
                 if (!check) {
-                  this.rest.defreeze('wci')
+                  this.rest.defreeze()
                   resolve('')
                 }
               })
@@ -160,38 +160,43 @@ export class EditPage {
           }
         });
         if (!check) {
-          this.rest.defreeze('wci')
+          this.rest.defreeze()
           resolve('')
         }
       }
     }).then((data) => {
       // return 0 if overrange process (0 - 100)
       this.rest.work.edit.process = Number(this.rest.work.edit.process)
-      if (!this.rest.work.edit.process || this.rest.work.edit.process < 0 || this.rest.work.edit.process > 100) this.rest.work.edit.process = 0
-      this.rest.freeze('ws', 'Đang cập nhật...')
-      this.rest.check({
-        action: 'work-save',
-        startdate: this.rest.totime(this.rest.work.filter['startdate']),
-        enddate: this.rest.totime(this.rest.work.filter['enddate']),
-        keyword: this.rest.work.filter['keyword'],
-        user: this.rest.work.filter['user'],
-        id: this.rest.work.edit.id,
-        content: this.rest.work.edit.content,
-        process: this.rest.work.edit.process,
-        calltime: this.rest.totime(this.rest.work.edit.calltime),
-        note: this.rest.work.edit.note,
-        page1: this.rest.work.page.undone,
-        page2: this.rest.work.page.done,
-        image: list.join(','),
-        status: this.rest.work.reversal[this.rest.work.segment]
-      }).then(data => {
-        this.rest.work.unread = data['unread']
-        this.rest.work.data = data['list']
-        this.rest.defreeze('ws')
-        this.dismiss()
-      }, (error) => {
-        this.rest.defreeze('ws')
-      })
+      let checker = !this.rest.work.edit.process || this.rest.work.edit.process < 0 || this.rest.work.edit.process > 100
+      if (checker) this.rest.work.edit.process = 0
+      this.saveSubmit(list)
+    })
+  }
+
+  public async saveSubmit(list: any[]) {
+    await this.rest.freeze('Đang cập nhật...')
+    this.rest.check({
+      action: 'work-save',
+      startdate: this.rest.totime(this.rest.work.filter['startdate']),
+      enddate: this.rest.totime(this.rest.work.filter['enddate']),
+      keyword: this.rest.work.filter['keyword'],
+      user: this.rest.work.filter['user'],
+      id: this.rest.work.edit.id,
+      content: this.rest.work.edit.content,
+      process: this.rest.work.edit.process,
+      calltime: this.rest.totime(this.rest.work.edit.calltime),
+      note: this.rest.work.edit.note,
+      page1: this.rest.work.page.undone,
+      page2: this.rest.work.page.done,
+      image: list.join(','),
+      status: this.rest.work.reversal[this.rest.work.segment]
+    }).then(data => {
+      this.rest.work.unread = data['unread']
+      this.rest.work.data = data['list']
+      this.rest.defreeze()
+      this.dismiss()
+    }, (error) => {
+      this.rest.defreeze()
     })
   }
 

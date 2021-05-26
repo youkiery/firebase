@@ -41,15 +41,17 @@ export class BloodPage implements OnInit {
     }
   }
 
-  ionViewDidEnter() {
-    this.rest.freeze('auto', 'Đang tải danh sách...')
+  public async ionViewDidEnter() {
+    await this.rest.freeze('Đang tải danh sách...')
     this.rest.check({
       action: 'blood-init',
       page: this.rest.blood.page
     }).then(response => {
       this.rest.blood.list = response.list
       this.rest.blood.init = 1
+      this.rest.defreeze()
     }, () => {
+      this.rest.defreeze()
     })
   }
 

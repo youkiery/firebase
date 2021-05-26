@@ -14,10 +14,10 @@ export class UsgPage implements OnInit {
     public alert: AlertController
   ) { }
 
-  ionViewDidEnter() {
-    this.rest.freeze('va', 'Đang tải danh sách')
+  public async ionViewDidEnter() {
+    await this.rest.freeze('Đang tải danh sách')
     this.filter().then(() => {
-      this.rest.defreeze('va')
+      this.rest.defreeze()
     })
   }
 
@@ -47,17 +47,17 @@ export class UsgPage implements OnInit {
     this.rest.router.navigateByUrl('/usg/filter')
   }
 
-  public onSegmentChange() {
-    this.rest.freeze('va', 'Đang tải danh sách')
+  public async onSegmentChange() {
+    await this.rest.freeze('Đang tải danh sách')
     this.filter().then(() => {
-      this.rest.defreeze('va')
+      this.rest.defreeze()
     })
   }
 
-  public changeStatus(id: number) {
+  public async changeStatus(id: number) {
     if (this.rest.config.usg < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
-      this.rest.freeze('cs', 'Đang thay đổi trạng thái')
+      await this.rest.freeze('Đang thay đổi trạng thái')
       this.rest.check({
         action: 'usg-check',
         id: id,
@@ -66,9 +66,9 @@ export class UsgPage implements OnInit {
       }).then(response => {
         this.rest.notify('Đã thay đổi trạng thái')
         this.rest.usg.data = response.data
-        this.rest.defreeze('cs')
+        this.rest.defreeze()
       }, () => {
-        this.rest.defreeze('cs')
+        this.rest.defreeze()
       })
     }
   }
@@ -94,24 +94,29 @@ export class UsgPage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'secondary',
             handler: (e) => {
-              this.rest.freeze('kcheck', 'Đang hoàn thành...')
-              this.rest.check({
-                action: 'usg-birth',
-                id: id,
-                number: Number(e['number']),
-                keyword: this.rest.usg.filterKey,
-                status: this.rest.usg.status
-              }).then((response) => {
-                this.rest.usg.data = response.data
-              }, () => {
-                
-              })
+              this.birthSubmit(id, e['number'])
             }
           }
         ]
       })
       alert.present()
     }
+  }
+
+  public async birthSubmit(id: number, number: number) {
+    await this.rest.freeze('Đang hoàn thành...')
+    this.rest.check({
+      action: 'usg-birth',
+      id: id,
+      number: Number(number),
+      keyword: this.rest.usg.filterKey,
+      status: this.rest.usg.status
+    }).then((response) => {
+      this.rest.usg.data = response.data
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async note(index: number, id: number, text: string) {
@@ -135,24 +140,28 @@ export class UsgPage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'secondary',
             handler: (e) => {
-              this.rest.freeze('kcheck', 'Đang hoàn thành...')
-              this.rest.check({
-                action: 'usg-note',
-                id: id,
-                text: e['note'],
-                keyword: this.rest.usg.filterKey,
-                status: this.rest.usg.status
-              }).then(() => {
-                this.rest.usg.data[index].note = e['note']
-                this.rest.defreeze('kcheck')
-              }, () => [
-              ])
+              this.noteSubmit(id, e['note'])
             }
           }
         ]
       })
       alert.present()
     }
+  }
+
+  public async noteSubmit(id: number, index: number, note: string) {
+    await this.rest.freeze('Đang hoàn thành...')
+    this.rest.check({
+      action: 'usg-note',
+      id: id,
+      text: note,
+      keyword: this.rest.usg.filterKey,
+      status: this.rest.usg.status
+    }).then(() => {
+      this.rest.usg.data[index].note = note
+      this.rest.defreeze()
+    }, () => [
+    ])
   }
   
   ngOnInit() {}

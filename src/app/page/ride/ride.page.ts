@@ -20,17 +20,17 @@ export class RidePage implements OnInit {
     
   }
   
-  ionViewDidEnter() {
-    this.rest.freeze('ra', 'Lấy danh sách...')
+  public async ionViewDidEnter() {
+    await this.rest.freeze('Lấy danh sách...')
     this.rest.check({
       action: 'ride-init',
       type: this.rest.ride.selected,
       time: this.rest.ride.current.time / 1000
     }).then(response => {
       this.rest.ride.list = response.list
-      this.rest.defreeze('ra')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('ra')
+      this.rest.defreeze()
     })
   }
 
@@ -47,24 +47,28 @@ export class RidePage implements OnInit {
           text: 'Xác nhận',
           cssClass: 'danger',
           handler: () => {
-            this.rest.freeze('rr', 'Xóa phiếu...')
-            this.rest.check({
-              action: 'ride-remove',
-              id: id,
-              time: this.rest.ride.current.time / 1000,
-              type: this.rest.ride.selected
-            }).then(response => {
-              this.rest.ride.list[this.rest.ride.selected] = response.list
-              this.rest.defreeze('rr')
-            }, () => {
-              this.rest.defreeze('rr')
-            })
+            this.removeSubmit(id)
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Xóa phiếu...')
+    this.rest.check({
+      action: 'ride-remove',
+      id: id,
+      time: this.rest.ride.current.time / 1000,
+      type: this.rest.ride.selected
+    }).then(response => {
+      this.rest.ride.list[this.rest.ride.selected] = response.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public insert() {
@@ -106,8 +110,7 @@ export class RidePage implements OnInit {
           cssClass: 'secondary',
           handler: (e) => {
             this.rest.ride.current = this.rest.parseDate(e.date)
-            this.rest.freeze('sa', 'Lấy danh sách ride')
-            this.filter()
+            this.pickDateSubmit()
           }
         }
       ]
@@ -115,17 +118,22 @@ export class RidePage implements OnInit {
     alert.present()
   }
 
-  public filter() {
-    this.rest.freeze('ra', 'Lấy danh sách...')
+  public async pickDateSubmit() {
+    await this.rest.freeze('Lấy danh sách ride')
+    this.filter()
+  }
+
+  public async filter() {
+    await this.rest.freeze('Lấy danh sách...')
     this.rest.check({
       action: 'ride-auto',
       type: this.rest.ride.selected,
       time: this.rest.ride.current.time / 1000
     }).then(response => {
       this.rest.ride.list[this.rest.ride.selected] = response.list
-      this.rest.defreeze('ra')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('ra')
+      this.rest.defreeze()
     })
   }
 

@@ -16,10 +16,10 @@ export class EditPage implements OnInit {
 
   ngOnInit() { }
 
-  public save() {
+  public async save() {
     let action = 'edit'
     if (this.rest.kaizen.insert) action = 'insert'
-    this.rest.freeze('kedit', 'Saving data')
+    await this.rest.freeze('Lưu dữ liệu...')
     this.rest.check({
       action: 'kaizen-' + action,
       id: this.rest.kaizen.edit.id,
@@ -36,10 +36,10 @@ export class EditPage implements OnInit {
     }).then(data => {
       this.rest.kaizen.data = data['list']
       this.rest.kaizen.unread = data['unread']
-      this.rest.defreeze('kedit')
+      this.rest.defreeze()
       this.dismiss()
     }, (e) => {
-      this.rest.defreeze('kedit')
+      this.rest.defreeze()
     })
   }
 

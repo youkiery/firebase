@@ -77,28 +77,32 @@ export class KaizenPage implements OnInit {
           text: 'Xác nhận',
           cssClass: 'secondary',
           handler: (e) => {
-            this.rest.freeze('kcheck', 'Đang hoàn thành...')
-            this.rest.check({
-              action: 'kaizen-check',
-              id: id,
-              type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
-              starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
-              endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
-              keyword: this.rest.kaizen.filter.keyword,
-              page1: this.rest.kaizen.page.undone,
-              page2: this.rest.kaizen.page.done,
-              sort: this.rest.kaizen.filter.sort
-            }).then(data => {
-              this.rest.kaizen.data = data['list']
-              this.rest.defreeze('kcheck')
-            }, () => [
-              this.rest.defreeze('kcheck')
-            ])
+            this.checkerSubmit(id)
           }
         }
       ]
     })
     alert.present()
+  }
+
+  public async checkerSubmit(id: number) {
+    await this.rest.freeze('Đang hoàn thành...')
+    this.rest.check({
+      action: 'kaizen-check',
+      id: id,
+      type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
+      starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
+      endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
+      keyword: this.rest.kaizen.filter.keyword,
+      page1: this.rest.kaizen.page.undone,
+      page2: this.rest.kaizen.page.done,
+      sort: this.rest.kaizen.filter.sort
+    }).then(data => {
+      this.rest.kaizen.data = data['list']
+      this.rest.defreeze()
+    }, () => [
+      this.rest.defreeze()
+    ])
   }
 
   public async filterM() {
@@ -150,30 +154,34 @@ export class KaizenPage implements OnInit {
           text: 'Xác nhận',
           cssClass: 'danger',
           handler: () => {
-            this.rest.freeze('kremove', 'Đang xóa giải pháp')
-            this.rest.check({
-              action: 'kaizen-remove',
-              id: id,
-              starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
-              endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
-              keyword: this.rest.kaizen.filter.keyword,
-              page: this.rest.kaizen.page[this.rest.kaizen.segment],
-              type: this.rest.kaizen.segment,
-              sort: this.rest.kaizen.filter.sort
-            }).then((data) => {
-              this.rest.kaizen.unread = data['unread']
-              this.rest.kaizen.time = data['time']
-              this.rest.kaizen.data = data['list']
-              this.rest.defreeze('kremove')
-            }, (error) => {
-              this.rest.defreeze('kremove')
-            })
+            this.removeSubmit(id)
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Đang xóa giải pháp')
+    this.rest.check({
+      action: 'kaizen-remove',
+      id: id,
+      starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
+      endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
+      keyword: this.rest.kaizen.filter.keyword,
+      page: this.rest.kaizen.page[this.rest.kaizen.segment],
+      type: this.rest.kaizen.segment,
+      sort: this.rest.kaizen.filter.sort
+    }).then((data) => {
+      this.rest.kaizen.unread = data['unread']
+      this.rest.kaizen.time = data['time']
+      this.rest.kaizen.data = data['list']
+      this.rest.defreeze()
+    }, (error) => {
+      this.rest.defreeze()
+    })
   }
 
   public loadData(event) {

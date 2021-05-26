@@ -19,7 +19,7 @@ export class DetailPage implements OnInit {
   }
 
   async update() {
-    if (!this.rest.drug.role) this.rest.notify('Không có quyền truy cập')
+    if (this.rest.config.drug < 2) this.rest.notify('Không có quyền truy cập')
     else {
       this.rest.drug.update = true
       const modal = await this.modal.create({

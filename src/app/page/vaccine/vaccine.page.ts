@@ -14,10 +14,10 @@ export class VaccinePage implements OnInit {
     public modal: ModalController
   ) { }
 
-  ionViewDidEnter() {
-    this.rest.freeze('va', 'Đang tải danh sách')
+  public async ionViewDidEnter() {
+    await this.rest.freeze('Đang tải danh sách')
     this.filter().then(() => {
-      this.rest.defreeze('va')
+      this.rest.defreeze()
     })
   }
   
@@ -42,10 +42,10 @@ export class VaccinePage implements OnInit {
     this.rest.router.navigateByUrl('/vaccine/filter')
   }
 
-  public onSegmentChange() {
-    this.rest.freeze('va', 'Đang tải danh sách')
+  public async onSegmentChange() {
+    await this.rest.freeze('Đang tải danh sách')
     this.filter().then(() => {
-      this.rest.defreeze('va')
+      this.rest.defreeze()
     })
   }
 
@@ -65,21 +65,7 @@ export class VaccinePage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'danger',
             handler: () => {
-              this.rest.freeze('cs', 'Đang thay đổi trạng thái')
-              this.rest.check({
-                action: 'vaccine-check',
-                id: id,
-                status: this.rest.vaccine.status
-              }).then(response => {
-                this.rest.notify('Đã thay đổi trạng thái')
-                response.data.forEach((item: any, index: number) => {
-                  response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
-                });
-                this.rest.vaccine.data = response.data
-                this.rest.defreeze('cs')
-              }, () => {
-                this.rest.defreeze('cs')
-              })
+              this.changeStatusSubmit(id)
             }
           }
         ]
@@ -87,6 +73,24 @@ export class VaccinePage implements OnInit {
   
       await alert.present();
     }
+  }
+
+  public async changeStatusSubmit(id: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.check({
+      action: 'vaccine-check',
+      id: id,
+      status: this.rest.vaccine.status
+    }).then(response => {
+      this.rest.notify('Đã thay đổi trạng thái')
+      response.data.forEach((item: any, index: number) => {
+        response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
+      });
+      this.rest.vaccine.data = response.data
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async note(index: number, id: number, text: string) {
@@ -110,23 +114,27 @@ export class VaccinePage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'secondary',
             handler: (e) => {
-              this.rest.freeze('kcheck', 'Đang hoàn thành...')
-              this.rest.check({
-                action: 'vaccine-note',
-                id: id,
-                text: e['note'],
-                status: this.rest.vaccine.status
-              }).then(() => {
-                this.rest.vaccine.data[index].note = e['note']
-                this.rest.defreeze('kcheck')
-              }, () => [
-              ])
+              this.noteSubmit(id, e['note'])
             }
           }
         ]
       })
       alert.present()
     }
+  }
+
+  public async noteSubmit(id: number, index: number, note: string) {
+    await this.rest.freeze('Đang hoàn thành...')
+    this.rest.check({
+      action: 'vaccine-note',
+      id: id,
+      text: note,
+      status: this.rest.vaccine.status
+    }).then(() => {
+      this.rest.vaccine.data[index].note = note
+      this.rest.defreeze()
+    }, () => [
+    ])
   }
 
   public insert() {

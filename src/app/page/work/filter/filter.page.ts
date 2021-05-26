@@ -31,8 +31,8 @@ export class FilterPage {
     this.modal.dismiss()
   }
 
-  public filter() {
-    this.rest.freeze('wf', 'Lọc công việc')
+  public async filter() {
+    await this.rest.freeze('Lọc công việc')
     this.rest.work.page = {
       'undone': 1,
       'done': 1
@@ -50,10 +50,10 @@ export class FilterPage {
       this.rest.work.init = 1
       this.rest.work.unread = data.unread
       this.rest.work.data = data.list
-      this.rest.defreeze('wf')
+      this.rest.defreeze()
       this.dismiss()
     }, () => {
-      this.rest.defreeze('wf')
+      this.rest.defreeze()
     })
   }
 

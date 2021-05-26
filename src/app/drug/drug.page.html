@@ -30,7 +30,7 @@
 
   <ion-list>
     <ion-item *ngFor="let item of rest.drug.list; let i = index">
-      Tên: {{item.name}}
+      {{i + 1}}. {{item.name}}
       <ion-button slot="end" color="secondary" (click)="detail(i)">
         <ion-icon name="information-circle-outline"></ion-icon>
       </ion-button>

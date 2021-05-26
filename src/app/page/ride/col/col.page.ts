@@ -58,8 +58,8 @@ export class ColPage implements OnInit {
     this.rest.ride.edit.amount = this.parseCurrency(Math.abs(from - end))
   }
 
-  public save() {
-    this.rest.freeze('ri', 'Thêm phiếu...')
+  public async save() {
+    await this.rest.freeze('Thêm phiếu...')
     this.rest.check({
       action: 'ride-insert',
       type: 0,
@@ -75,9 +75,9 @@ export class ColPage implements OnInit {
       this.rest.ride.edit['amount']  = '10,000'
       this.rest.ride.edit['destination']  = ''
       this.rest.ride.edit['note']  = ''
-      this.rest.defreeze('ri')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('ri')
+      this.rest.defreeze()
     })
   }
 }

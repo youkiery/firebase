@@ -69,18 +69,7 @@ export class ProfilePage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'danger',
             handler: () => {
-              this.rest.freeze('cs', 'Đang xóa chỉ tiêu...')
-              this.rest.check({
-                action: 'target-remove',
-                id: this.rest.profile.target[i].id,
-                key: this.rest.profile.filter.key
-              }).then(response => {
-                this.rest.notify('Đã xóa chỉ tiêu')
-                this.rest.profile.target = response.list
-                this.rest.defreeze('cs')
-              }, () => {
-                this.rest.defreeze('cs')
-              })
+              this.removeTargetSubmit(i)
             }
           }
         ]
@@ -88,6 +77,21 @@ export class ProfilePage implements OnInit {
 
       await alert.present();
     }
+  }
+
+  public async removeTargetSubmit(i: number) {
+    await this.rest.freeze('Đang xóa chỉ tiêu...')
+    this.rest.check({
+      action: 'target-remove',
+      id: this.rest.profile.target[i].id,
+      key: this.rest.profile.filter.key
+    }).then(response => {
+      this.rest.notify('Đã xóa chỉ tiêu')
+      this.rest.profile.target = response.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async update(index: number) {
@@ -102,22 +106,26 @@ export class ProfilePage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: () => {
-            this.rest.freeze('load', 'Cập nhật...')
-            this.rest.check({
-              action: 'target-update',
-              id: this.rest.profile.target[index].id
-            }).then(response => {
-              this.rest.profile.target[index].number = Number(this.rest.profile.target[index].number) + 1
-              this.rest.defreeze('load')
-            }, () => {
-              this.rest.defreeze('load')
-            })
+            this.updateSubmit(index)
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async updateSubmit(index: number) {
+    await this.rest.freeze('Cập nhật...')
+    this.rest.check({
+      action: 'target-update',
+      id: this.rest.profile.target[index].id
+    }).then(response => {
+      this.rest.profile.target[index].number = Number(this.rest.profile.target[index].number) + 1
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async reset(index: number) {
@@ -132,23 +140,27 @@ export class ProfilePage implements OnInit {
         }, {
           text: 'Xác nhận',
           handler: () => {
-            this.rest.freeze('load', 'Cài lại...')
-            this.rest.check({
-              action: 'target-reset',
-              id: this.rest.profile.target[index].id,
-              key: this.rest.profile.filter.key
-            }).then(response => {
-              this.rest.profile.target[index].number = 0
-              this.rest.defreeze('load')
-            }, () => {
-              this.rest.defreeze('load')
-            })
+            this.resetSubmit(index)
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  public async resetSubmit(index: number) {
+    await this.rest.freeze('Cài lại...')
+    this.rest.check({
+      action: 'target-reset',
+      id: this.rest.profile.target[index].id,
+      key: this.rest.profile.filter.key
+    }).then(response => {
+      this.rest.profile.target[index].number = 0
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public print(id: number) {
@@ -170,9 +182,9 @@ export class ProfilePage implements OnInit {
           winPrint.print()
           winPrint.close()
         }, 300)
-      this.rest.defreeze('load')
+        this.rest.defreeze()
       }, () => {
-        this.rest.defreeze('load')
+        this.rest.defreeze()
       })
     }
   }
@@ -199,17 +211,7 @@ export class ProfilePage implements OnInit {
           }, {
             text: 'Xác nhận',
             handler: () => {
-              this.rest.check({
-                action: 'profile-remove',
-                id: id,
-                keyword: this.rest.profile.filter.keyword,
-                page: this.rest.profile.filter.page
-              }).then(response => {
-                this.rest.profile.list = response.list
-                this.rest.defreeze('load')
-              }, () => {
-                this.rest.defreeze('load')
-              })
+              this.removeSubmit(id)
             }
           }
         ]
@@ -219,12 +221,28 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Đang xóa...')
+    this.rest.check({
+      action: 'profile-remove',
+      id: id,
+      keyword: this.rest.profile.filter.keyword,
+      page: this.rest.profile.filter.page
+    }).then(response => {
+      this.rest.profile.list = response.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async insert() {
     this.rest.profile.suggest.select.phone = ''
     this.rest.router.navigateByUrl('/profile/insert')
   }
 
   public async detail(id: number) {
+    await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.check({
       // action: 'profile-get',
       action: 'profile-print',
@@ -234,9 +252,9 @@ export class ProfilePage implements OnInit {
       // this.rest.profile.data = response.data
       this.rest.profile.print = response.html
       this.rest.router.navigateByUrl('profile/detail')
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     })
   }
 
@@ -262,10 +280,8 @@ export class ProfilePage implements OnInit {
       }).then(response => {
         this.rest.profile.list = this.rest.profile.list.concat(response.list)
         this.rest.profile.init = 1
-        this.rest.defreeze('load')
         resolve(true)
       }, () => {
-        this.rest.defreeze('load')
         resolve(true)
       })
     }) 

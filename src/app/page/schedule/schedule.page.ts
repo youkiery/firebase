@@ -43,23 +43,21 @@ export class SchedulePage implements OnInit {
 
   ngOnInit() { }
 
-  ionViewWillEnter() {
+  public async ionViewWillEnter() {
     let date = this.rest.today.split('/')
     this.today = date[0] + '/' + date[1]
 
-    this.rest.freeze('sget', 'Đang lấy danh sách đăng ký')
+    await this.rest.freeze('Đang lấy danh sách đăng ký')
     this.rest.check({
       action: 'schedule-auto',
       time: this.rest.schedule.filter.time
     }).then(response => {
-      // console.log(response['data']);
       this.rest.schedule.data = response['data']
-
       if (this.rest.config.schedule < 2) this.parseData()
       else this.temp = JSON.parse(JSON.stringify(response['data']))
-      this.rest.defreeze('sget')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('sget')
+      this.rest.defreeze()
     })
   }
 
@@ -112,10 +110,10 @@ export class SchedulePage implements OnInit {
     this.rest.schedule.data[index]['day'][id][type] = this.reversal_color[this.rest.schedule.data[index]['day'][id][type]]
   }
 
-  public changeWeek(increaseWeek: number) {
+  public async changeWeek(increaseWeek: number) {
     let time = this.rest.schedule.filter.time + 60 * 60 * 24 * 7 * 1000 * increaseWeek
     // console.log(time);
-    this.rest.freeze('sauto', 'Đang lấy danh sách đăng ký')
+    await this.rest.freeze('Đang lấy danh sách đăng ký')
     this.rest.check({
       action: 'schedule-auto',
       time: time
@@ -124,9 +122,9 @@ export class SchedulePage implements OnInit {
       if (this.rest.config.schedule < 2) this.parseData()
       else this.temp = JSON.parse(JSON.stringify(response['data']))
       this.rest.schedule.filter.time = time
-      this.rest.defreeze('sauto')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('sauto')
+      this.rest.defreeze()
     })
   }
 
@@ -161,18 +159,7 @@ export class SchedulePage implements OnInit {
               text: 'Đăng ký',
               cssClass: 'secondary',
               handler: () => {
-                this.rest.freeze('scheck', 'Đang đăng ký công việc')
-                this.rest.check({
-                  action: 'schedule-regist-manager',
-                  list: JSON.stringify(list),
-                  time: this.rest.schedule.filter.time
-                }).then(response => {
-                  this.rest.schedule.data = response['data']
-                  this.temp = JSON.parse(JSON.stringify(response['data']))
-                  this.rest.defreeze('scheck')
-                }, () => {
-                  this.rest.defreeze('scheck')
-                })
+                this.registerSubmit(list)
               }
             }
           ]
@@ -203,19 +190,7 @@ export class SchedulePage implements OnInit {
               text: 'Đăng ký',
               cssClass: 'secondary',
               handler: () => {
-                this.rest.freeze('scheck', 'Đang đăng ký công việc')
-                this.rest.check({
-                  action: 'schedule-regist',
-                  list: JSON.stringify(list),
-                  time: this.rest.schedule.filter.time
-                }).then(response => {
-                  this.rest.schedule.data = response['data']
-                  this.temp = JSON.parse(JSON.stringify(response['data']))
-                  this.parseData()
-                  this.rest.defreeze('scheck')
-                }, () => {
-                  this.rest.defreeze('scheck')
-                })
+                this.managerRegisterSubmit(list)
               }
             }
           ]
@@ -223,6 +198,37 @@ export class SchedulePage implements OnInit {
         alert.present()
       }
     }
+  }
+
+  public async managerRegisterSubmit(list: any[]) {
+    await this.rest.freeze('Đang đăng ký công việc')
+    this.rest.check({
+      action: 'schedule-regist',
+      list: JSON.stringify(list),
+      time: this.rest.schedule.filter.time
+    }).then(response => {
+      this.rest.schedule.data = response['data']
+      this.temp = JSON.parse(JSON.stringify(response['data']))
+      this.parseData()
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async registerSubmit(list: any[]) {
+    await this.rest.freeze('Đang đăng ký công việc')
+    this.rest.check({
+      action: 'schedule-regist-manager',
+      list: JSON.stringify(list),
+      time: this.rest.schedule.filter.time
+    }).then(response => {
+      this.rest.schedule.data = response['data']
+      this.temp = JSON.parse(JSON.stringify(response['data']))
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public cancel() {

@@ -8,11 +8,11 @@
 </ion-toolbar>
 
 <ion-content>
-  <ion-item *ngIf="!rest.work.role">
+  <ion-item *ngIf="rest.config.work < 2">
     Nội dung: {{rest.work.edit.content}}
   </ion-item>
 
-  <ion-item *ngIf="rest.work.role">
+  <ion-item *ngIf="rest.config.work > 1">
     <ion-label position="fixed"> Nội dung </ion-label>
     <ion-input [(ngModel)]="rest.work.edit.content"></ion-input>
   </ion-item>
@@ -22,7 +22,7 @@
     <ion-input type="number" [(ngModel)]="rest.work.edit.process"></ion-input>
   </ion-item>
 
-  <ion-item *ngIf="rest.work.role">
+  <ion-item *ngIf="rest.config.work > 1">
     <ion-label position="fixed"> Hạn chót </ion-label>
     <ion-datetime [(ngModel)]="rest.work.edit.calltime" displayFormat="DD/MM/YYYY"></ion-datetime>
   </ion-item>

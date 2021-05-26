@@ -28,8 +28,8 @@ export class InsertPage implements OnInit {
 
   ngOnInit() { }
 
-  insert() {
-    this.rest.freeze('load', 'Thêm thuốc...')
+  public async insert() {
+    await this.rest.freeze('Thêm thuốc...')
     this.rest.check({
       action: 'drug-insert',
       name: this.name,
@@ -42,14 +42,14 @@ export class InsertPage implements OnInit {
     }).then((response) => {
       this.rest.drug.list = response.data
       this.modal.dismiss()
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     })
   }
 
-  update() {
-    this.rest.freeze('load', 'Cập nhật thông tin...')
+  public async update() {
+    await this.rest.freeze('Cập nhật thông tin...')
     this.rest.check({
       action: 'drug-update',
       name: this.name,
@@ -63,9 +63,9 @@ export class InsertPage implements OnInit {
     }).then((response) => {
       this.rest.drug.list[this.rest.drug.index] = response.data
       this.modal.dismiss()
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     })
   }
 }

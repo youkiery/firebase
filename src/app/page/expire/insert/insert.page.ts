@@ -15,10 +15,10 @@ export class InsertPage implements OnInit {
   ngOnInit() {
   }
 
-  public save() {
+  public async save() {
     if (!this.rest.expire.edit.rid) this.rest.notify('Chưa chọn mặt hàng')
     else {
-      this.rest.freeze('ei', 'Đang thêm hạn sử dụng')
+      await this.rest.freeze('Đang thêm hạn sử dụng')
       this.rest.check({
         action: 'expire-insert',
         id: this.rest.expire.edit.id,
@@ -32,9 +32,9 @@ export class InsertPage implements OnInit {
         this.rest.expire.edit.expire = '' 
         this.rest.expire.edit.number = 0 
         this.rest.expire.list = response.list
-        this.rest.defreeze('ei')
+        this.rest.defreeze()
       }, () => {
-       this.rest.defreeze('ei')
+       this.rest.defreeze()
       })
     }
   }

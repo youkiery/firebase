@@ -117,18 +117,18 @@ export class InsertPage implements OnInit {
     this.rest.router.navigateByUrl('/spa/suggest')
   }
 
-  public save() {
+  public async save() {
     let list = []
     let check = 0
 
     if (!this.rest.spa.edit.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.spa.edit.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
-      this.rest.freeze('wci', 'Kiểm tra hình ảnh')
+      await this.rest.freeze('Kiểm tra hình ảnh')
       new Promise(resolve => {
         if (!this.rest.spa.edit.image.length) {
-          this.rest.defreeze('wci')
-          resolve()
+          this.rest.defreeze()
+          resolve(true)
         }
         else {
           // console.log(this.rest.work.edit.image.length);
@@ -145,8 +145,8 @@ export class InsertPage implements OnInit {
                 list.push(item)
                 // console.log(check);
                 if (!check) {
-                  this.rest.defreeze('wci')
-                  resolve()
+                  this.rest.defreeze()
+                  resolve(true)
                 }
               }
               else {
@@ -161,16 +161,16 @@ export class InsertPage implements OnInit {
                   }
                   // uncomment if get formated data
                   if (!check) {
-                    this.rest.defreeze('wci')
-                    resolve()
+                    this.rest.defreeze()
+                    resolve(true)
                   }
                 })
               }
             }
           });
           if (!check) {
-            this.rest.defreeze('wci')
-            resolve()
+            this.rest.defreeze()
+            resolve(true)
           }
         }
       }).then((data) => {
@@ -179,32 +179,36 @@ export class InsertPage implements OnInit {
         this.rest.spa.edit.type.forEach(item => {
           if (item.value) type.push(item.id)
         })
-        this.rest.freeze('iv', 'Đang thêm lịch spa')
-        this.rest.check({
-          action: 'spa-insert',
-          id: this.rest.spa.edit.id,
-          customer: this.rest.spa.edit.name,
-          phone: this.rest.spa.edit.phone,
-          note: this.rest.spa.edit.note,
-          image: list.join(','),
-          type: type.join(',')
-        }).then(() => {
-          if (this.rest.spa.edit.id) {
-            this.rest.navCtrl.pop()
-            this.rest.notify('Đã thêm lịch spa')
-          }
-          else {
-            this.rest.spa.edit.name = ''
-            this.rest.spa.edit.phone = ''
-            this.rest.spa.edit.note = ''
-            this.rest.spa.edit.image = []
-            this.rest.notify('Đã thêm lịch spa')
-          }
-          this.rest.defreeze('iv')
-        }, () => {
-          this.rest.defreeze('iv')
-        })
+        this.spaSubmit(list, type)
       })
     }
+  }
+
+  public async spaSubmit(list: any, type: any) {
+    await this.rest.freeze('Đang thêm lịch spa')
+    this.rest.check({
+      action: 'spa-insert',
+      id: this.rest.spa.edit.id,
+      customer: this.rest.spa.edit.name,
+      phone: this.rest.spa.edit.phone,
+      note: this.rest.spa.edit.note,
+      image: list.join(','),
+      type: type.join(',')
+    }).then(() => {
+      if (this.rest.spa.edit.id) {
+        this.rest.navCtrl.pop()
+        this.rest.notify('Đã thêm lịch spa')
+      }
+      else {
+        this.rest.spa.edit.name = ''
+        this.rest.spa.edit.phone = ''
+        this.rest.spa.edit.note = ''
+        this.rest.spa.edit.image = []
+        this.rest.notify('Đã thêm lịch spa')
+      }
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }

@@ -13,34 +13,34 @@ export class ExpirePage implements OnInit {
     public alert: AlertController
   ) { }
 
-  ngOnInit() {
-    this.rest.freeze('auto', 'Đang lấy danh sách')
+  public async ngOnInit() {
+    await this.rest.freeze('Đang lấy danh sách')
     this.rest.check({
       action: 'expire-auto',
       fname: this.rest.expire.filter.name,
       ftime: this.rest.expire.filter.time
     }).then(response => {
       this.rest.expire.list = response.list
-      this.rest.defreeze('auto')
+      this.rest.defreeze()
     }, (e) => {
-      this.rest.defreeze('auto')
+      this.rest.defreeze()
     })
   }
 
-  public edit(id: number) {
+  public async edit(id: number) {
     if (this.rest.config.expire < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
       this.rest.expire.id = id
       if (id) {
-        this.rest.freeze('ee', 'Đang lấy thông tin')
+        await this.rest.freeze('Đang lấy thông tin')
         this.rest.check({
           action: 'expire-get',
           id: id
         }).then(response => {
           this.rest.expire.edit = response.data
-          this.rest.defreeze('ee')
+          this.rest.defreeze()
         }, () => {
-          this.rest.defreeze('ee')
+          this.rest.defreeze()
         })
       }
       else {
@@ -70,23 +70,27 @@ export class ExpirePage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'secondary',
             handler: (e) => {
-              this.rest.freeze('kcheck', 'Đang xóa hạn sử dụng...')
-              this.rest.check({
-                action: 'expire-remove',
-                id: id,
-                status: this.rest.vaccine.status
-              }).then((response) => {
-                this.rest.expire.list = response.list
-                this.rest.defreeze('kcheck')
-              }, () => {
-                this.rest.defreeze('kcheck')
-              })
+              this.removeSubmit(id)
             }
           }
         ]
       })
       alert.present()
     }
+  }
+
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Đang xóa hạn sử dụng...')
+    this.rest.check({
+      action: 'expire-remove',
+      id: id,
+      status: this.rest.vaccine.status
+    }).then((response) => {
+      this.rest.expire.list = response.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public filterM() {

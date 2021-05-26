@@ -91,9 +91,9 @@ export class InsertProfile implements OnInit {
       this.rest.profile.list = data.concat(this.rest.profile.list)
       this.rest.profile.serial = response.serial
       this.rest.navCtrl.pop()
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     })
   }
 
@@ -122,23 +122,27 @@ export class InsertProfile implements OnInit {
         text: 'Xác nhận',
         cssClass: 'primary',
         handler: (e) => {
-          this.rest.freeze('cs', 'Đang thêm...')
-          this.rest.check({
-            action: 'profile-suggest-insert',
-            type: type,
-            name: e['name'],
-          }).then(response => {
-            this.rest.profile[type] = response.list
-            this.rest.notify('Đã thêm')
-            this.rest.defreeze('cs')
-          }, () => {
-            this.rest.defreeze('cs')
-          })
+          this.insertSelectSubmit(type, e['name'])
         }
       }]
     });
 
     alert.present();
+  }
+
+  public async insertSelectSubmit(type: string, name: string) {
+    await this.rest.freeze('Đang thêm...')
+    this.rest.check({
+      action: 'profile-suggest-insert',
+      type: type,
+      name: name,
+    }).then(response => {
+      this.rest.profile[type] = response.list
+      this.rest.notify('Đã thêm')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async insertTarget() {
@@ -160,22 +164,26 @@ export class InsertProfile implements OnInit {
             text: 'Xác nhận',
             cssClass: 'primary',
             handler: (e) => {
-              this.rest.freeze('cs', 'Đang thêm chỉ tiêu...')
-              this.rest.check({
-                action: 'target-insert',
-                name: e['name'],
-              }).then(response => {
-                this.rest.notify('Đã thêm chỉ tiêu')
-                this.rest.profile.target = response.list
-                this.rest.defreeze('cs')
-              }, () => {
-                this.rest.defreeze('cs')
-              })
+              this.insertTargetSubmit(e['name'])
             }
           }
         ]
       });
 
       await alert.present();
+  }
+
+  public async insertTargetSubmit(name: string) {
+    await this.rest.freeze('Đang thêm chỉ tiêu...')
+    this.rest.check({
+      action: 'target-insert',
+      name: name,
+    }).then(response => {
+      this.rest.notify('Đã thêm chỉ tiêu')
+      this.rest.profile.target = response.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }

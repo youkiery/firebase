@@ -70,7 +70,11 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },  {
+    path: 'fivemin',
+    loadChildren: () => import('./fivemin/fivemin.module').then( m => m.FiveminPageModule)
   },
+
 
 ];
 

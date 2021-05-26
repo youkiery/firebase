@@ -24,8 +24,8 @@ export class PrintPage implements OnInit {
     this.time = this.rest.todate(this.rest.today)
   }
 
-  ionViewDidEnter() {
-    this.rest.freeze('wp', 'Đang tạo file')
+  public async ionViewDidEnter() {
+    await this.rest.freeze('Đang tạo file')
     this.rest.check({
       action: 'word-work-print',
       time: this.rest.totime(this.time)
@@ -33,16 +33,16 @@ export class PrintPage implements OnInit {
       this.doc = data['doc']
       this.name = data['name']
       this.preview = this.sanitizer.bypassSecurityTrustResourceUrl(data['preview'])
-      this.rest.defreeze('wp')
+      this.rest.defreeze()
     }, () => [
-      this.rest.defreeze('wp')
+      this.rest.defreeze()
     ])
   }
 
-  public changeWeek(increaseWeek: number) {
+  public async changeWeek(increaseWeek: number) {
     let time = this.rest.datetotime(this.rest.totime(this.time)) + 60 * 60 * 24 * 7 * 1000 * increaseWeek
     this.time = this.rest.todate(this.rest.timetodate(time))
-    this.rest.freeze('wp', 'Đang tạo file')
+    await this.rest.freeze('Đang tạo file')
     this.rest.check({
       action: 'word-work-print',
       time: this.rest.totime(this.time)
@@ -50,9 +50,9 @@ export class PrintPage implements OnInit {
       this.doc = data['doc']
       this.name = data['name']
       this.preview = this.sanitizer.bypassSecurityTrustResourceUrl(data['preview'])
-      this.rest.defreeze('wp')
+      this.rest.defreeze()
     }, () => [
-      this.rest.defreeze('wp')
+      this.rest.defreeze()
     ])
   }
 

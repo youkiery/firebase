@@ -57,11 +57,11 @@ export class InsertPage implements OnInit {
     this.time[name] = datetime.datestring
   }
 
-  public save() {
+  public async save() {
     if (!this.customer.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.customer.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
-      this.rest.freeze('iv', 'Đang thêm tiêm phòng')
+      await this.rest.freeze('Đang thêm tiêm phòng')
       this.rest.check({
         action: 'vaccine-insert',
         customer: this.customer.name,
@@ -76,9 +76,9 @@ export class InsertPage implements OnInit {
         this.pets = []
         this.pet = 0
         this.rest.notify('Đã thêm lịch tiêm vaccine')
-        this.rest.defreeze('iv')
+        this.rest.defreeze()
       }, () => {
-        this.rest.defreeze('iv')
+        this.rest.defreeze()
       })
     } 
   }

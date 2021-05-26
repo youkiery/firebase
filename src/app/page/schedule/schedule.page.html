@@ -20,7 +20,7 @@
     Ngày hiện tại: {{rest.timetodate(rest.schedule.filter.time)}}
   </div>
 
-  <ion-grid *ngIf="!rest.schedule.role">
+  <ion-grid *ngIf="rest.config.schedule < 2">
     <ion-row>
       <ion-col> Thứ </ion-col>
       <ion-col> Ngày </ion-col>
@@ -51,7 +51,7 @@
     </ion-row>
   </ion-grid>
 
-  <table style="width: 100%; border-collapse: collapse;" border="1" *ngIf="rest.schedule.role">
+  <table style="width: 100%; border-collapse: collapse;" border="1" *ngIf="rest.config.schedule > 1">
     <tr class="text-center" *ngIf="rest.schedule.data.length">
       <td>  </td>
       <td colspan="2"> T2 <br>  {{rest.schedule.data[0].day[0][1]}} </td>

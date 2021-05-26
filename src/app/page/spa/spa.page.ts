@@ -19,10 +19,10 @@ export class SpaPage implements OnInit {
 
   async ionViewDidEnter() {
     // loading spa list on start
+    await this.rest.freeze('Lấy danh sách spa')
     return new Promise((resolve) => {
-      this.rest.freeze('sa', 'Lấy danh sách spa')
       this.filter().then(() => {
-        this.rest.defreeze('sa')
+        this.rest.defreeze()
         resolve(true)
       })      
     }).then(() => {
@@ -65,10 +65,10 @@ export class SpaPage implements OnInit {
     })
   }
 
-  public done(id: number) {
+  public async done(id: number) {
     if (this.rest.config.spa < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
-      this.rest.freeze('done', 'Đang hoàn thành')
+      await this.rest.freeze('Đang hoàn thành')
       this.rest.check({
         action: 'spa-done',
         id: id,
@@ -76,9 +76,9 @@ export class SpaPage implements OnInit {
       }).then((response) => {
         this.rest.spa.time = response.time
         this.rest.spa.data = response.data
-        this.rest.defreeze('done')
+        this.rest.defreeze()
       }, () => {
-        this.rest.defreeze('done')
+        this.rest.defreeze()
       })
     }
   }
@@ -103,17 +103,20 @@ export class SpaPage implements OnInit {
           text: 'Chọn ngày',
           cssClass: 'secondary',
           handler: (e) => {
-            // console.log(e);
             this.rest.spa.current = this.rest.parseDate(e.date)
-            this.rest.freeze('sa', 'Lấy danh sách spa')
-            this.filter().then(() => {
-              this.rest.defreeze('sa')
-            })      
+            this.filterPickDate()
           }
         }
       ]
     })
     alert.present()
+  }
+
+  public async filterPickDate() {
+    await this.rest.freeze('Lấy danh sách spa')
+    this.filter().then(() => {
+      this.rest.defreeze()
+    })      
   }
 
   public filter() {
@@ -137,13 +140,13 @@ export class SpaPage implements OnInit {
     })
   }
 
-  public changeDate(amount: number) {
+  public async changeDate(amount: number) {
     let time = this.rest.spa.current.time / 1000 + amount * 60 * 60 * 24
     this.rest.spa.current = this.rest.parseDate(time)
-    this.rest.freeze('sa', 'Lấy danh sách spa')
+    await this.rest.freeze('Lấy danh sách spa')
     this.filter().then(() => {
-      this.rest.defreeze('sa')
-    })      
+      this.rest.defreeze()
+    })
   }
 }
 

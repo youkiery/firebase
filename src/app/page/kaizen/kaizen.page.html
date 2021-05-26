@@ -41,7 +41,7 @@
         <p> <b> Vấn đề: </b> {{item.problem}} </p>  
         <p> <b> Giải quyết: </b> {{item.solution}} </p>  
         <p> <b> Hiệu quả: </b> {{item.result}} </p>  
-        <p *ngIf="rest.kaizen.role"> <b> Người gửi: </b> {{item.name}} </p>  
+        <p *ngIf="rest.config.kaizen > 1"> <b> Người gửi: </b> {{item.name}} </p>  
       </ion-card-content>
       <ion-card-subtitle class="notify-time">
         {{item.time}}

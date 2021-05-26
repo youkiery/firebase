@@ -30,13 +30,12 @@ export class LoginPage {
     this.subscription.unsubscribe();
   }
 
-  public ngOnInit() {
-    this.rest.freeze('cuser', 'Kiểm tra thông tin người dùng')
+  public async ngOnInit() {
+    await this.rest.freeze('Kiểm tra thông tin người dùng...')
     this.rest.storage.get('userdata').then((val) => {
       if (val && val['username'] && val['password']) {
         this.rest.login(val['username'], val['password'])
       }
-      this.rest.defreeze('cuser')
     })
   }
 }

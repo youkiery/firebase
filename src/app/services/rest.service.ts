@@ -290,7 +290,7 @@ export class RestService {
     profile: 0,
   }
   toast: any
-  load: any = {}
+  load: any
   public today: string = ''
   public error: string = ''
   public link: string = ''
@@ -303,31 +303,16 @@ export class RestService {
     public navCtrl: NavController
   ) {  } 
 
-  public async freeze(name: string, text: string = 'connecting to server') {
-    // this.load[name] = await this.loadCtrl.create({
-    //   cssClass: 'my-custom-class',
-    //   message: text
-    // })
-    // await this.load[name].present()
+  public async freeze(text: string = 'connecting to server') {
+    let loading = await this.loadCtrl.create({
+      message: text
+    })
+    this.load = loading
+    await this.load.present()
   }
 
-  public defreeze(name: string) {
-    // if (!name) {
-    //   this.load = {}
-    //   return 0
-    // }
-    // let count = 3
-    
-    // let interval = setInterval(() => {
-    //   // console.log(name);
-    //   count --
-    //   if (this.load[name]) {
-    //     this.load[name].dismiss()
-    //     delete this.load[name]
-    //     clearInterval(interval)
-    //   }
-    //   if (!count) clearInterval(interval)
-    // }, 300)
+  public defreeze() {
+    this.load.dismiss()
   }
 
   // datestring, datetime, time, dateiso
@@ -367,7 +352,6 @@ export class RestService {
   public check(param: Object): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.post(this.baseurl + this.buildHttpParam(param), '').toPromise().then((data) => {
-        // console.log(data);
         if (data['overtime']) {
           this.notify("Đã hết thời gian sử dụng")
           this.router.navigateByUrl('/home')
@@ -386,8 +370,6 @@ export class RestService {
           }
         }
       }, (error) => {
-        // console.log(error);
-        this.defreeze(null)
         if (error['messenger']) this.notify(error['messenger'])
         else this.notify('Có lỗi xảy ra >.<')
         // this.error = JSON.stringify(error)
@@ -423,16 +405,11 @@ export class RestService {
     }).then((data) => {
       this.work.unread = data['work']
       this.kaizen.unread = data['kaizen']
-      this.work.role = data['workrole']
-      // this.schedule.role = 0
       this.vaccine.disease = data['disease']
-      // console.log(this.vaccine.disease);
       this.spa.type = data.type
       
       // this.config = data.config
       this.ride.clock = data.clock
-      this.schedule.role = data['schedulerole']
-      this.kaizen.role = data['kaizenrole']
       this.list.employ = data['employ']
       this.list.except = data['except']
       this.today = data['today']
@@ -464,10 +441,9 @@ export class RestService {
       }
       this.storage.set('userdata', this.user)
       this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'forward' })
-      // console.log(this.config);
-      // this.router.navigateByUrl('/home')
+      this.defreeze()
     }, (e) => {
-      // console.log(e);
+      this.defreeze()
     })
   }
 
