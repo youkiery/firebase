@@ -16,14 +16,24 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label position="stacked">
+      Lọc danh sách
+    </ion-label>
+    <ion-datetime displayFormat="DD/MM/YYYY" [value]="rest.fivemin.filter.time" max="2100"></ion-datetime>
+  </ion-item>
+  <ion-button color="secondary" expand="full" (click)="filter()">
+    Lọc danh sách
+  </ion-button>
+
   <ion-card *ngFor="let item of rest.fivemin.list; let i = index">
     <ion-card-content>
-      Kế hoạch công việc ngày {{rest.timetodate(item.thoigianthem)}}
+      Kế hoạch công việc ngày {{rest.timetodate(item.thoigian)}}
       <br>
       <ion-button size="small" shape="round" color="secondary" (click)="detail(i)">
         <ion-icon name="information-circle-outline"></ion-icon>
       </ion-button>
-      <ion-button size="small" shape="round" color="secondary">
+      <ion-button size="small" shape="round" color="secondary" (click)="update(i)">
         <ion-icon name="refresh-circle-outline"></ion-icon>
       </ion-button>
       <ion-button size="small" shape="round" color="danger">
@@ -47,15 +57,11 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="update(true)">
+      <ion-tab-button (click)="update(0)">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="filter()">
-        <ion-icon name="filter-outline"></ion-icon>
-        <ion-label> Tìm kiếm </ion-label>
-      </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-toolbar>

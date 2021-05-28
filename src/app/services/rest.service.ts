@@ -9,8 +9,8 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  // public baseurl: string = 'http://localhost/server/index.php?';
-  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
     type: 0,
@@ -23,6 +23,21 @@ export class RestService {
   public fivemin = {
     list: [],
     init: false,
+    data: {
+      chamsoc: '',
+      tugiac: '',
+      giaiphap: '',
+      uytin: '',
+      ketqua: '',
+      dongdoi: '',
+      trachnhiem: '',
+      tinhyeu: '',
+      hoanthanh: ''
+    },
+    filter: {
+      time: (new Date()).toISOString()
+    },
+    update: false,
     index: 0
   }
   public user = {
@@ -377,6 +392,7 @@ export class RestService {
       }, (error) => {
         if (error['messenger']) this.notify(error['messenger'])
         else this.notify('Có lỗi xảy ra >.<')
+        reject(1)
         // this.error = JSON.stringify(error)
         // this.rest.notify(JSON.stringify(error))
       })

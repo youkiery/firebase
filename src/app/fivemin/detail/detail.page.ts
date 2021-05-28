@@ -15,4 +15,8 @@ export class DetailPage implements OnInit {
   ngOnInit() {
   }
 
+  public update() {
+    this.rest.fivemin.data = JSON.parse(JSON.stringify(this.rest.fivemin.list[this.rest.fivemin.index]))
+    this.rest.router.navigateByUrl('/fivemin/update')
+  }
 }

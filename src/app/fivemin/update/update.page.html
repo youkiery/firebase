@@ -2,7 +2,10 @@
   <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button slot="end" (click)="filter()" color="light" fill="clear">
+  <ion-button *ngIf="rest.fivemin.index" slot="end" (click)="update()" color="light" fill="clear">
+    Cập nhật
+  </ion-button>
+  <ion-button *ngIf="!rest.fivemin.index" slot="end" (click)="insert()" color="light" fill="clear">
     Thêm kế hoạch
   </ion-button>
 </ion-toolbar>
@@ -14,35 +17,35 @@
   <ion-list>
     <ion-item>
       <ion-label position="stacked"> Chăm sóc khác hàng </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.chamsoc"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Tự giác </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.tugiac"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Giải pháp đạt mục tiêu </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.giaiphap"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Uy tín </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.uytin"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Kết quả thực hiện </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.ketqua"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Giúp đỡ đồng đội </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.dongdoi"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Trách nhiệm </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.trachnhiem"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="stacked"> Tình yêu </ion-label>
-      <ion-textarea  autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.tinhyeu"></ion-textarea>
     </ion-item>
   </ion-list>
 </ion-content>
