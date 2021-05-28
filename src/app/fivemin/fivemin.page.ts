@@ -27,9 +27,19 @@ export class FiveminPage {
     }
   }
 
-  public detail(index: number) {
-    this.rest.fivemin.index = index
-    this.rest.router.navigateByUrl('/fivemin/detail')
+  public async detail(id: number) {
+    this.rest.fivemin.id = id
+    await this.rest.freeze()
+    this.rest.check({
+      action: 'fivemin-get',
+      id: id
+    }).then(response => {
+      this.rest.fivemin.data = response.data
+      this.rest.router.navigateByUrl('/fivemin/detail')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public insert() {
@@ -59,7 +69,7 @@ export class FiveminPage {
     return new Promise((resolve, reject) => {
       this.rest.check({
         action: 'fivemin-init',
-        time: this.rest.totime(this.rest.fivemin.filter.time)
+        time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
       }).then((response) => {
         this.rest.fivemin.list = response.list
         this.rest.defreeze()

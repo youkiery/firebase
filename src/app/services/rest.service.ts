@@ -9,9 +9,9 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
+  public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
     type: 0,
     index: 0,
@@ -21,12 +21,23 @@ export class RestService {
     }
   }
   public fivemin = {
-    list: [],
     init: false,
+    data: {
+      id: 0,
+      chamsoc: [],
+      tugiac: [],
+      giaiphap: [],
+      ketqua: [],
+      uytin: [],
+      dongdoi: [],
+      trachnhiem: [],
+      tinhyeu: []
+    },
+    list: [],
     filter: {
       time: (new Date()).toISOString()
     },
-    index: 0
+    id: 0
   }
   public user = {
     userid: '0',
@@ -497,6 +508,12 @@ export class RestService {
     let datetime = time.split("T")[0].split('-')
     if (datetime.length === 3) return (Number(datetime['2']) + 1) + '/' + datetime['1'] + '/' + datetime['0']
     return ''
+  }
+
+  public isodatetotime(time: any) {
+    let datetime = time.split("T")[0].split('-')
+    if (datetime.length === 3) return (new Date(datetime[0], Number(datetime[1]) - 1, datetime[2])).getTime()
+    return 0
   }
 
   public async notify(text: string, duration: number = 1000) {

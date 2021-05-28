@@ -7,7 +7,16 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./detail.page.scss'],
 })
 export class DetailPage implements OnInit {
-
+  public dulieu = [
+    {ten: 'chamsoc', tieude: 'Chăm sóc khách hàng'},
+    {ten: 'tugiac', tieude: 'Tự giác'},
+    {ten: 'giaiphap', tieude: 'Giái pháp đạt mục tiêu'},
+    {ten: 'ketqua', tieude: 'Kết quẳ'},
+    {ten: 'uytin', tieude: 'Uy tín'},
+    {ten: 'dongdoi', tieude: 'Giúp đỡ đồng đội'},
+    {ten: 'trachnhiem', tieude: 'Trách nhiệm'},
+    {ten: 'tinhyeu', tieude: 'Tình yêu'}
+  ]
   constructor(
     public rest: RestService
   ) { }
@@ -15,8 +24,18 @@ export class DetailPage implements OnInit {
   ngOnInit() {
   }
 
-  public update() {
-    // this.rest.fivemin.data = JSON.parse(JSON.stringify(this.rest.fivemin.list[this.rest.fivemin.index]))
-    // this.rest.router.navigateByUrl('/fivemin/update')
+  public async change(id: number, status:number) {
+    await this.rest.freeze()
+    this.rest.check({
+      action: 'fivemin-change',
+      rid: id,
+      id: this.rest.fivemin.id,
+      status: status
+    }).then(response => {
+      this.rest.fivemin.data = response.data
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 }

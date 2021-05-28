@@ -2,36 +2,24 @@
   <ion-button color="light" fill="clear" (click)="this.rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button slot="end" (click)="update()" color="light" fill="clear">
+  <!-- <ion-button slot="end" (click)="update()" color="light" fill="clear">
     Cập nhật
-  </ion-button>
+  </ion-button> -->
 </ion-toolbar>
 
 <ion-content>
   <div class="pad">
-    <div class="endline-text">
-      <b>Chăm sóc khách hàng:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].chamsoc}}
-    </div>
-    <div class="endline-text">
-      <b>Tự giác:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].tugiac}}
-    </div>
-    <div class="endline-text">
-      <b>Giải pháp đạt mục tiêu:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].giaiphap}}
-    </div>
-    <div class="endline-text">
-      <b>Uy tín:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].uytin}}
-    </div>
-    <div class="endline-text">
-      <b>Kết quả thực hiện:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].ketqya}}
-    </div>
-    <div class="endline-text">
-      <b>Giúp đỡ đồng đội:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].dongdoi}}
-    </div>
-    <div class="endline-text">
-      <b>Trách nhiệm:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].trachnhiem}}
-    </div>
-    <div class="endline-text">
-      <b>Tình yêu:</b> <br/>{{rest.fivemin.list[rest.fivemin.index].tinhyeu}}
+    <div class="hopthoaitieuchi" *ngFor="let tieuchi of dulieu">
+      <b> {{tieuchi.tieude}} </b> <br>
+      <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]">
+        {{hang.noidung}}
+        <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="change(hang.id, 1)">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="change(hang.id, 0)">
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
     </div>
   </div>
 </ion-content>

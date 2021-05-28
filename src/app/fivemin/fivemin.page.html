@@ -29,8 +29,11 @@
   <ion-card *ngFor="let item of rest.fivemin.list; let i = index">
     <ion-card-content>
       Kế hoạch công việc ngày {{rest.timetodate(item.thoigian)}}
+      <div *ngIf="rest.config.kaizen > 1">
+        <b> Nhân viên: {{item.name}} </b>
+      </div>
       <br>
-      <ion-button size="small" shape="round" color="secondary" (click)="detail(i)">
+      <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
         <ion-icon name="information-circle-outline"></ion-icon>
       </ion-button>
       <ion-button size="small" shape="round" color="danger">
@@ -48,7 +51,7 @@
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="update(0)">
+      <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
