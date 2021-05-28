@@ -1,9 +1,61 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>fivemin</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-card *ngFor="let item of rest.fivemin.list; let i = index">
+    <ion-card-content>
+      Kế hoạch công việc ngày {{rest.timetodate(item.thoigianthem)}}
+      <br>
+      <ion-button size="small" shape="round" color="secondary" (click)="detail(i)">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button size="small" shape="round" color="secondary">
+        <ion-icon name="refresh-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button size="small" shape="round" color="danger">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+  <!-- <ion-item>
+    <ion-label>
+      {{item.work}}
+    </ion-label>
+    <ion-checkbox slot="end" [(ngModel)]="list[i].status"></ion-checkbox>
+  </ion-item> -->
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="update(true)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="filter()">
+        <ion-icon name="filter-outline"></ion-icon>
+        <ion-label> Tìm kiếm </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

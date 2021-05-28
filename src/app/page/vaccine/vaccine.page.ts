@@ -114,7 +114,7 @@ export class VaccinePage implements OnInit {
             text: 'Xác nhận',
             cssClass: 'secondary',
             handler: (e) => {
-              this.noteSubmit(id, e['note'])
+              this.noteSubmit(id, index, e['note'])
             }
           }
         ]

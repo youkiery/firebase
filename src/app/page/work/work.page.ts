@@ -23,6 +23,7 @@ export class WorkPage implements OnInit {
   ngOnInit() { }
 
   ionViewDidEnter() {
+    this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.work.page = {
       'undone': 1,
       'done': 1
@@ -41,7 +42,10 @@ export class WorkPage implements OnInit {
       this.rest.work.init = 1
       this.rest.work.unread = data.unread
       this.rest.work.data = data.list
-    }, (error) => { })
+      this.rest.defreeze()
+    }, (error) => { 
+      this.rest.defreeze()
+    })
   }
 
   public filter() {

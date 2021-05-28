@@ -1,0 +1,48 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="filter()" color="light" fill="clear">
+    Thêm kế hoạch
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <div class="header">
+    {{rest.user.name}}
+  </div>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked"> Chăm sóc khác hàng </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tự giác </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Giải pháp đạt mục tiêu </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Uy tín </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Kết quả thực hiện </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Giúp đỡ đồng đội </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Trách nhiệm </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tình yêu </ion-label>
+      <ion-textarea  autoGrow="true"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</ion-content>

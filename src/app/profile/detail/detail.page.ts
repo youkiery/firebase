@@ -44,15 +44,16 @@ export class DetailPage implements OnInit {
     }
   }
 
-  public download() {
+  public async download() {
+    await this.rest.freeze()
     this.rest.check({
       action: 'profile-download',
       id: this.rest.profile.id
     }).then(response => {
       window.open(response.link)
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     }, () => {
-      this.rest.defreeze('load')
+      this.rest.defreeze()
     })
   }
 }

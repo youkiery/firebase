@@ -1,0 +1,12 @@
+.pad {
+  padding: 10px;
+}
+.endline-text {
+  border-bottom: 1px solid lightslategray;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+}
+.endline-text.last {
+  border-bottom: none;
+}

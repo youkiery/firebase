@@ -20,6 +20,11 @@ export class RestService {
 
     }
   }
+  public fivemin = {
+    list: [],
+    init: false,
+    index: 0
+  }
   public user = {
     userid: '0',
     name: '',
