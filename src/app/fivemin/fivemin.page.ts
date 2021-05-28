@@ -32,22 +32,26 @@ export class FiveminPage {
     this.rest.router.navigateByUrl('/fivemin/detail')
   }
 
+  public insert() {
+    this.rest.router.navigateByUrl('/fivemin/insert')
+  }
+
   public update(index = 0) {
-    if (!index) {
-      this.rest.fivemin.data = {
-        chamsoc: '',
-        tugiac: '',
-        giaiphap: '',
-        uytin: '',
-        ketqua: '',
-        dongdoi: '',
-        trachnhiem: '',
-        tinhyeu: '',
-        hoanthanh: ''
-      }
-    }
-    else this.rest.fivemin.data = JSON.parse(JSON.stringify(this.rest.fivemin.list[this.rest.fivemin.index]))
-    this.rest.router.navigateByUrl('/fivemin/update')
+    // if (!index) {
+    //   this.rest.fivemin.data = {
+    //     chamsoc: '',
+    //     tugiac: '',
+    //     giaiphap: '',
+    //     uytin: '',
+    //     ketqua: '',
+    //     dongdoi: '',
+    //     trachnhiem: '',
+    //     tinhyeu: '',
+    //     hoanthanh: ''
+    //   }
+    // }
+    // else this.rest.fivemin.data = JSON.parse(JSON.stringify(this.rest.fivemin.list[this.rest.fivemin.index]))
+    // this.rest.router.navigateByUrl('/fivemin/update')
   }
 
   public async filter() {

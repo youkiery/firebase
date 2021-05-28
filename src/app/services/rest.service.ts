@@ -23,21 +23,9 @@ export class RestService {
   public fivemin = {
     list: [],
     init: false,
-    data: {
-      chamsoc: '',
-      tugiac: '',
-      giaiphap: '',
-      uytin: '',
-      ketqua: '',
-      dongdoi: '',
-      trachnhiem: '',
-      tinhyeu: '',
-      hoanthanh: ''
-    },
     filter: {
       time: (new Date()).toISOString()
     },
-    update: false,
     index: 0
   }
   public user = {
