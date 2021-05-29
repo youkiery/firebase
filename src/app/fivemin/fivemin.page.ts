@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RestService } from '../services/rest.service';
+import { PhotoService } from '../services/photo.service';
 
 @Component({
   selector: 'app-fivemin',
@@ -8,7 +9,8 @@ import { RestService } from '../services/rest.service';
 })
 export class FiveminPage {
   constructor(
-    public rest: RestService
+    public rest: RestService,
+    public photoService: PhotoService
   ) { }
 
   public async ionViewWillEnter() {

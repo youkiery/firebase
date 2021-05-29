@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { PhotoService } from 'src/app/services/photo.service';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -18,25 +20,53 @@ export class DetailPage implements OnInit {
     {ten: 'tinhyeu', tieude: 'Tình yêu'}
   ]
   constructor(
-    public rest: RestService
+    public rest: RestService,
+    public photoService: PhotoService,
+    private storage: AngularFireStorage,
   ) { }
 
   ngOnInit() {
   }
 
-  public async change(id: number, status:number) {
-    await this.rest.freeze()
-    this.rest.check({
-      action: 'fivemin-change',
-      rid: id,
-      id: this.rest.fivemin.id,
-      status: status
-    }).then(response => {
-      this.rest.fivemin.data = response.data
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
+  public uploadImage(image: string) {
+    return new Promise((resolve) => {
+      const path = 'images/' + new Date().getTime() + '.jpg';
+      let fileRef = this.storage.ref(path);
+      let base64 = image.substr(image.indexOf(',') + 1);
+      let metadata = {
+        contentType: 'image/jpeg',
+      };
+
+      fileRef.putString(base64, 'base64', metadata).then((response) => {
+        fileRef.getDownloadURL().subscribe(url => {
+          resolve(url)
+        })
+      }, (error) => {
+        resolve('')
+      })
     })
+  }
+
+  public async change(id: number, status:number) {
+    await this.photoService.addNewToGallery()
+    console.log(this.photoService.photo);
+    
+    // await this.rest.freeze()
+    // this.uploadImage(base64).then(url => {
+    //   this.rest.check({
+    //     action: 'fivemin-change',
+    //     rid: id,
+    //     id: this.rest.fivemin.id,
+    //     status: status,
+    //     image: url
+    //   }).then(response => {
+    //     this.rest.fivemin.data = response.data
+    //     this.rest.defreeze()
+    //   }, () => {
+    //     this.rest.defreeze()
+    //   })
+    // })
+    
   }
 
   // public update() {
