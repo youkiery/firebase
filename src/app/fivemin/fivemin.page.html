@@ -36,6 +36,9 @@
       <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
         <ion-icon name="information-circle-outline"></ion-icon>
       </ion-button>
+      <ion-button *ngIf="rest.config.kaizen > 1" size="small" shape="round" color="secondary" (click)="preview(item.id)">
+        <ion-icon name="eye-outline"></ion-icon>
+      </ion-button>
       <ion-button size="small" shape="round" color="danger">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>

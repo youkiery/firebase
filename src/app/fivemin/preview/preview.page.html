@@ -1,0 +1,14 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="print()" color="light" fill="clear">
+    <ion-icon name="print-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <div id="printable">
+    <div [innerHTML]="html" ></div>
+  </div>
+</ion-content>

@@ -42,6 +42,20 @@ export class FiveminPage {
     })
   }
 
+  public async preview(id: number) {
+    await this.rest.freeze()
+    this.rest.check({
+      action: 'fivemin-preview',
+      id: id
+    }).then(response => {
+      this.rest.fivemin.html = response.html
+      this.rest.router.navigateByUrl('fivemin/preview')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public insert() {
     this.rest.router.navigateByUrl('/fivemin/insert')
   }

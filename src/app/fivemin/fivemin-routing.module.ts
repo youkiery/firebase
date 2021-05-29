@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'insert',
     loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'preview',
+    loadChildren: () => import('./preview/preview.module').then( m => m.PreviewPageModule)
   }
 ];
 

@@ -11,38 +11,21 @@
   <div class="header">
     {{rest.user.name}}
   </div>
-  <ion-list>
-    <ion-item>
-      <ion-label position="stacked"> Chăm sóc khác hàng </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.chamsoc"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Tự giác </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.tugiac"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Giải pháp đạt mục tiêu </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.giaiphap"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Uy tín </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.uytin"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Kết quả thực hiện </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.ketqua"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Giúp đỡ đồng đội </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.dongdoi"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Trách nhiệm </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.trachnhiem"></ion-textarea>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked"> Tình yêu </ion-label>
-      <ion-textarea autoGrow="true" [(ngModel)]="rest.fivemin.data.tinhyeu"></ion-textarea>
-    </ion-item>
-  </ion-list>
+  <div class="content">
+    <div *ngFor="let tieuchi of dulieu; let chimuctieuchi = index">
+      <ion-label position="stacked"> 
+        {{tieuchi.tieude}} 
+      </ion-label>
+      <ion-item *ngFor="let truong of tieuchi.truong; let chimuc = index">
+        <ion-input [(ngModel)]="dulieu[chimuctieuchi].truong[chimuc].giatri"></ion-input>
+        <ion-button slot="end" color="secondary" size="small" (click)="xoaTruong(chimuctieuchi, chimuc)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-button color="danger" size="small" (click)="themTruong(chimuctieuchi)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
 </ion-content>

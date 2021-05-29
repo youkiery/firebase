@@ -38,4 +38,8 @@ export class DetailPage implements OnInit {
       this.rest.defreeze()
     })
   }
+
+  // public update() {
+  //   this.rest.router.navigateByUrl('/fivemin/update')
+  // }
 }
