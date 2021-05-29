@@ -17,7 +17,11 @@
   overflow: auto;
   border-bottom: 1px solid lightgray;
   line-height: 2.5em;
+  white-space: pre-wrap;
 }
 .hopthoaitieuchi {
   margin-bottom: 1.5em;
+}
+img {
+  max-width: 100px;
 }

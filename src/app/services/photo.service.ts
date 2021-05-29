@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Camera, CameraPhoto, CameraResultType, CameraSource } from '@capacitor/camera';
 // import { Filesystem, Directory } from '@capacitor/filesystem';
-
-export interface Photo {
-  filepath: string;
-  webviewPath: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +17,8 @@ export class PhotoService {
       source: CameraSource.Camera,
       quality: 100
     })
-
-    this.photo = capturedPhoto.base64String
+    
+    this.photo = 'data:image/png;base64,' + capturedPhoto.base64String
     this.resize()
   }
 

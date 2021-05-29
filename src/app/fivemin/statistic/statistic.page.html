@@ -1,0 +1,22 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <table>
+    <tr>
+      <th> STT </th>
+      <th> Hình ảnh </th>
+      <th> Nhân viên </th>
+      <th> Nội dung </th>
+    </tr>
+    <tr *ngFor="let thongke of rest.fivemin.thongke.danhsach; let i = index">
+      <td> {{i + 1}} </td>
+      <td> <img [src]="thongke.image"> </td>
+      <td> {{thongke.nhanvien}} </td>
+      <td> {{thongke.noidung}} </td>
+    </tr>
+  </table>
+</ion-content>

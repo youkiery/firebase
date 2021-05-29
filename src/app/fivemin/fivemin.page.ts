@@ -18,14 +18,6 @@ export class FiveminPage {
       this.filter().then(() => {
         this.rest.fivemin.init = true
       }, () => {})
-//       this.rest.fivemin.list = [
-//         {
-//           id: 1, chamsoc: `abc`, tugiac: `a
-// bc`, giaiphap: `a
-// b
-// c`, uytin: '', ketqua: '', dongdoi: '', trachnhiem: '', tinhyeu: '', hoanthanh: false, thoigianthem: 1622023139179
-//         }
-//       ]
     }
   }
 
@@ -62,6 +54,22 @@ export class FiveminPage {
     this.rest.router.navigateByUrl('/fivemin/insert')
   }
 
+  public hoanthanh(id: number, status: number = 0) {
+    this.rest.freeze('Đang lấy dữ liệu')
+    this.rest.check({
+      action: 'fivemin-hoanthanh',
+      id: id,
+      status: status,
+      time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+    }).then(response => {
+      this.rest.fivemin.thongke.danhsach = response.list
+      this.rest.router.navigateByUrl('fivemin/statistic')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public update(index = 0) {
     // if (!index) {
     //   this.rest.fivemin.data = {
@@ -83,17 +91,32 @@ export class FiveminPage {
   public async filter() {
     await this.rest.freeze('Đang lấy dữ liệu')
     return new Promise((resolve, reject) => {
-      this.rest.check({
-        action: 'fivemin-init',
-        time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
-      }).then((response) => {
-        this.rest.fivemin.list = response.list
-        this.rest.defreeze()
-        resolve(true)
-      }, () => {
-        this.rest.defreeze()
-        reject()
-      })
+      if (this.rest.config.kaizen < 2) {
+        this.rest.check({
+          action: 'fivemin-init',
+          time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+        }).then((response) => {
+          this.rest.fivemin.list = response.list
+          this.rest.defreeze()
+          resolve(true)
+        }, () => {
+          this.rest.defreeze()
+          reject()
+        })
+      }
+      else {
+        this.rest.check({
+          action: 'fivemin-statistic',
+          time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+        }).then((response) => {
+          this.rest.fivemin.thongke.dulieu = response.list
+          this.rest.defreeze()
+          resolve(true)
+        }, () => {
+          this.rest.defreeze()
+          reject()
+        })
+      }
     })
   }
 }

@@ -48,25 +48,40 @@ export class DetailPage implements OnInit {
   }
 
   public async change(id: number, status:number) {
-    await this.photoService.addNewToGallery()
-    console.log(this.photoService.photo);
-    
-    // await this.rest.freeze()
-    // this.uploadImage(base64).then(url => {
-    //   this.rest.check({
-    //     action: 'fivemin-change',
-    //     rid: id,
-    //     id: this.rest.fivemin.id,
-    //     status: status,
-    //     image: url
-    //   }).then(response => {
-    //     this.rest.fivemin.data = response.data
-    //     this.rest.defreeze()
-    //   }, () => {
-    //     this.rest.defreeze()
-    //   })
-    // })
-    
+    if (status) {
+      await this.photoService.addNewToGallery()
+      await this.rest.freeze('Đang tải ảnh lên...')
+      this.uploadImage(this.photoService.photo).then((url:string) => {
+        this.rest.check({
+          action: 'fivemin-change',
+          rid: id,
+          id: this.rest.fivemin.id,
+          status: status,
+          image: url.replace('%2F', '@@')
+        }).then(response => {
+          this.rest.fivemin.data = response.data
+          this.rest.defreeze()
+        }, () => {
+          this.rest.defreeze()
+        })
+      })
+    }
+    else {
+      await this.rest.freeze('Đang cập nhật dữ liệu')
+      this.rest.check({
+        action: 'fivemin-change',
+        rid: id,
+        id: this.rest.fivemin.id,
+        status: status,
+        image: ''
+      }).then(response => {
+        this.rest.fivemin.data = response.data
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+
   }
 
   // public update() {

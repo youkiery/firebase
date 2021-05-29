@@ -2,9 +2,9 @@
   <ion-button color="light" fill="clear" (click)="this.rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button slot="end" (click)="update()" color="light" fill="clear">
+  <!-- <ion-button slot="end" (click)="update()" color="light" fill="clear">
     Cập nhật
-  </ion-button>
+  </ion-button> -->
 </ion-toolbar>
 
 <ion-content>
@@ -13,6 +13,8 @@
       <b> {{tieuchi.tieude}} </b> <br>
       <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]">
         {{hang.noidung}}
+        <br>
+        <img [src]="hang.hinhanh">
         <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="change(hang.id, 1)">
           <ion-icon name="checkmark-circle-outline"></ion-icon>
         </ion-button>

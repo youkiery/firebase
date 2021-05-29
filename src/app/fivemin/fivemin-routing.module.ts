@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'preview',
     loadChildren: () => import('./preview/preview.module').then( m => m.PreviewPageModule)
+  },
+  {
+    path: 'statistic',
+    loadChildren: () => import('./statistic/statistic.module').then( m => m.StatisticPageModule)
   }
 ];
 

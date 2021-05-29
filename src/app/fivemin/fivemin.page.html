@@ -26,24 +26,41 @@
     Lọc danh sách
   </ion-button>
 
-  <ion-card *ngFor="let item of rest.fivemin.list; let i = index">
-    <ion-card-content>
-      Kế hoạch công việc ngày {{rest.timetodate(item.thoigian)}}
-      <div *ngIf="rest.config.kaizen > 1">
-        <b> Nhân viên: {{item.name}} </b>
-      </div>
-      <br>
-      <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
-        <ion-icon name="information-circle-outline"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="rest.config.kaizen > 1" size="small" shape="round" color="secondary" (click)="preview(item.id)">
-        <ion-icon name="eye-outline"></ion-icon>
-      </ion-button>
-      <ion-button size="small" shape="round" color="danger">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+  <!-- <div *ngIf="rest.config.kaizen > 1"> -->
+  <div>
+    <table>
+      <tr>
+        <th> STT </th>
+        <th> Nhân viên </th>
+        <th> Hoàn thành </th>
+        <th> Chưa hoàn thành </th>
+      </tr>
+      <tr *ngFor="let thongke of rest.fivemin.thongke.dulieu; let i = index">
+        <td> {{i + 1}} </td>
+        <td> {{thongke.nhanvien}} </td>
+        <td (click)="hoanthanh(thongke.id, 1)"> {{thongke.hoanthanh}} </td>
+        <td (click)="hoanthanh(thongke.id, 0)"> {{thongke.chuahoanthanh}} </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- <div *ngIf="rest.config.kaizen < 2"> -->
+  <div>
+    <ion-card *ngFor="let item of rest.fivemin.list; let i = index">
+      <ion-card-content>
+        Kế hoạch công việc ngày {{rest.timetodate(item.thoigian)}}
+        <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="rest.config.kaizen > 1" size="small" shape="round" color="secondary" (click)="preview(item.id)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button size="small" shape="round" color="danger">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
 
 <ion-toolbar>

@@ -36,6 +36,7 @@ export class LoginPage {
       if (val && val['username'] && val['password']) {
         this.rest.login(val['username'], val['password'])
       }
+      else this.rest.defreeze()
     })
   }
 }
