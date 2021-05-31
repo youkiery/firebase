@@ -59,9 +59,10 @@ export class InsertPage implements OnInit {
       dongdoi: danhsach['dongdoi'],
       trachnhiem: danhsach['trachnhiem'],
       tinhyeu: danhsach['tinhyeu'],
+      page: this.rest.fivemin.filter.page,
       time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
     }).then(response => {
-      this.rest.fivemin.list = response.list
+      this.rest.fivemin.list = this.rest.fivemin.list.concat(response.list)
       this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {

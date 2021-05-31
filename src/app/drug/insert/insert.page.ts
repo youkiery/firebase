@@ -19,24 +19,25 @@ export class InsertPage implements OnInit {
   ) { }
 
   ionViewWillEnter() {
-    this.name = this.rest.drug.list[this.rest.drug.index].name
-    this.limit = this.rest.drug.list[this.rest.drug.index].limits
-    this.effect = this.rest.drug.list[this.rest.drug.index].effect
-    this.sideeffect = this.rest.drug.list[this.rest.drug.index].sideeffect
-    this.mechanic = this.rest.drug.list[this.rest.drug.index].mechanic
+    if (this.rest.drug.index) {
+      this.name = this.rest.drug.list[this.rest.drug.index].name
+      this.limit = this.rest.drug.list[this.rest.drug.index].limits
+      this.effect = this.rest.drug.list[this.rest.drug.index].effect
+      this.sideeffect = this.rest.drug.list[this.rest.drug.index].sideeffect
+      this.mechanic = this.rest.drug.list[this.rest.drug.index].mechanic
+    }
   }
 
   ngOnInit() { }
 
   public async insert() {
     await this.rest.freeze('Thêm thuốc...')
-    this.rest.check({
-      action: 'drug-insert',
+    this.rest.checkpost('drug-insert', {
       name: this.name,
-      limit: encodeURI(this.limit),
-      effect: encodeURI(this.effect),
-      sideeffect: encodeURI(this.sideeffect),
-      mechanic: encodeURI(this.mechanic),
+      limit: encodeURI(this.limit.replace('/', '')),
+      effect: encodeURI(this.effect.replace('/', '')),
+      sideeffect: encodeURI(this.sideeffect.replace('/', '')),
+      mechanic: encodeURI(this.mechanic.replace('/', '')),
       key_name: this.rest.drug.filter.name,
       key_effect: this.rest.drug.filter.effect
     }).then((response) => {
@@ -54,9 +55,9 @@ export class InsertPage implements OnInit {
       action: 'drug-update',
       name: this.name,
       limit: encodeURI(this.limit),
-      effect: encodeURI(this.effect),
-      sideeffect: encodeURI(this.sideeffect),
-      mechanic: encodeURI(this.mechanic),
+      effect: encodeURI(this.effect.replace('/', '')),
+      sideeffect: encodeURI(this.sideeffect.replace('/', '')),
+      mechanic: encodeURI(this.mechanic.replace('/', '')),
       id: this.rest.drug.list[this.rest.drug.index].id,
       key_name: this.rest.drug.filter.name,
       key_effect: this.rest.drug.filter.effect

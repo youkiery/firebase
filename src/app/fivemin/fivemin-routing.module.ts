@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'statistic',
     loadChildren: () => import('./statistic/statistic.module').then( m => m.StatisticPageModule)
+  },
+  {
+    path: 'image',
+    loadChildren: () => import('./image/image.module').then( m => m.ImagePageModule)
   }
 ];
 

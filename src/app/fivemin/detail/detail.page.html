@@ -9,17 +9,19 @@
 
 <ion-content>
   <div class="pad">
-    <div class="hopthoaitieuchi" *ngFor="let tieuchi of dulieu">
+    <div class="hopthoaitieuchi" *ngFor="let tieuchi of dulieu; let i = index">
       <b> {{tieuchi.tieude}} </b> <br>
       <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]">
         {{hang.noidung}}
         <br>
-        <img [src]="hang.hinhanh">
         <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="change(hang.id, 1)">
           <ion-icon name="checkmark-circle-outline"></ion-icon>
         </ion-button>
         <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="change(hang.id, 0)">
           <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="hang.img.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(i)">
+          xem ảnh
         </ion-button>
       </div>
     </div>

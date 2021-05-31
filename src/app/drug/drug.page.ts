@@ -39,6 +39,7 @@ export class DrugPage implements OnInit {
   public async insert() {
     if (this.rest.config.drug < 2) this.rest.notify('Chưa cấp quyền truy cập')
     else {
+      this.rest.drug.index = 0
       this.rest.drug.update = false
       const modal = await this.modalCtrl.create({
         component: InsertPage,

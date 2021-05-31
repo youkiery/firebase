@@ -9,9 +9,9 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = 'http://daklak.thanhxuanpet.com/server/index.php?';
-  public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
+  // public baseurl: string = '/server/index.php?';
   public admin = {
     type: 0,
     index: 0,
@@ -21,6 +21,7 @@ export class RestService {
     }
   }
   public fivemin = {
+    index: 0,
     init: false,
     html: '',
     thongke: {
@@ -46,6 +47,7 @@ export class RestService {
     },
     list: [],
     filter: {
+      page: 1,
       time: (new Date()).toISOString()
     },
     id: 0
@@ -382,6 +384,36 @@ export class RestService {
   public check(param: Object): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.post(this.baseurl + this.buildHttpParam(param), '').toPromise().then((data) => {
+        if (data['overtime']) {
+          this.notify("Đã hết thời gian sử dụng")
+          this.router.navigateByUrl('/home')
+          reject(data)
+        }
+        else if (data['no_branch']) {
+          this.notify("Tài khoản không có trong chi nhánh")
+          this.router.navigateByUrl('/')
+          reject(data)
+        }
+        else {
+          if (data['messenger']) this.notify(data['messenger'])
+          if (data['status']) resolve(data)
+          else {
+            reject(data)
+          }
+        }
+      }, (error) => {
+        if (error['messenger']) this.notify(error['messenger'])
+        else this.notify('Có lỗi xảy ra >.<')
+        reject(1)
+        // this.error = JSON.stringify(error)
+        // this.rest.notify(JSON.stringify(error))
+      })
+    })
+  }
+
+  public checkpost(action: string, param: Object): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.post(this.baseurl + 'action='+action+'&userid='+ this.user.userid, JSON.stringify(param)).toPromise().then((data) => {
         if (data['overtime']) {
           this.notify("Đã hết thời gian sử dụng")
           this.router.navigateByUrl('/home')

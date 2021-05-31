@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { ModalController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { RestService } from 'src/app/services/rest.service';
+import { ImagePage } from '../image/image.page';
 
 @Component({
   selector: 'app-detail',
@@ -23,6 +25,7 @@ export class DetailPage implements OnInit {
     public rest: RestService,
     public photoService: PhotoService,
     private storage: AngularFireStorage,
+    public modal: ModalController
   ) { }
 
   ngOnInit() {
@@ -82,6 +85,14 @@ export class DetailPage implements OnInit {
       })
     }
 
+  }
+
+  public async viewImage(index: number) {
+    this.rest.fivemin.index = index
+    let modal = await this.modal.create({
+      component: ImagePage
+    })
+    modal.present()
   }
 
   // public update() {
