@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { ModalController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
 import { RestService } from 'src/app/services/rest.service';
-import { ImagePage } from '../image/image.page';
+import { UploadPage } from '../upload/upload.page';
 
 @Component({
   selector: 'app-detail',
@@ -21,53 +20,35 @@ export class DetailPage implements OnInit {
     {ten: 'trachnhiem', tieude: 'Trách nhiệm'},
     {ten: 'tinhyeu', tieude: 'Tình yêu'}
   ]
+  public image = []
   constructor(
     public rest: RestService,
     public photoService: PhotoService,
-    private storage: AngularFireStorage,
     public modal: ModalController
   ) { }
 
   ngOnInit() {
   }
 
-  public uploadImage(image: string) {
-    return new Promise((resolve) => {
-      const path = 'images/' + new Date().getTime() + '.jpg';
-      let fileRef = this.storage.ref(path);
-      let base64 = image.substr(image.indexOf(',') + 1);
-      let metadata = {
-        contentType: 'image/jpeg',
-      };
-
-      fileRef.putString(base64, 'base64', metadata).then((response) => {
-        fileRef.getDownloadURL().subscribe(url => {
-          resolve(url)
-        })
-      }, (error) => {
-        resolve('')
-      })
-    })
-  }
 
   public async change(id: number, status:number) {
     if (status) {
-      await this.photoService.addNewToGallery()
-      await this.rest.freeze('Đang tải ảnh lên...')
-      this.uploadImage(this.photoService.photo).then((url:string) => {
+      // await this.photoService.addNewToGallery()
+      // await this.rest.freeze('Đang tải ảnh lên...')
+      // this.uploadImage(this.photoService.photo).then((url:string) => {
         this.rest.check({
           action: 'fivemin-change',
           rid: id,
           id: this.rest.fivemin.id,
           status: status,
-          image: url.replace('%2F', '@@')
+          // image: url.replace('%2F', '@@')
         }).then(response => {
           this.rest.fivemin.data = response.data
           this.rest.defreeze()
         }, () => {
           this.rest.defreeze()
         })
-      })
+      // })
     }
     else {
       await this.rest.freeze('Đang cập nhật dữ liệu')
@@ -87,10 +68,12 @@ export class DetailPage implements OnInit {
 
   }
 
-  public async viewImage(index: number) {
-    this.rest.fivemin.index = index
+  public async viewImage(tieuchi: string, chimuc: number, rid: number) {
+    if (this.rest.fivemin.data[tieuchi][chimuc].hinhanh == '') this.rest.fivemin.image = []
+    else this.rest.fivemin.image = this.rest.fivemin.data[tieuchi][chimuc].hinhanh.split(',')
+    this.rest.fivemin.rid = rid
     let modal = await this.modal.create({
-      component: ImagePage
+      component: UploadPage
     })
     modal.present()
   }

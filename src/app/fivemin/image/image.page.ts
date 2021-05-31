@@ -8,7 +8,6 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./image.page.scss'],
 })
 export class ImagePage implements OnInit {
-  public images = []
   constructor(
     public rest: RestService,
     public modal: ModalController
@@ -16,9 +15,4 @@ export class ImagePage implements OnInit {
 
   ngOnInit() {
   }
-
-  ionViewWillEnter() {
-    this.images = this.rest.fivemin.thongke.danhsach[this.rest.fivemin.index].image.split(',')
-  }
-
 }

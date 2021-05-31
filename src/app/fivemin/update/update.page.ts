@@ -70,7 +70,7 @@ export class UpdatePage implements OnInit {
       dongdoi: danhsach['dongdoi'],
       trachnhiem: danhsach['trachnhiem'],
       tinhyeu: danhsach['tinhyeu'],
-      time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+      // time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
     }).then(response => {
       this.rest.fivemin.data = response.data
       this.rest.fivemin.list = response.list

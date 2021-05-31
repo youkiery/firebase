@@ -1,0 +1,15 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="this.modal.dismiss()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+    <ion-icon name="save-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="upload()" color="light" fill="clear">
+    <ion-icon name="camera-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-img *ngFor="let hinhanh of rest.fivemin.image; let i = index" [src]="hinhanh" (click)="remove(i)"></ion-img>
+</ion-content>

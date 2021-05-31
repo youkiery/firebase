@@ -9,8 +9,8 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // // public baseurl: string = 'http://daklak.thanhxuanpet.com/server/index.php?';
   public admin = {
     type: 0,
@@ -21,7 +21,9 @@ export class RestService {
     }
   }
   public fivemin = {
+    image: [''],
     index: 0,
+    rid: 0,
     init: false,
     html: '',
     thongke: {

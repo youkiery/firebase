@@ -11,7 +11,7 @@
   <div class="pad">
     <div class="hopthoaitieuchi" *ngFor="let tieuchi of dulieu; let i = index">
       <b> {{tieuchi.tieude}} </b> <br>
-      <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]">
+      <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]; let chimuc = index">
         {{hang.noidung}}
         <br>
         <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="change(hang.id, 1)">
@@ -20,8 +20,11 @@
         <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="change(hang.id, 0)">
           <ion-icon name="close-circle-outline"></ion-icon>
         </ion-button>
-        <ion-button *ngIf="hang.hinhanh.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(i)">
-          xem ảnh
+        <ion-button *ngIf="hang.hinhanh.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+          hình ảnh
+        </ion-button>
+        <ion-button *ngIf="!hang.hinhanh.length" size="small" color="primary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+          hình ảnh
         </ion-button>
       </div>
     </div>
