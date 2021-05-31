@@ -16,27 +16,37 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="stacked">
+  <div *ngIf="rest.config.kaizen > 1">
+    <ion-item>
+      <ion-label position="stacked">
+        Từ ngày
+      </ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="rest.fivemin.filter.start" max="2100"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">
+        Đến ngày ngày
+      </ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="rest.fivemin.filter.end" max="2100"></ion-datetime>
+    </ion-item>
+    <ion-button color="secondary" expand="full" (click)="filterButton()">
       Lọc danh sách
-    </ion-label>
-    <ion-datetime displayFormat="DD/MM/YYYY" [value]="rest.fivemin.filter.time" max="2100"></ion-datetime>
-  </ion-item>
-  <ion-button color="secondary" expand="full" (click)="filterButton()">
-    Lọc danh sách
-  </ion-button>
+    </ion-button>
+  </div>
 
   <div *ngIf="rest.config.kaizen > 1">
   <!-- <div> -->
     <table>
       <tr>
         <th> STT </th>
+        <th>  </th>
         <th> Nhân viên </th>
         <th> Hoàn thành </th>
         <th> Chưa hoàn thành </th>
       </tr>
       <tr *ngFor="let thongke of rest.fivemin.thongke.dulieu; let i = index">
         <td> {{i + 1}} </td>
+        <td> <ion-checkbox [(ngModel)]="list[thongke.id]"></ion-checkbox> </td>
         <td> {{thongke.nhanvien}} </td>
         <td> {{thongke.hoanthanh}}
           <ion-button size="small" shape="round" color="secondary" (click)="hoanthanh(thongke.id, 1)">
@@ -56,20 +66,22 @@
   <!-- <div> -->
     <ion-card *ngFor="let item of rest.fivemin.list; let i = index">
       <ion-card-content>
-        Kế hoạch công việc ngày {{rest.timetodate(item.thoigian)}}
-        <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
-          <ion-icon name="information-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-button size="small" shape="round" color="secondary" (click)="preview(item.id)">
-          <ion-icon name="eye-outline"></ion-icon>
-        </ion-button>
-        <ion-button size="small" shape="round" color="danger" (click)="remove(item.id)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
+        Kế hoạch ngày {{rest.timetodate(item.thoigian)}}
+        <div class="right">
+          <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" shape="round" color="secondary" (click)="preview(item.id)">
+            <ion-icon name="eye-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" shape="round" color="danger" (click)="remove(item.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
       </ion-card-content>
     </ion-card>
   </div>
-  <ion-button expand="full" color="secondary" (click)="more()">
+  <ion-button *ngIf="rest.config.kaizen < 2" expand="full" color="secondary" (click)="more()">
     Xem thêm
   </ion-button>
 </ion-content>
@@ -85,6 +97,11 @@
       <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.kaizen > 1" (click)="previewSelected()">
+        <ion-icon name="print-outline"></ion-icon>
+        <ion-label> In </ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>

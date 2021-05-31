@@ -9,6 +9,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./fivemin.page.scss'],
 })
 export class FiveminPage {
+  public selected = false
+  public list = {}
   constructor(
     public rest: RestService,
     public photoService: PhotoService,
@@ -23,9 +25,38 @@ export class FiveminPage {
     }
   }
 
+  public select() {
+    this.selected = !this.selected
+    if (this.selected) this.list = {}
+  }
+
+  public async previewSelected() {
+    if (Object.keys(this.list).length) {
+      await this.rest.freeze('Đang lấy dữ liệu...')
+      let list = []
+      for (const key in this.list) {
+        if (Object.prototype.hasOwnProperty.call(this.list, key)) {
+          list.push(key)       
+        }
+      }
+      this.rest.check({
+        action: 'fivemin-previewed',
+        id: list.join(','),
+        start: this.rest.isodatetotime(this.rest.fivemin.filter.start),
+        end: this.rest.isodatetotime(this.rest.fivemin.filter.end)
+      }).then(response => {
+        this.rest.fivemin.html = response.html
+        this.rest.router.navigateByUrl('/fivemin/preview')
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
   public async detail(id: number) {
     this.rest.fivemin.id = id
-    await this.rest.freeze()
+    await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.check({
       action: 'fivemin-get',
       id: id
@@ -79,8 +110,7 @@ export class FiveminPage {
     this.rest.check({
       action: 'fivemin-remove',
       id: id,
-      page: this.rest.fivemin.filter.page,
-      time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+      page: this.rest.fivemin.filter.page
     }).then((response) => {
       this.rest.fivemin.list = this.rest.fivemin.list.filter(item => {
         return id != item.id
@@ -95,14 +125,15 @@ export class FiveminPage {
     this.rest.router.navigateByUrl('/fivemin/insert')
   }
 
-  public hoanthanh(id: number, status: number = 0, index) {
+  public hoanthanh(id: number, status: number = 0) {
     this.rest.freeze('Đang lấy dữ liệu')
     this.rest.check({
       action: 'fivemin-hoanthanh',
       id: id,
       status: status,
       page: this.rest.fivemin.filter.page,
-      time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+      start: this.rest.isodatetotime(this.rest.fivemin.filter.start),
+      end: this.rest.isodatetotime(this.rest.fivemin.filter.end)
     }).then(response => {
       this.rest.fivemin.thongke.danhsach = response.list
       this.rest.router.navigateByUrl('fivemin/statistic')
@@ -149,7 +180,6 @@ export class FiveminPage {
         this.rest.check({
           action: 'fivemin-init',
           page: this.rest.fivemin.filter.page,
-          time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
         }).then((response) => {
           this.rest.fivemin.list = this.rest.fivemin.list.concat(response.list)
           this.rest.defreeze()
@@ -163,7 +193,8 @@ export class FiveminPage {
         this.rest.check({
           action: 'fivemin-statistic',
           page: this.rest.fivemin.filter.page,
-          time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+          start: this.rest.isodatetotime(this.rest.fivemin.filter.start),
+          end: this.rest.isodatetotime(this.rest.fivemin.filter.end)
         }).then((response) => {
           this.rest.fivemin.thongke.dulieu = this.rest.fivemin.thongke.dulieu.concat(response.list)
           this.rest.defreeze()

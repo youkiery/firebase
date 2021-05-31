@@ -35,7 +35,7 @@ export class PreviewPage implements OnInit {
       winPrint.document.write(this.rest.fivemin.html);
       setTimeout(() => {
         winPrint.print()
-        // winPrint.close()
+        winPrint.close()
       }, 300)
     }
   }

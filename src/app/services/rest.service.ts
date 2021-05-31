@@ -10,8 +10,8 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 export class RestService {
   public branch = 'test'
   public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = 'http://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = '/server/index.php?';
+  // // public baseurl: string = 'http://daklak.thanhxuanpet.com/server/index.php?';
   public admin = {
     type: 0,
     index: 0,
@@ -25,13 +25,7 @@ export class RestService {
     init: false,
     html: '',
     thongke: {
-      dulieu: [{
-        index: 0,
-        id: 0,
-        nhanvien: 'Không có dữ liệu',
-        hoanthanh: 0,
-        chuahoanthanh: 0
-      }],
+      dulieu: [],
       danhsach: []
     },
     data: {
@@ -48,7 +42,8 @@ export class RestService {
     list: [],
     filter: {
       page: 1,
-      time: (new Date()).toISOString()
+      start: new Date((new Date().getTime() - 1000 * 60 * 60 * 24 * 3)).toISOString(),
+      end: (new Date()).toISOString()
     },
     id: 0
   }
@@ -245,6 +240,7 @@ export class RestService {
     },
   }
   public drug = {
+    init: false,
     role: 0,
     list: [],
     index: 0,

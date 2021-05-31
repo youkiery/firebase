@@ -18,21 +18,29 @@ export class DrugPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    if (!this.rest.drug.init) {
+      this.filter().then(() => {
+        this.rest.drug.init = true
+      })
+    }
   }
 
   public async filter() {
     await this.rest.freeze('Đang lọc thuốc')
-    this.rest.check({
-      action: 'drug-filter',
-      key_name: this.rest.drug.filter.name,
-      key_effect: this.rest.drug.filter.effect
-    }).then(response => {
-      this.rest.drug.list = response.data
-      this.rest.defreeze()
-    }, (response) => {
-      this.rest.notify(response.messenger)
-      this.rest.defreeze()
+    return new Promise(resolve => {
+      this.rest.check({
+        action: 'drug-filter',
+        key_name: this.rest.drug.filter.name,
+        key_effect: this.rest.drug.filter.effect
+      }).then(response => {
+        this.rest.drug.list = response.data
+        this.rest.defreeze()
+        resolve(true)
+      }, (response) => {
+        this.rest.notify(response.messenger)
+        this.rest.defreeze()
+        resolve(true)
+      })
     })
   }
 

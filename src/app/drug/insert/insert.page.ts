@@ -19,7 +19,7 @@ export class InsertPage implements OnInit {
   ) { }
 
   ionViewWillEnter() {
-    if (this.rest.drug.index) {
+    if (this.rest.drug.update) {
       this.name = this.rest.drug.list[this.rest.drug.index].name
       this.limit = this.rest.drug.list[this.rest.drug.index].limits
       this.effect = this.rest.drug.list[this.rest.drug.index].effect
