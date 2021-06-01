@@ -49,7 +49,8 @@ export class AdminDetail {
     this.module = this.rest.admin.users[this.rest.admin.index].module
   }
 
-  public save() {
+  public async save() {
+    await this.rest.freeze('Đang lưu dữ liệu')
     this.rest.check({
       action: 'admin-save',
       'work': this.module.work,
@@ -65,9 +66,10 @@ export class AdminDetail {
       'id': this.rest.admin.users[this.rest.admin.index].userid
     }).then(response => {
       this.rest.admin.users[this.rest.admin.index].module = response.data
+      this.rest.defreeze()
       this.modal.dismiss()
     }, () => {
-
+      this.rest.defreeze()
     })
   }
 

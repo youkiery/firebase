@@ -9,8 +9,29 @@ export class PhotoService {
   public photo: string = '';
   public max = 640;
   constructor() { }
+  
+  public async getPermisson() {
+    return new Promise((resolve) => {
+      Camera.checkPermissions().then(data => {
+        console.log(data);
+        if (data.camera != 'granted') {
+          Camera.requestPermissions({
+            permissions: ['camera']
+          }).then((data2) => {
+            console.log(data2);
+            resolve(true)
+          }, () => {
+            resolve(true)
+          })
+        }
+        else resolve(true)
+      })
+    })
+  }
 
   public async addNewToGallery() {
+    await this.getPermisson()
+    console.log(2);
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Base64,

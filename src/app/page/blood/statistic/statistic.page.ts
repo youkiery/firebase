@@ -15,11 +15,15 @@ export class StatisticPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
+  public async ionViewDidEnter() {
+    await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.check({
       'action': 'blood-statistic'
     }).then(response => {
       this.rest.blood.statistic = response.statistic
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
     })
   }
 }

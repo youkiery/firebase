@@ -9,8 +9,6 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./fivemin.page.scss'],
 })
 export class FiveminPage {
-  public selected = false
-  public list = {}
   constructor(
     public rest: RestService,
     public photoService: PhotoService,
@@ -22,35 +20,6 @@ export class FiveminPage {
       this.filter().then(() => {
         this.rest.fivemin.init = true
       }, () => {})
-    }
-  }
-
-  public select() {
-    this.selected = !this.selected
-    if (this.selected) this.list = {}
-  }
-
-  public async previewSelected() {
-    if (Object.keys(this.list).length) {
-      await this.rest.freeze('Đang lấy dữ liệu...')
-      let list = []
-      for (const key in this.list) {
-        if (Object.prototype.hasOwnProperty.call(this.list, key)) {
-          list.push(key)       
-        }
-      }
-      this.rest.check({
-        action: 'fivemin-previewed',
-        id: list.join(','),
-        start: this.rest.isodatetotime(this.rest.fivemin.filter.start),
-        end: this.rest.isodatetotime(this.rest.fivemin.filter.end)
-      }).then(response => {
-        this.rest.fivemin.html = response.html
-        this.rest.router.navigateByUrl('/fivemin/preview')
-        this.rest.defreeze()
-      }, () => {
-        this.rest.defreeze()
-      })
     }
   }
 
@@ -125,24 +94,6 @@ export class FiveminPage {
     this.rest.router.navigateByUrl('/fivemin/insert')
   }
 
-  public hoanthanh(id: number, status: number = 0) {
-    this.rest.freeze('Đang lấy dữ liệu')
-    this.rest.check({
-      action: 'fivemin-hoanthanh',
-      id: id,
-      status: status,
-      page: this.rest.fivemin.filter.page,
-      start: this.rest.isodatetotime(this.rest.fivemin.filter.start),
-      end: this.rest.isodatetotime(this.rest.fivemin.filter.end)
-    }).then(response => {
-      this.rest.fivemin.thongke.danhsach = response.list
-      this.rest.router.navigateByUrl('fivemin/statistic')
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
-  }
-
   public update(index = 0) {
     // if (!index) {
     //   this.rest.fivemin.data = {
@@ -161,49 +112,29 @@ export class FiveminPage {
     // this.rest.router.navigateByUrl('/fivemin/update')
   }
 
-  public filterButton() {
-    this.rest.fivemin.filter.page = 1
-    this.rest.fivemin.list = []
-    this.rest.fivemin.thongke.dulieu = []
-    this.filter()
-  }
-
   public more() {
     this.rest.fivemin.filter.page ++
     this.filter()
   }
 
+  public static() {
+    this.rest.router.navigateByUrl('/fivemin/static')
+  }
+
   public async filter() {
     await this.rest.freeze('Đang lấy dữ liệu...')
     return new Promise((resolve, reject) => {
-      if (this.rest.config.kaizen < 2) {
-        this.rest.check({
-          action: 'fivemin-init',
-          page: this.rest.fivemin.filter.page,
-        }).then((response) => {
-          this.rest.fivemin.list = this.rest.fivemin.list.concat(response.list)
-          this.rest.defreeze()
-          resolve(true)
-        }, () => {
-          this.rest.defreeze()
-          reject()
-        })
-      }
-      else {
-        this.rest.check({
-          action: 'fivemin-statistic',
-          page: this.rest.fivemin.filter.page,
-          start: this.rest.isodatetotime(this.rest.fivemin.filter.start),
-          end: this.rest.isodatetotime(this.rest.fivemin.filter.end)
-        }).then((response) => {
-          this.rest.fivemin.thongke.dulieu = this.rest.fivemin.thongke.dulieu.concat(response.list)
-          this.rest.defreeze()
-          resolve(true)
-        }, () => {
-          this.rest.defreeze()
-          reject()
-        })
-      }
+      this.rest.check({
+        action: 'fivemin-init',
+        page: this.rest.fivemin.filter.page,
+      }).then((response) => {
+        this.rest.fivemin.list = this.rest.fivemin.list.concat(response.list)
+        this.rest.defreeze()
+        resolve(true)
+      }, () => {
+        this.rest.defreeze()
+        reject()
+      })
     })
   }
 }

@@ -20,11 +20,13 @@ export class KaizenPage implements OnInit {
 
   ngOnInit() { }
 
-  ionViewWillEnter() {
+  public async ionViewWillEnter() {
     this.rest.kaizen.page = {
       undone: 1,
       done: 1
     }
+
+    await this.rest.freeze('Đang lấy dữ liệu...')
 
     this.rest.check({
       action: 'kaizen-init',
@@ -39,29 +41,36 @@ export class KaizenPage implements OnInit {
       this.rest.kaizen.init = 1
       this.rest.kaizen.unread = data.unread
       this.rest.kaizen.data = data.list
-    }, (error) => { })
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public filter() {
     return new Promise((resolve) => {
-      this.rest.check({
-        action: 'kaizen-auto',
-        starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
-        endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
-        keyword: this.rest.kaizen.filter.keyword,
-        type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
-        page: this.rest.kaizen.page[this.rest.kaizen.segment],
-        sort: this.rest.kaizen.filter.sort,
-      }).then(data => {
-        if (data['list']) {
-          this.rest.kaizen.unread = data['unread']
-          this.rest.kaizen.time = data.time
-          if (data.list) this.rest.kaizen.data[this.rest.kaizen.segment] = this.rest.kaizen.data[this.rest.kaizen.segment].concat(data.list)
+      if (!this.autoupdate) {
+        this.autoupdate = true
+        this.rest.check({
+          action: 'kaizen-auto',
+          starttime: this.rest.totime(this.rest.kaizen.filter.starttime),
+          endtime: this.rest.totime(this.rest.kaizen.filter.endtime),
+          keyword: this.rest.kaizen.filter.keyword,
+          type: this.rest.kaizen.reversal_segment[this.rest.kaizen.segment],
+          page: this.rest.kaizen.page[this.rest.kaizen.segment],
+          sort: this.rest.kaizen.filter.sort,
+        }).then(data => {
+          this.autoupdate = false
+          if (data['list']) {
+            this.rest.kaizen.unread = data['unread']
+            this.rest.kaizen.time = data.time
+            if (data.list) this.rest.kaizen.data[this.rest.kaizen.segment] = this.rest.kaizen.data[this.rest.kaizen.segment].concat(data.list)
+            resolve('')
+          }
+        }, (e) => {
           resolve('')
-        }
-      }, (e) => {
-        resolve('')
-      })
+        })
+      }
     })
   }
 

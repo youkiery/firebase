@@ -58,7 +58,7 @@ export class UpdatePage implements OnInit {
       danhsach[tieuchi.ten] = dulieu.join(',')
     })
 
-    await this.rest.freeze()
+    await this.rest.freeze('Đang lưu dữ liệu...')
     this.rest.check({
       action: 'fivemin-update',
       id: this.rest.fivemin.id,

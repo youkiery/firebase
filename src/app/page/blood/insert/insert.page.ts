@@ -19,7 +19,8 @@ export class InsertPage implements OnInit {
     this.rest.blood.edit.end = this.rest.blood.total - this.rest.blood.edit.number
   }
 
-  public save() {
+  public async save() {
+    await this.rest.freeze('Đang thêm phiếu nhập...')
     this.rest.check({
       'action': 'blood-insert',
       'number': this.rest.blood.edit.number,
@@ -30,6 +31,9 @@ export class InsertPage implements OnInit {
       this.rest.blood.edit.start = this.rest.blood.total
       this.rest.blood.edit.end = this.rest.blood.total - 1
       this.rest.blood.edit.target = ''
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
     })
   }
 }

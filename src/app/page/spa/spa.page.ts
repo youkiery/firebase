@@ -127,7 +127,7 @@ export class SpaPage implements OnInit {
         time: this.rest.spa.time,
         current: this.rest.spa.current.time
       }).then((response) => {
-        if (response.data) {
+        if (response.data && response.data != this.rest.spa.data) {
           this.rest.spa.data = response.data
           this.rest.spa.time = response.time
         }

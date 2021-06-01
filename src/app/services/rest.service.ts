@@ -9,8 +9,8 @@ import { LoadingController, NavController, ToastController } from '@ionic/angula
 })
 export class RestService {
   public branch = 'test'
-  // public baseurl: string = 'http://localhost/server/index.php?';
-  public baseurl: string = '/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = '/server/index.php?';
   // // public baseurl: string = 'http://daklak.thanhxuanpet.com/server/index.php?';
   public admin = {
     type: 0,
@@ -25,6 +25,7 @@ export class RestService {
     index: 0,
     rid: 0,
     init: false,
+    init2: false,
     html: '',
     thongke: {
       dulieu: [],
@@ -334,6 +335,7 @@ export class RestService {
   ) {  } 
 
   public async freeze(text: string = 'connecting to server') {
+    console.log(this.load);
     let loading = await this.loadCtrl.create({
       message: text
     })

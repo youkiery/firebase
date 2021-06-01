@@ -35,6 +35,10 @@ const routes: Routes = [
   {
     path: 'upload',
     loadChildren: () => import('./upload/upload.module').then( m => m.UploadPageModule)
+  },
+  {
+    path: 'static',
+    loadChildren: () => import('./static/static.module').then( m => m.StaticPageModule)
   }
 ];
 

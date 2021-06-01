@@ -36,6 +36,7 @@ export class DetailPage implements OnInit {
       // await this.photoService.addNewToGallery()
       // await this.rest.freeze('Đang tải ảnh lên...')
       // this.uploadImage(this.photoService.photo).then((url:string) => {
+        await this.rest.freeze('Đang lưu dữ liệu...')
         this.rest.check({
           action: 'fivemin-change',
           rid: id,
@@ -51,7 +52,7 @@ export class DetailPage implements OnInit {
       // })
     }
     else {
-      await this.rest.freeze('Đang cập nhật dữ liệu')
+      await this.rest.freeze('Đang cập nhật dữ liệu...')
       this.rest.check({
         action: 'fivemin-change',
         rid: id,

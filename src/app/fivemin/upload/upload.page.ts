@@ -53,7 +53,7 @@ export class UploadPage implements OnInit {
 
   public async save() {
     this.count = 0
-    
+    this.rest.freeze('Đang tải ảnh...')
     if (!this.rest.fivemin.image.length) this.saveSubmit()
     else this.rest.fivemin.image.forEach((image, index) => {
       if (image.length > 200) {
@@ -74,7 +74,6 @@ export class UploadPage implements OnInit {
   }
 
   public async saveSubmit() {
-    this.rest.freeze('Đang tải ảnh...')
     this.rest.checkpost('fivemin-upload', {
       id: this.rest.fivemin.id,
       rid: this.rest.fivemin.rid,

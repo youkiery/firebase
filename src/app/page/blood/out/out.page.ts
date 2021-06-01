@@ -14,7 +14,9 @@ export class OutPage implements OnInit {
 
   ngOnInit() { }
 
-  public save() {
+  public async save() {
+    await this.rest.freeze('Đang thêm dữ liệu...')
+    
     this.rest.check({
       action: 'blood-export-chemist',
       number: this.number
@@ -22,7 +24,10 @@ export class OutPage implements OnInit {
       this.rest.blood.number = response.number
       this.rest.blood.edit.start = response.number
       this.rest.blood.edit.end = response.number - this.rest.blood.edit.number
+      this.rest.defreeze()
       this.rest.navCtrl.pop()
+    }, () => {
+      this.rest.defreeze()
     })
   }
 }

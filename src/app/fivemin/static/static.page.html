@@ -1,0 +1,69 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <div *ngIf="rest.config.kaizen > 1">
+    <ion-item>
+      <ion-label position="stacked">
+        Từ ngày
+      </ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="rest.fivemin.filter.start" max="2100"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">
+        Đến ngày ngày
+      </ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="rest.fivemin.filter.end" max="2100"></ion-datetime>
+    </ion-item>
+    <ion-button color="secondary" expand="full" (click)="filterButton()">
+      Lọc danh sách
+    </ion-button>
+  </div>
+
+  <div *ngIf="rest.config.kaizen > 1">
+      <table>
+        <tr>
+          <th> STT </th>
+          <th>  </th>
+          <th> Nhân viên </th>
+          <th> Hoàn thành </th>
+          <th> Chưa hoàn thành </th>
+        </tr>
+        <tr *ngFor="let thongke of rest.fivemin.thongke.dulieu; let i = index">
+          <td> {{i + 1}} </td>
+          <td> <ion-checkbox [(ngModel)]="list[thongke.id]"></ion-checkbox> </td>
+          <td> {{thongke.nhanvien}} </td>
+          <td> {{thongke.hoanthanh}}
+            <ion-button size="small" shape="round" color="secondary" (click)="hoanthanh(thongke.id, 1)">
+              xem
+            </ion-button>  
+          </td>
+          <td> {{thongke.chuahoanthanh}} 
+            <ion-button size="small" shape="round" color="secondary" (click)="hoanthanh(thongke.id, 0)">
+              xem
+            </ion-button>  
+          </td>
+        </tr>
+      </table>
+    </div>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.config.kaizen > 1" (click)="previewSelected()">
+        <ion-icon name="print-outline"></ion-icon>
+        <ion-label> In </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
+

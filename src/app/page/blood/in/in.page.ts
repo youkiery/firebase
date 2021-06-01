@@ -19,7 +19,8 @@ export class InPage implements OnInit {
 
   ngOnInit() { }
 
-  public save() {
+  public async save() {
+    await this.rest.freeze('Đang thêm phiếu nhập...')
     this.rest.check({
       action: 'blood-import-chemist',
       number1: this.number[1],
@@ -31,7 +32,10 @@ export class InPage implements OnInit {
       this.rest.blood.total = Number(response.number)
       this.rest.blood.edit.start = this.rest.blood.total
       this.rest.blood.edit.end = this.rest.blood.edit.start - this.rest.blood.edit.number
+      this.rest.defreeze()
       this.rest.navCtrl.pop()
+    }, () => {
+      this.rest.defreeze()
     })
   }
 }

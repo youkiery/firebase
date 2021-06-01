@@ -14,7 +14,8 @@ export class AdminPage implements OnInit {
     public modal: ModalController
   ) { }
 
-  ionViewDidEnter() {
+  public async ionViewDidEnter() {
+    await this.rest.freeze('Đang tải dữ liệu...')
     this.rest.check({
       action: 'admin-user',
     }).then((data) => {
@@ -28,6 +29,7 @@ export class AdminPage implements OnInit {
       //   }
       // });
       this.rest.admin.users = users
+      this.rest.defreeze()
     }, () => {})
   }
 

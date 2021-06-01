@@ -48,7 +48,7 @@ export class InsertPage implements OnInit {
       danhsach[tieuchi.ten] = dulieu.join(',')
     })
 
-    await this.rest.freeze()
+    await this.rest.freeze('Đang thêm dữ liệu')
     this.rest.check({
       action: 'fivemin-insert',
       chamsoc: danhsach['chamsoc'],
