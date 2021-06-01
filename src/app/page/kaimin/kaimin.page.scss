@@ -1,0 +1,44 @@
+ion-card-content {
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.box {
+  display: inline-block;
+  height: 250px;
+  width: calc(50% - 10px);
+  margin: 5px;
+  padding: 10px;
+  background: #3dc2ff;
+  border-radius: 10px;
+  position: relative;
+}
+
+@media only screen and (min-width: 600px) {
+  .box {
+    height: 250px;
+    width: calc(33% - 10px);
+  }
+}
+@media only screen and (min-width: 897px) {
+  .box {
+    height: 250px;
+    width: calc(25% - 10px);
+  }
+}
+
+.box-image {
+  margin: auto;
+  width: 100%;
+  max-width: 200px;
+}
+
+.box-title {
+  font-weight: bold;
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  text-align: center;
+}

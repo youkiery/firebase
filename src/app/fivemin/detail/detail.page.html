@@ -14,18 +14,13 @@
       <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]; let chimuc = index">
         {{hang.noidung}}
         <br>
-        <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="change(hang.id, 1)">
-          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+          chi tiết <ion-icon name="checkmark-circle-outline"></ion-icon>
         </ion-button>
-        <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="change(hang.id, 0)">
-          <ion-icon name="close-circle-outline"></ion-icon>
+        <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+          chi tiết <ion-icon name="close-circle-outline"></ion-icon>
         </ion-button>
-        <ion-button *ngIf="hang.hinhanh.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
-          hình ảnh
-        </ion-button>
-        <ion-button *ngIf="!hang.hinhanh.length" size="small" color="primary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
-          hình ảnh
-        </ion-button>
+        <ion-icon *ngIf="hang.hinhanh.length" name="image-outline" class="right"></ion-icon>
       </div>
     </div>
   </div>

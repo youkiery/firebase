@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="box" (click)="rest.router.navigateByUrl('fivemin')">
+    <ion-img src="assets/image/fivemin.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Kế hoạch 5 phút
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('kaizen')">
+    <ion-img src="assets/image/kaizen.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Chiến lược Kaizen
+      <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -73,6 +73,9 @@ export class DetailPage implements OnInit {
     if (this.rest.fivemin.data[tieuchi][chimuc].hinhanh == '') this.rest.fivemin.image = []
     else this.rest.fivemin.image = this.rest.fivemin.data[tieuchi][chimuc].hinhanh.split(',')
     this.rest.fivemin.rid = rid
+    this.rest.fivemin.lydo = this.rest.fivemin.data[tieuchi][chimuc].lydo
+    this.rest.fivemin.hoanthanh = (this.rest.fivemin.data[tieuchi][chimuc].hoanthanh > 0 ? true : false)
+
     let modal = await this.modal.create({
       component: UploadPage
     })

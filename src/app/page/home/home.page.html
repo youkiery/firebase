@@ -16,13 +16,6 @@
 </ion-header>
 
 <ion-content>
-  <div class="box" (click)="rest.router.navigateByUrl('fivemin')">
-    <ion-img src="assets/image/fivemin.png" class="box-image"></ion-img>
-    <div class="box-title">
-      Kế hoạch 5 phút
-    </div>
-  </div>
-
   <div *ngIf="rest.config.work > 0" class="box" (click)="rest.router.navigateByUrl('work')">
     <ion-img src="assets/image/work.png" class="box-image"></ion-img>
     <div class="box-title">
@@ -31,10 +24,10 @@
     </div>
   </div>
 
-  <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('kaizen')">
-    <ion-img src="assets/image/kaizen.png" class="box-image"></ion-img>
+  <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('kaimin')">
+    <ion-img src="assets/image/kaimin.png" class="box-image"></ion-img>
     <div class="box-title">
-      Chiến lược Kaizen
+      5 phút/Kaizen
       <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
     </div>
   </div>

@@ -11,6 +11,8 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class UploadPage implements OnInit {
   public count = 0
+  public lydo = ""
+  public hoanthanh = false
   constructor(
     public photoService: PhotoService,
     public rest: RestService,
@@ -19,6 +21,11 @@ export class UploadPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.lydo = this.rest.fivemin.lydo
+    this.hoanthanh = this.rest.fivemin.hoanthanh
   }
 
   public remove(index: number) {
@@ -77,6 +84,8 @@ export class UploadPage implements OnInit {
     this.rest.checkpost('fivemin-upload', {
       id: this.rest.fivemin.id,
       rid: this.rest.fivemin.rid,
+      lydo: this.lydo,
+      hoanthanh: Number(this.hoanthanh),
       image: this.rest.fivemin.image.join(','),
     }).then(response => {
       this.rest.fivemin.data = response.data

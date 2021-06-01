@@ -74,6 +74,10 @@ const routes: Routes = [
     path: 'fivemin',
     loadChildren: () => import('./fivemin/fivemin.module').then( m => m.FiveminPageModule)
   },
+  {
+    path: 'kaimin',
+    loadChildren: () => import('./page/kaimin/kaimin.module').then( m => m.KaiminPageModule)
+  },
 
 
 ];
