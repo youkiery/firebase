@@ -27,7 +27,7 @@
     </tr>
     <tr>
       <td colspan="3">
-        {{dulieu.gopy}}
+        <span *ngIf="dulieu.gopy.length"> <b> {{dulieu.nguoigopy}} góp ý: </b> {{dulieu.gopy}} </span>
         <ion-button class="right" size="small" shape="round" color="secondary" (click)="gopy(i)">
           góp ý
         </ion-button>  

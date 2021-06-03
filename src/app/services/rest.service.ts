@@ -26,7 +26,10 @@ export class RestService {
     index: 0,
     rid: 0,
     lydo: '',
-    gopy: '',
+    gopy: {
+      gopy: '',
+      nguoigopy: ''
+    },
     hoanthanh: false,
     init: false,
     init2: false,

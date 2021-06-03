@@ -21,8 +21,6 @@ export class StatisticPage implements OnInit {
 
   public async gopy(index: number) {
     console.log(this.rest.fivemin.thongke.danhsach[index].gopy);
-
-    
     const alert = await this.alert.create({
       header: 'Góp ý',
       message: 'Góp ý sẽ được hiển thị cho nhân viên',
@@ -55,7 +53,8 @@ export class StatisticPage implements OnInit {
       gopy: gopy,
       id: this.rest.fivemin.thongke.danhsach[index].id
     }).then(response => {
-      this.rest.fivemin.thongke.danhsach[index].gopy = response.gopy
+      this.rest.fivemin.thongke.danhsach[index].gopy = response.gopy.gopy
+      this.rest.fivemin.thongke.danhsach[index].nguoigopy = response.gopy.nguoigopy
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

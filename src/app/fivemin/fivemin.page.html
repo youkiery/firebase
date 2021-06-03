@@ -21,6 +21,7 @@
       <ion-card-content>
         Kế hoạch ngày {{rest.timetodate(item.thoigian)}}
         <div class="right">
+          <ion-icon *ngIf="item.gopy.length" class="error" name="alert-circle-outline"></ion-icon>
           <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
             <ion-icon name="information-circle-outline"></ion-icon>
           </ion-button>
