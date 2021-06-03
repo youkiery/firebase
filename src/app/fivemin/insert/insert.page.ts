@@ -11,11 +11,11 @@ export class InsertPage implements OnInit {
     {ten: 'chamsoc', truong: [{giatri: ''}], tieude: 'Chăm sóc khách hàng'},
     {ten: 'tugiac', truong: [{giatri: ''}], tieude: 'Tự giác'},
     {ten: 'giaiphap', truong: [{giatri: ''}], tieude: 'Giái pháp đạt mục tiêu'},
-    {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quẳ'},
-    {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
+    // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},
+    // {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
     {ten: 'dongdoi', truong: [{giatri: ''}], tieude: 'Giúp đỡ đồng đội'},
-    {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
-    {ten: 'tinhyeu', truong: [{giatri: ''}], tieude: 'Tình yêu'}
+    // {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
+    // {ten: 'tinhyeu', truong: [{giatri: ''}], tieude: 'Tình yêu'}
   ]
   constructor(
     public rest: RestService

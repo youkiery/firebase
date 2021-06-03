@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 import { ImagePage } from '../image/image.page';
 
@@ -12,10 +12,54 @@ export class StatisticPage implements OnInit {
 
   constructor(
     public rest: RestService,
-    public modal: ModalController
+    public modal: ModalController,
+    public alert: AlertController
   ) { }
 
   ngOnInit() {
+  }
+
+  public async gopy(index: number) {
+    console.log(this.rest.fivemin.thongke.danhsach[index].gopy);
+
+    
+    const alert = await this.alert.create({
+      header: 'Góp ý',
+      message: 'Góp ý sẽ được hiển thị cho nhân viên',
+      inputs: [{
+        name: 'gopy',
+        label: 'Góp ý:',
+        value: this.rest.fivemin.thongke.danhsach[index].gopy,
+        type: 'textarea'
+      }],
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.gopySubmit(e['gopy'], index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async gopySubmit(gopy: string, index: number) {
+    await this.rest.freeze()
+    this.rest.checkpost('fivemin-gopy', {
+      gopy: gopy,
+      id: this.rest.fivemin.thongke.danhsach[index].id
+    }).then(response => {
+      this.rest.fivemin.thongke.danhsach[index].gopy = response.gopy
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async viewImage(index: number) {

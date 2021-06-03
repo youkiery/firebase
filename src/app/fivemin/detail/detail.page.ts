@@ -14,11 +14,11 @@ export class DetailPage implements OnInit {
     {ten: 'chamsoc', tieude: 'Chăm sóc khách hàng'},
     {ten: 'tugiac', tieude: 'Tự giác'},
     {ten: 'giaiphap', tieude: 'Giái pháp đạt mục tiêu'},
-    {ten: 'ketqua', tieude: 'Kết quẳ'},
-    {ten: 'uytin', tieude: 'Uy tín'},
+    // {ten: 'ketqua', tieude: 'Kết quả'},
+    // {ten: 'uytin', tieude: 'Uy tín'},
     {ten: 'dongdoi', tieude: 'Giúp đỡ đồng đội'},
-    {ten: 'trachnhiem', tieude: 'Trách nhiệm'},
-    {ten: 'tinhyeu', tieude: 'Tình yêu'}
+    // {ten: 'trachnhiem', tieude: 'Trách nhiệm'},
+    // {ten: 'tinhyeu', tieude: 'Tình yêu'}
   ]
   public image = []
   constructor(

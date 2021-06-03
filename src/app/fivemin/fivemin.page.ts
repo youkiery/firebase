@@ -31,6 +31,7 @@ export class FiveminPage {
       id: id
     }).then(response => {
       this.rest.fivemin.data = response.data
+      this.rest.fivemin.gopy = response.gopy
       this.rest.router.navigateByUrl('/fivemin/detail')
       this.rest.defreeze()
     }, () => {

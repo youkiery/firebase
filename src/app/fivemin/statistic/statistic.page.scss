@@ -4,6 +4,11 @@
   line-height: 2.5em;
   white-space: pre-wrap;
 }
-td {
-  border: 1px solid black;
+td, th {
+  border: 1px solid gray;
+}
+
+table {
+  border: 2px solid gray;
+  margin-bottom: 20px;
 }

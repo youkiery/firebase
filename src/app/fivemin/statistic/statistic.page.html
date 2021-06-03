@@ -5,21 +5,32 @@
 </ion-toolbar>
 
 <ion-content>
-  <table>
+  <table *ngFor="let dulieu of rest.fivemin.thongke.danhsach; let i = index">
+    <tr>
+      <th colspan="3">
+        {{rest.timetodate(dulieu.time * 1000)}} 
+      </th>
+    </tr>
     <tr>
       <th> STT </th>
-      <th> Nhân viên </th>
       <th> Nội dung </th>
       <th> Hình ảnh </th>
     </tr>
-    <tr *ngFor="let thongke of rest.fivemin.thongke.danhsach; let i = index">
+    <tr *ngFor="let thongke of dulieu.danhsach; let j = index">
       <td> {{i + 1}} </td>
-      <td> {{thongke.nhanvien}} </td>
-      <td> {{thongke.noidung}} </td>
+      <td> <b> {{thongke.tieuchi}}: </b> {{thongke.noidung}} </td>
       <td> 
-        <ion-button *ngIf="thongke.image.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(i)">
+        <ion-button *ngIf="thongke.image.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(j)">
           xem ảnh
         </ion-button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        {{dulieu.gopy}}
+        <ion-button class="right" size="small" shape="round" color="secondary" (click)="gopy(i)">
+          góp ý
+        </ion-button>  
       </td>
     </tr>
   </table>
