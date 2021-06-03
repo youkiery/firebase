@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
@@ -33,7 +32,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
       messagingSenderId: "816396321770",
       appId: "1:816396321770:web:193e84ee21b16d41"
     }, 'Petcoffee'), // imports firebase/app needed for everything
-    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    // AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   providers: [

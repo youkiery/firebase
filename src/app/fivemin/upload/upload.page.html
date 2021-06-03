@@ -2,7 +2,7 @@
   <ion-button color="light" fill="clear" (click)="this.modal.dismiss()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button slot="end" (click)="upload()" color="light" fill="clear">
+  <ion-button slot="end" (click)="upload()"color="light" fill="clear">
     Thêm ảnh
   </ion-button>
   <ion-button slot="end" (click)="save()" color="light" fill="clear">
@@ -11,6 +11,10 @@
 </ion-toolbar>
 
 <ion-content>
+  <div id="pwa" style="display: none;">
+    <input type="file" id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
   <ion-item>
     <ion-label position="stacked">
       Tình trạng: <span *ngIf="hoanthanh"> Hoàn thành </span> <span *ngIf="!hoanthanh"> Chưa hoàn thành </span>

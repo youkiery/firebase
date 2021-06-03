@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Camera, CameraPhoto, CameraResultType, CameraSource } from '@capacitor/camera';
+// import { Camera, CameraPhoto, CameraResultType, CameraSource } from '@capacitor/camera';
 // import { Filesystem, Directory } from '@capacitor/filesystem';
 
 @Injectable({
@@ -10,42 +10,42 @@ export class PhotoService {
   public max = 640;
   constructor() { }
   
-  public async getPermisson() {
-    return new Promise((resolve) => {
-      Camera.checkPermissions().then(data => {
-        console.log(data);
-        if (data.camera != 'granted') {
-          Camera.requestPermissions({
-            permissions: ['camera']
-          }).then((data2) => {
-            console.log(data2);
-            resolve(true)
-          }, () => {
-            resolve(true)
-          })
-        }
-        else resolve(true)
-      })
-    })
-  }
+  // public async getPermisson() {
+  //   return new Promise((resolve) => {
+  //     Camera.checkPermissions().then(data => {
+  //       console.log(data);
+  //       if (data.camera != 'granted') {
+  //         Camera.requestPermissions({
+  //           permissions: ['camera']
+  //         }).then((data2) => {
+  //           console.log(data2);
+  //           resolve(true)
+  //         }, () => {
+  //           resolve(true)
+  //         })
+  //       }
+  //       else resolve(true)
+  //     })
+  //   })
+  // }
 
-  public async addNewToGallery() {
-    await this.getPermisson()
-    console.log(2);
-    // Take a photo
-    const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Base64,
-      source: CameraSource.Camera,
-      quality: 100
-    })
+  // public async addNewToGallery() {
+  //   await this.getPermisson()
+  //   console.log(2);
+  //   // Take a photo
+  //   const capturedPhoto = await Camera.getPhoto({
+  //     resultType: CameraResultType.Base64,
+  //     source: CameraSource.Camera,
+  //     quality: 100
+  //   })
     
-    this.photo = 'data:image/png;base64,' + capturedPhoto.base64String
-    this.resize()
-  }
+  //   this.photo = 'data:image/png;base64,' + capturedPhoto.base64String
+  //   this.resize()
+  // }
 
-  public async resize() {
+  public async resize(base64: string = '') {
     let image = new Image();
-    image.src = this.photo
+    image.src = base64
     image.onload = (e) => {
       let canvas = document.createElement('canvas')
       let context = canvas.getContext('2d')
@@ -60,8 +60,7 @@ export class PhotoService {
       canvas.height = newHeight
       context.drawImage(image, 0, 0, canvas.width, canvas.height)
   
-      this.photo = canvas.toDataURL('image/jpeg') 
-      console.log(this.photo);
+      return canvas.toDataURL('image/jpeg') 
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ModalController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
@@ -13,6 +13,9 @@ export class UploadPage implements OnInit {
   public count = 0
   public lydo = ""
   public hoanthanh = false
+  public imgURI: string = null
+  public max = 500
+  @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
     public photoService: PhotoService,
     public rest: RestService,
@@ -21,6 +24,66 @@ export class UploadPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  public upload() {
+    // if (this.pwaphoto == null) {
+    //   return;
+    // }
+    this.pwaphoto.nativeElement.click();
+  }
+
+  public async uploadPWA() {
+    // if (this.pwaphoto == null) {
+    //   return;
+    // }
+    await this.rest.freeze('Đang tải...')
+    const fileList: FileList = this.pwaphoto.nativeElement.files;
+    if (fileList && fileList.length > 0) {
+      this.firstFileToBase64(fileList[0]).then((result: string) => {
+        let image = new Image();
+        image.src = result
+        image.onload = () => {
+          let canvas = document.createElement('canvas')
+          let context = canvas.getContext('2d')
+          let rate = 1
+          if (image.width > this.max || image.height > this.max) {
+            if (image.width > image.height) rate = image.width / this.max
+            else rate = image.height / this.max
+          }
+          let newWidth = image.width / rate
+          let newHeight = image.height / rate
+          canvas.width = newWidth
+          canvas.height = newHeight
+          context.drawImage(image, 0, 0, canvas.width, canvas.height)
+
+          this.rest.fivemin.image.push(canvas.toDataURL('image/jpeg'));
+          this.rest.defreeze()
+        }
+      }, (err: any) => {
+        // Ignore error, do nothing
+        // this.imgURI = null;
+        this.rest.defreeze()
+      });
+    }
+  }
+
+  private firstFileToBase64(fileImage: File): Promise<{}> {
+    return new Promise((resolve, reject) => {
+      let fileReader: FileReader = new FileReader();
+      if (fileReader && fileImage != null) {
+        fileReader.readAsDataURL(fileImage);
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+      } else {
+        reject(new Error('No file found'));
+      }
+    });
   }
 
   ionViewWillEnter() {
@@ -53,10 +116,10 @@ export class UploadPage implements OnInit {
     })
   }
 
-  public async upload() {
-    await this.photoService.addNewToGallery()
-    this.rest.fivemin.image.push(this.photoService.photo)
-  }
+  // public async upload() {
+  //   await this.photoService.addNewToGallery()
+  //   this.rest.fivemin.image.push(this.photoService.photo)
+  // }
 
   public async save() {
     this.count = 0

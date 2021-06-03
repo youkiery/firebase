@@ -9,6 +9,7 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class HomePage {
   private subscription: any
+  imgURI: string = null;
   constructor(
     public rest: RestService,
     public platform: Platform
