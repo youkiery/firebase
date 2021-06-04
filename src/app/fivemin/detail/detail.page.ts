@@ -11,12 +11,14 @@ import { UploadPage } from '../upload/upload.page';
 })
 export class DetailPage implements OnInit {
   public dulieu = [
+    {ten: 'muctieu', tieude: 'Mục tiêu doanh số'},
     {ten: 'chamsoc', tieude: 'Chăm sóc khách hàng'},
-    {ten: 'tugiac', tieude: 'Tự giác'},
-    {ten: 'giaiphap', tieude: 'Giái pháp đạt mục tiêu'},
+    {ten: 'tugiac', tieude: 'Tính tự giác'},
+    {ten: 'chuyenmin', tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'dongdoi', tieude: 'Tính đồng đội'},
+    {ten: 'giaiphap', tieude: 'Ý tưởng và pháp cải tiến'},
     // {ten: 'ketqua', tieude: 'Kết quả'},
     // {ten: 'uytin', tieude: 'Uy tín'},
-    {ten: 'dongdoi', tieude: 'Giúp đỡ đồng đội'},
     // {ten: 'trachnhiem', tieude: 'Trách nhiệm'},
     // {ten: 'tinhyeu', tieude: 'Tình yêu'}
   ]

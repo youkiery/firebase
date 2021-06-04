@@ -8,12 +8,14 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class InsertPage implements OnInit {
   public dulieu = [
+    {ten: 'muctieu', truong: [{giatri: ''}], tieude: 'Mục tiêu doanh số'},
     {ten: 'chamsoc', truong: [{giatri: ''}], tieude: 'Chăm sóc khách hàng'},
-    {ten: 'tugiac', truong: [{giatri: ''}], tieude: 'Tự giác'},
-    {ten: 'giaiphap', truong: [{giatri: ''}], tieude: 'Giái pháp đạt mục tiêu'},
+    {ten: 'tugiac', truong: [{giatri: ''}], tieude: 'Tính tự giác'},
+    {ten: 'chuyenmin', truong: [{giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'dongdoi', truong: [{giatri: ''}], tieude: 'Tính đồng đội'},
+    {ten: 'giaiphap', truong: [{giatri: ''}], tieude: 'Ý tưởng và pháp cải tiến'},
     // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},
     // {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
-    {ten: 'dongdoi', truong: [{giatri: ''}], tieude: 'Giúp đỡ đồng đội'},
     // {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
     // {ten: 'tinhyeu', truong: [{giatri: ''}], tieude: 'Tình yêu'}
   ]
@@ -49,18 +51,7 @@ export class InsertPage implements OnInit {
     })
 
     await this.rest.freeze('Đang thêm dữ liệu')
-    this.rest.check({
-      action: 'fivemin-insert',
-      chamsoc: danhsach['chamsoc'],
-      tugiac: danhsach['tugiac'],
-      giaiphap: danhsach['giaiphap'],
-      ketqua: danhsach['ketqua'],
-      uytin: danhsach['uytin'],
-      dongdoi: danhsach['dongdoi'],
-      trachnhiem: danhsach['trachnhiem'],
-      tinhyeu: danhsach['tinhyeu'],
-      page: this.rest.fivemin.filter.page,
-    }).then(response => {
+    this.rest.checkpost('fivemin-insert', danhsach).then(response => {
       this.rest.fivemin.list = [response.data].concat(this.rest.fivemin.list)
       this.rest.defreeze()
       this.rest.navCtrl.pop()
