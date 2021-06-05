@@ -1,7 +1,10 @@
 <ion-toolbar color="success">
-  <ion-button color="light" fill="clear" (click)="modal.dismiss()">
+  <ion-button slot="start" color="light" fill="clear" (click)="modal.dismiss()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
+  <ion-title style="text-align: center;">
+    {{username}}
+  </ion-title>
   <ion-button slot="end" (click)="save()" color="light" fill="clear">
     Lưu
   </ion-button>
@@ -10,7 +13,11 @@
 <ion-content>
   <ion-item *ngFor="let item of list">
     {{item.name}}: {{level[module[item.module]]}}
-    <ion-button size="small" shape="round" slot="start" color="warning" (click)="change(item.module, -1)"> Giảm quyền </ion-button>
-    <ion-button size="small" shape="round" slot="end" color="secondary" (click)="change(item.module, 1)"> Tăng quyền </ion-button>
+    <ion-button size="small" shape="round" slot="start" color="warning" (click)="change(item.module, -1)">
+      <ion-icon name="caret-down-circle-outline"></ion-icon>
+    </ion-button>
+    <ion-button size="small" shape="round" slot="end" color="secondary" (click)="change(item.module, 1)"> 
+      <ion-icon name="caret-up-circle-outline"></ion-icon>
+    </ion-button>
   </ion-item>
 </ion-content>

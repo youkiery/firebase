@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Storage } from '@ionic/storage'; 
 import { Router } from '@angular/router';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -338,7 +338,8 @@ export class RestService {
     public router: Router,
     public toastCtrl: ToastController,
     public loadCtrl: LoadingController,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public alert: AlertController
   ) {  } 
 
   public async freeze(text: string = 'connecting to server') {
@@ -352,6 +353,41 @@ export class RestService {
 
   public defreeze() {
     this.load.dismiss()
+  }
+
+  public async gopy() {
+    let alert = await this.alert.create({
+      header: 'Góp ý cải thiện phần mềm',
+      message: 'Mục góp ý sẽ được gửi để nhân viên kỹ thuật, và hoàn toàn ẩn danh',
+      inputs: [{
+        name: 'gopy',
+        type: 'textarea',
+        value: ''
+      }],
+      buttons: [{
+        text: 'Hủy',
+        role: 'cancel'
+      }, {
+        text: 'Xác nhận',
+        handler: (e) => {
+          this.xacnhangopy(e.gopy)
+        }
+      }]
+    })
+    alert.present()
+  }
+
+  public async xacnhangopy(gopy = '') {
+    await this.freeze()
+    this.check({
+      action: 'gopy',
+      gopy: gopy
+    }).then(() => {
+      this.notify('Thông tin đã gửi đến nhân viên kỹ thuật, cảm ơn vì đã đóng góp')
+      this.defreeze()
+    }, () => {
+      this.defreeze()
+    })
   }
 
   // datestring, datetime, time, dateiso
@@ -413,7 +449,7 @@ export class RestService {
         else this.notify('Có lỗi xảy ra >.<')
         reject(1)
         // this.error = JSON.stringify(error)
-        // this.rest.notify(JSON.stringify(error))
+        // this.notify(JSON.stringify(error))
       })
     })
   }
@@ -443,7 +479,7 @@ export class RestService {
         else this.notify('Có lỗi xảy ra >.<')
         reject(1)
         // this.error = JSON.stringify(error)
-        // this.rest.notify(JSON.stringify(error))
+        // this.notify(JSON.stringify(error))
       })
     })
   }

@@ -61,8 +61,8 @@ export class StatisticPage implements OnInit {
     })
   }
 
-  public async viewImage(index: number) {
-    this.rest.fivemin.image = this.rest.fivemin.thongke.danhsach[index].image.split(',')
+  public async viewImage(i: number, j: number) {
+    this.rest.fivemin.image = this.rest.fivemin.thongke.danhsach[i].danhsach[j].image.split(',')
     let modal = await this.modal.create({
       component: ImagePage
     })

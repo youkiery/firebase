@@ -16,6 +16,12 @@
 </ion-header>
 
 <ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.gopy()">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-toolbar>
     <ion-segment [(ngModel)]="rest.kaizen.segment">
       <ion-segment-button value="undone"> Chưa hoàn thành </ion-segment-button>

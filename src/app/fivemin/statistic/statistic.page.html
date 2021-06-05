@@ -20,7 +20,7 @@
       <td> {{i + 1}} </td>
       <td> <b> {{thongke.tieuchi}}: </b> {{thongke.noidung}} </td>
       <td> 
-        <ion-button *ngIf="thongke.image.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(j)">
+        <ion-button *ngIf="thongke.image.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(i, j)">
           xem ảnh
         </ion-button>
       </td>

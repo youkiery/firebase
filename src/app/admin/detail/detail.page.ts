@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
@@ -39,6 +39,7 @@ export class AdminDetail {
     '2': 'Quản lý',
     '3': ''
   }
+  @Input('username') username: string;
   constructor(
     public rest: RestService,
     public modal: ModalController
@@ -66,6 +67,7 @@ export class AdminDetail {
       'id': this.rest.admin.users[this.rest.admin.index].userid
     }).then(response => {
       this.rest.admin.users[this.rest.admin.index].module = response.data
+      this.rest.config = response.config
       this.rest.defreeze()
       this.modal.dismiss()
     }, () => {

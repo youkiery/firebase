@@ -44,7 +44,8 @@ export class AdminPage implements OnInit {
   public async detail(index: number) {
     this.rest.admin.index = index
     let modal = await this.modal.create({
-      component: AdminDetail
+      component: AdminDetail,
+      componentProps: {username: this.rest.admin.users[index].username }
     })
     modal.present()
   }

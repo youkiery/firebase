@@ -16,6 +16,12 @@
 </ion-header>
 
 <ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.gopy()">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-item>
     <ion-label position="floating"> Tìm kiếm </ion-label>
     <ion-input [(ngModel)]="rest.usg.filterKey">  </ion-input>
