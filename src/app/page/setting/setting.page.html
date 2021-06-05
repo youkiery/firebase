@@ -46,6 +46,9 @@
     <ion-item *ngIf="rest.admin.type" (click)="rest.router.navigateByUrl('admin')"> 
       Phân quyền
     </ion-item>
+    <ion-item *ngIf="rest.admin.type" (click)="rest.router.navigateByUrl('admin/gopy')"> 
+      Góp ý
+    </ion-item>
     <ion-item (click)="rest.logout()"> 
       <ion-icon name="exit-outline" color="danger"></ion-icon>
       Đăng xuất

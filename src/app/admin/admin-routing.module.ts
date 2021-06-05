@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'detail',
     loadChildren: () => import('./detail/detail.module').then( m => m.AdminDetailModule)
+  },
+  {
+    path: 'gopy',
+    loadChildren: () => import('./gopy/gopy.module').then( m => m.GopyPageModule)
   }
 ];
 
