@@ -181,10 +181,7 @@ export class RestService {
   }
   public expire = {
     id: 0,
-    filter: {
-      name: '',
-      time: '7776000'
-    },
+    index: 0,
     edit: {
       id: 0,
       name: '',
@@ -193,7 +190,9 @@ export class RestService {
       expire: ''
     },
     suggestList: [],
-    list: []
+    storage: [],
+    list: [],
+    item: []
   }
   public ride = {
     current: {

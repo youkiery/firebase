@@ -8,21 +8,78 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./expire.page.scss'],
 })
 export class ExpirePage implements OnInit {
+  public list = {}
+  public expire = 0
   constructor(
     public rest: RestService,
     public alert: AlertController
   ) { }
 
-  public async ngOnInit() {
+  public select(index: number) {
+    this.expire = index
+    this.init()
+  }
+
+  public async init() {
     await this.rest.freeze('Đang lấy danh sách')
-    this.rest.check({
-      action: 'expire-auto',
-      fname: this.rest.expire.filter.name,
-      ftime: this.rest.expire.filter.time
+    if (this.expire == 1) {
+      this.rest.check({
+        action: 'expire-auto',
+      }).then(response => {
+        this.rest.expire.list = response.list
+        this.rest.defreeze()
+      }, (e) => {
+        this.rest.defreeze()
+      })
+    }
+    else {
+      this.rest.check({
+        action: 'expire-storage',
+      }).then(response => {
+        this.rest.expire.item = response.list
+        this.rest.expire.storage = response.storage
+        this.rest.defreeze()
+      }, (e) => {
+        this.rest.defreeze()
+      })
+    }
+  }
+
+  public updateItem(index: number = 0) {
+    if (index) this.rest.expire.index = index
+    this.rest.router.navigateByUrl('expire/insert-item')
+  }
+
+  public async ngOnInit() {
+    // await this.rest.freeze('Đang lấy danh sách')
+    // this.rest.check({
+    //   action: 'expire-auto',
+    // }).then(response => {
+    //   this.rest.expire.list = response.list
+    //   this.rest.defreeze()
+    // }, (e) => {
+    //   this.rest.defreeze()
+    // })
+  }
+
+  public async removeSelected() {
+    if (!Object.keys(this.list).length) {
+      this.rest.notify('Chưa chọn mục nào')
+      return true
+    }
+    let list = []
+    for (const key in this.list) {
+      if (Object.prototype.hasOwnProperty.call(this.list, key)) {
+        list.push(key)        
+      }
+    }
+    await this.rest.freeze()
+    this.rest.checkpost('expire-removes', {
+      list: list,
     }).then(response => {
       this.rest.expire.list = response.list
       this.rest.defreeze()
-    }, (e) => {
+    }, () => {
       this.rest.defreeze()
     })
   }
@@ -84,7 +141,7 @@ export class ExpirePage implements OnInit {
     this.rest.check({
       action: 'expire-remove',
       id: id,
-      status: this.rest.vaccine.status
+      status: this.rest.vaccine.status,
     }).then((response) => {
       this.rest.expire.list = response.list
       this.rest.defreeze()

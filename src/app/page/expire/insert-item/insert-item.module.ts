@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FilterPageRoutingModule } from './filter-routing.module';
+import { InsertItemPageRoutingModule } from './insert-item-routing.module';
 
-import { FilterPage } from './filter.page';
+import { InsertItemPage } from './insert-item.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FilterPageRoutingModule
+    InsertItemPageRoutingModule
   ],
-  declarations: [FilterPage]
+  declarations: [InsertItemPage]
 })
-export class FilterPageModule {}
+export class InsertItemPageModule {}

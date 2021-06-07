@@ -17,8 +17,8 @@ const routes: Routes = [
     loadChildren: () => import('./suggest/suggest.module').then( m => m.SuggestPageModule)
   },
   {
-    path: 'filter',
-    loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
+    path: 'insert-item',
+    loadChildren: () => import('./insert-item/insert-item.module').then( m => m.InsertItemPageModule)
   }
 ];
 

@@ -22,8 +22,25 @@
     </ion-fab-button>
   </ion-fab>
 
-  <table border="1">
+  <div *ngIf="expire == 0">
+    <div class="box" (click)="select(1)">
+      <ion-img src="assets/image/expire.png" class="box-image"></ion-img>
+      <div class="box-title">
+        Danh sách hết hạn
+      </div>
+    </div>
+
+    <div class="box" (click)="select(2)">
+      <ion-img src="assets/image/storage.png" class="box-image"></ion-img>
+      <div class="box-title">
+        Danh sách kho
+      </div>
+    </div>
+  </div>
+
+  <table border="1" *ngIf="expire == 1">
     <tr>
+      <th>  </th>
       <th> Mặt hàng </th>
       <th> Số lượng </th>
       <th> Hạn sử dụng </th>
@@ -31,6 +48,7 @@
     </tr>
     <tbody *ngFor="let item of rest.expire.list" [class]="item.color">
       <tr>
+        <td> <ion-checkbox [(ngModel)]="list[item.id]"></ion-checkbox> </td>
         <td> {{item.name}} </td>
         <td> {{item.number}} </td>
         <td> {{item.time}} </td>
@@ -39,15 +57,23 @@
             xem
           </ion-button> -->
           <ion-button color="danger" size="small" (click)="remove(item.id)">
-            xóa
+            <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <div *ngIf="expire == 2">
+    <ion-card *ngFor="let item of rest.expire.item">
+      <ion-card-content>
+        {{item.name}}
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
 
-<ion-toolbar>
+<ion-toolbar *ngIf="expire == 1">
   <ion-tabs>
     <ion-tab-bar>
       <ion-tab-button (click)="rest.navCtrl.pop()">
@@ -60,9 +86,25 @@
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="filterM()">
-        <ion-icon name="filter-outline"></ion-icon>
-        <ion-label> Tìm kiếm </ion-label>
+      <ion-tab-button (click)="removeSelected()">
+        <ion-icon name="trash-outline"></ion-icon>
+        <ion-label> Xóa đã chọn </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>
+
+<ion-toolbar *ngIf="expire == 2">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="updateItem()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
