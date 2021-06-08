@@ -27,15 +27,19 @@ export class UpdatePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    console.log(this.dulieu);
+    
     this.dulieu.forEach((item, index) => {
       let dulieutam = []
-      this.rest.fivemin.data[item.ten].forEach(tieuchi => {
-        dulieutam.push({
-          id: tieuchi.id,
-          giatri: tieuchi.noidung
-        })
-      });
-      this.dulieu[index].truong = dulieutam
+      if (this.rest.fivemin.data[item.ten]) {
+        this.rest.fivemin.data[item.ten].forEach(tieuchi => {
+          dulieutam.push({
+            id: tieuchi.id,
+            giatri: tieuchi.noidung
+          })
+        });
+        this.dulieu[index].truong = dulieutam
+      }
     });
   }
 

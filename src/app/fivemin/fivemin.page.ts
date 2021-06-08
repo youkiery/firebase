@@ -40,6 +40,22 @@ export class FiveminPage {
     })
   }
 
+  public async update(id: number, disable: number) {
+    this.rest.fivemin.id = id
+    await this.rest.freeze('Đang lấy dữ liệu...')
+    this.rest.check({
+      action: 'fivemin-get',
+      id: id
+    }).then(response => {
+      this.rest.fivemin.data = response.data
+      this.rest.fivemin.disable = disable
+      this.rest.router.navigateByUrl('/fivemin/update')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async preview(id: number) {
     await this.rest.freeze()
     this.rest.check({
@@ -96,7 +112,7 @@ export class FiveminPage {
     this.rest.router.navigateByUrl('/fivemin/insert')
   }
 
-  public update(index = 0) {
+  // public update(index = 0) {
     // if (!index) {
     //   this.rest.fivemin.data = {
     //     chamsoc: '',
@@ -112,7 +128,7 @@ export class FiveminPage {
     // }
     // else this.rest.fivemin.data = JSON.parse(JSON.stringify(this.rest.fivemin.list[this.rest.fivemin.index]))
     // this.rest.router.navigateByUrl('/fivemin/update')
-  }
+  // }
 
   public more() {
     this.rest.fivemin.filter.page ++

@@ -34,6 +34,9 @@
           <ion-button size="small" shape="round" color="secondary" (click)="preview(item.id)">
             <ion-icon name="eye-outline"></ion-icon>
           </ion-button>
+          <ion-button *ngIf="!item.dis" size="small" shape="round" color="secondary" (click)="update(item.id, item.dis)">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
           <ion-button *ngIf="!item.dis" size="small" shape="round" color="danger" (click)="remove(item.id)">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>

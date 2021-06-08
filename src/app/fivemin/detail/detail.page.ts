@@ -32,7 +32,6 @@ export class DetailPage implements OnInit {
   ngOnInit() {
   }
 
-
   public async change(id: number, status:number) {
     if (status) {
       // await this.photoService.addNewToGallery()
