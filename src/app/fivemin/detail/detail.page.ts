@@ -84,7 +84,7 @@ export class DetailPage implements OnInit {
     modal.present()
   }
 
-  // public update() {
-  //   this.rest.router.navigateByUrl('/fivemin/update')
-  // }
+  public update() {
+    this.rest.router.navigateByUrl('/fivemin/update')
+  }
 }

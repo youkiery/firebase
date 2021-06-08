@@ -28,13 +28,13 @@
         Kế hoạch ngày {{rest.timetodate(item.thoigian)}}
         <div class="right">
           <ion-icon *ngIf="item.gopy.length" class="error" name="alert-circle-outline"></ion-icon>
-          <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id)">
+          <ion-button size="small" shape="round" color="secondary" (click)="detail(item.id, item.dis)">
             <ion-icon name="information-circle-outline"></ion-icon>
           </ion-button>
           <ion-button size="small" shape="round" color="secondary" (click)="preview(item.id)">
             <ion-icon name="eye-outline"></ion-icon>
           </ion-button>
-          <ion-button size="small" shape="round" color="danger" (click)="remove(item.id)">
+          <ion-button *ngIf="!item.dis" size="small" shape="round" color="danger" (click)="remove(item.id)">
             <ion-icon name="trash-outline"></ion-icon>
           </ion-button>
         </div>

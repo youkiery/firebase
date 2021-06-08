@@ -8,14 +8,16 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class UpdatePage implements OnInit {
   public dulieu = [
-    {ten: 'chamsoc', truong: [{giatri: ''}], tieude: 'Chăm sóc khách hàng'},
-    {ten: 'tugiac', truong: [{giatri: ''}], tieude: 'Tự giác'},
-    {ten: 'giaiphap', truong: [{giatri: ''}], tieude: 'Giái pháp đạt mục tiêu'},
-    {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quẳ'},
-    {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
-    {ten: 'dongdoi', truong: [{giatri: ''}], tieude: 'Giúp đỡ đồng đội'},
-    {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
-    {ten: 'tinhyeu', truong: [{giatri: ''}], tieude: 'Tình yêu'}
+    {ten: 'muctieu', truong: [{id: 0, giatri: ''}], tieude: 'Mục tiêu doanh số'},
+    {ten: 'chamsoc', truong: [{id: 0, giatri: ''}], tieude: 'Chăm sóc khách hàng'},
+    {ten: 'tugiac', truong: [{id: 0, giatri: ''}], tieude: 'Tính tự giác'},
+    {ten: 'chuyenmin', truong: [{id: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'dongdoi', truong: [{id: 0, giatri: ''}], tieude: 'Tính đồng đội'},
+    {ten: 'giaiphap', truong: [{id: 0, giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
+    // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},
+    // {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
+    // {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
+    // {ten: 'tinhyeu', truong: [{giatri: ''}], tieude: 'Tình yêu'}
   ]
   constructor(
     public rest: RestService
@@ -28,24 +30,21 @@ export class UpdatePage implements OnInit {
     this.dulieu.forEach((item, index) => {
       let dulieutam = []
       this.rest.fivemin.data[item.ten].forEach(tieuchi => {
-        dulieutam.push({giatri: tieuchi.noidung})
+        dulieutam.push({
+          id: tieuchi.id,
+          giatri: tieuchi.noidung
+        })
       });
       this.dulieu[index].truong = dulieutam
     });
   }
 
   public themTruong(chimuctieuchi: number) {
-    this.dulieu[chimuctieuchi].truong.push({giatri: ''})
-    console.log(this.dulieu)
-  }
-
-  public xoaTruong(chimuctieuchi: number, chimuc: number) {
-    let list = this.dulieu[chimuctieuchi].truong.filter((item, index) => {
-      return index !== chimuc
+    this.dulieu[chimuctieuchi].truong.push({
+      id: 0,
+      giatri: ''
     })
-    if (!list.length) list = [{giatri: ''}]
-    
-    this.dulieu[chimuctieuchi].truong = list
+    console.log(this.dulieu)
   }
 
   public async update() {
@@ -53,32 +52,30 @@ export class UpdatePage implements OnInit {
     this.dulieu.forEach((tieuchi) => {
       let dulieu = []
       tieuchi.truong.forEach(truong => {
-        dulieu.push(truong.giatri)
+        dulieu.push(truong)
       })
-      danhsach[tieuchi.ten] = dulieu.join(',')
+      danhsach[tieuchi.ten] = dulieu
     })
 
-    await this.rest.freeze('Đang lưu dữ liệu...')
-    this.rest.check({
-      action: 'fivemin-update',
+    await this.rest.freeze('Đang thêm dữ liệu')
+    this.rest.checkpost('fivemin-update', {
       id: this.rest.fivemin.id,
-      chamsoc: danhsach['chamsoc'],
-      tugiac: danhsach['tugiac'],
-      giaiphap: danhsach['giaiphap'],
-      ketqua: danhsach['ketqua'],
-      uytin: danhsach['uytin'],
-      dongdoi: danhsach['dongdoi'],
-      trachnhiem: danhsach['trachnhiem'],
-      tinhyeu: danhsach['tinhyeu'],
-      // time: this.rest.isodatetotime(this.rest.fivemin.filter.time)
+      danhsach: danhsach
     }).then(response => {
-      this.rest.fivemin.data = response.data
-      this.rest.fivemin.list = response.list
+      this.rest.fivemin.data = response.get
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
+      this.nav()
     }, () => {
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
     })
+  }
+
+  public async nav() {
+    this.rest.navCtrl.pop()
+    await this.rest.freeze('Đang thêm dữ liệu')
+    setTimeout(() => {
+      this.rest.router.navigateByUrl('/fivemin/detail')
+      this.rest.defreeze()
+    }, 500);
   }
 }

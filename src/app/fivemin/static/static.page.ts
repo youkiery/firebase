@@ -8,6 +8,7 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class StaticPage implements OnInit {
   public list = {}
+  public all = false
   constructor(
     public rest: RestService
   ) { }
@@ -25,9 +26,14 @@ export class StaticPage implements OnInit {
 
   public filterButton() {
     this.rest.fivemin.filter.page = 1
-    this.rest.fivemin.list = []
     this.rest.fivemin.thongke.dulieu = []
     this.filter()
+  }
+
+  public checkall() {
+    this.rest.fivemin.thongke.dulieu.forEach(item => {
+      this.list[item.id] = this.all
+    })
   }
 
   public async previewSelected() {

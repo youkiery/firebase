@@ -23,7 +23,7 @@ export class FiveminPage {
     }
   }
 
-  public async detail(id: number) {
+  public async detail(id: number, disable: number) {
     this.rest.fivemin.id = id
     await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.check({
@@ -32,6 +32,7 @@ export class FiveminPage {
     }).then(response => {
       this.rest.fivemin.data = response.data
       this.rest.fivemin.gopy = response.gopy
+      this.rest.fivemin.disable = disable
       this.rest.router.navigateByUrl('/fivemin/detail')
       this.rest.defreeze()
     }, () => {

@@ -29,13 +29,13 @@
         </div>
       </div>
     </ion-card-content>
-    <ion-card-title>
-      <div class="overflow">
+    <ion-card-subtitle>
+      <div class="overflow padding">
         <span *ngIf="danhsach.gopy.length"> <b> {{danhsach.nguoigopy}} góp ý: </b> {{danhsach.gopy}} </span>
         <ion-button class="right" size="small" shape="round" color="secondary" (click)="gopy(i)">
           góp ý
         </ion-button>  
       </div>
-    </ion-card-title>
+    </ion-card-subtitle>
   </ion-card>
 </ion-content>

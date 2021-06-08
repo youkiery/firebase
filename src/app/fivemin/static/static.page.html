@@ -27,11 +27,11 @@
       <table>
         <tr>
           <th> STT </th>
-          <th>  </th>
+          <td> <ion-checkbox [(ngModel)]="all" (ionChange)="checkall()"></ion-checkbox> </td>
           <th> Nhân viên </th>
           <th> Hoàn thành </th>
-          <th> Đánh giá </th>
           <th> Chưa hoàn thành </th>
+          <th> Đánh giá </th>
           <th></th>
         </tr>
         <tr *ngFor="let thongke of rest.fivemin.thongke.dulieu; let i = index">

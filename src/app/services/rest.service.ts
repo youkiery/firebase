@@ -25,6 +25,7 @@ export class RestService {
     image: [''],
     index: 0,
     rid: 0,
+    disable: 0,
     lydo: '',
     gopy: {
       gopy: '',
