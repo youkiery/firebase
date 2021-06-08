@@ -16,7 +16,7 @@ export class DetailPage implements OnInit {
     {ten: 'tugiac', tieude: 'Tính tự giác'},
     {ten: 'chuyenmin', tieude: 'Mục tiêu chuyên môn'},
     {ten: 'dongdoi', tieude: 'Tính đồng đội'},
-    {ten: 'giaiphap', tieude: 'Ý tưởng và pháp cải tiến'},
+    {ten: 'giaiphap', tieude: 'Ý tưởng và pháp pháp'},
     // {ten: 'ketqua', tieude: 'Kết quả'},
     // {ten: 'uytin', tieude: 'Uy tín'},
     // {ten: 'trachnhiem', tieude: 'Trách nhiệm'},

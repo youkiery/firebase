@@ -1,0 +1,8 @@
+<div class="text-center">
+  <p> Đánh giá nhân viên </p>
+  <span *ngFor="let item of list; let i = index">
+    <ion-icon class="rate" name="star" *ngIf="item == 1" color="warning" (click)="rateSubmit(i)"></ion-icon>
+    <ion-icon class="rate" name="star-outline" *ngIf="item == 0" color="warning" (click)="rateSubmit(i)"></ion-icon>
+  </span>
+</div>
+

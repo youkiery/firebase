@@ -39,6 +39,10 @@ const routes: Routes = [
   {
     path: 'static',
     loadChildren: () => import('./static/static.module').then( m => m.StaticPageModule)
+  },
+  {
+    path: 'rate',
+    loadChildren: () => import('./rate/rate.module').then( m => m.RatePageModule)
   }
 ];
 

@@ -54,12 +54,11 @@ export class StaticPage implements OnInit {
     }
   }
   
-  public async hoanthanh(id: number, status: number = 0) {
+  public async hoanthanh(id: number) {
     await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.check({
       action: 'fivemin-hoanthanh',
       id: id,
-      status: status,
       page: this.rest.fivemin.filter.page,
       start: this.rest.isodatetotime(this.rest.fivemin.filter.start),
       end: this.rest.isodatetotime(this.rest.fivemin.filter.end)

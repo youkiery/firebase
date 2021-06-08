@@ -8,21 +8,26 @@
 </ion-toolbar>
 
 <ion-content>
+  <div *ngFor="let tieuchi of dulieu; let i = index">
+    <ion-card *ngIf="rest.fivemin.data[tieuchi.ten]">
+      <ion-card-header class="header">
+        {{tieuchi.tieude}}
+      </ion-card-header>
+      <ion-card-content>
+        <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]; let chimuc = index">
+          {{chimuc + 1}} {{hang.noidung}}
+          <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+            chi tiết <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+            chi tiết <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-icon *ngIf="hang.hinhanh.length" name="image-outline" class="right"></ion-icon>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
   <div class="pad">
-    <div class="hopthoaitieuchi" *ngFor="let tieuchi of dulieu; let i = index">
-      <b> {{tieuchi.tieude}} </b> <br>
-      <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]; let chimuc = index">
-        {{hang.noidung}}
-        <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
-          chi tiết <ion-icon name="checkmark-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
-          chi tiết <ion-icon name="close-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-icon *ngIf="hang.hinhanh.length" name="image-outline" class="right"></ion-icon>
-      </div>
-    </div>
-
     <div *ngIf="rest.fivemin.gopy.gopy.length" class="endline-text">
       <p class="text-center"> <b> Góp ý </b> </p>
       <p class="error">

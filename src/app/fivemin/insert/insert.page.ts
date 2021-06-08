@@ -13,7 +13,7 @@ export class InsertPage implements OnInit {
     {ten: 'tugiac', truong: [{giatri: ''}], tieude: 'Tính tự giác'},
     {ten: 'chuyenmin', truong: [{giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
     {ten: 'dongdoi', truong: [{giatri: ''}], tieude: 'Tính đồng đội'},
-    {ten: 'giaiphap', truong: [{giatri: ''}], tieude: 'Ý tưởng và pháp cải tiến'},
+    {ten: 'giaiphap', truong: [{giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
     // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},
     // {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
     // {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
@@ -47,17 +47,28 @@ export class InsertPage implements OnInit {
       tieuchi.truong.forEach(truong => {
         dulieu.push(truong.giatri)
       })
-      danhsach[tieuchi.ten] = dulieu.join(',')
+      danhsach[tieuchi.ten] = dulieu
     })
 
     await this.rest.freeze('Đang thêm dữ liệu')
     this.rest.checkpost('fivemin-insert', danhsach).then(response => {
       this.rest.fivemin.list = [response.data].concat(this.rest.fivemin.list)
+      this.rest.fivemin.id = response.data.id
+      this.rest.fivemin.data = response.get
+      this.rest.fivemin.gopy = response.gopy
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
+      this.nav()
     }, () => {
       this.rest.defreeze()
-      this.rest.navCtrl.pop()
     })
+  }
+
+  public async nav() {
+    this.rest.navCtrl.pop()
+    await this.rest.freeze('Đang thêm dữ liệu')
+    setTimeout(() => {
+      this.rest.router.navigateByUrl('/fivemin/detail')
+      this.rest.defreeze()
+    }, 500);
   }
 }

@@ -36,6 +36,38 @@ ion-input, ion-textarea, ion-datetime, textarea.alert-input {
   margin-bottom: 3px !important;
 }
 
+.overflow {
+  overflow: auto;
+}
+
+.header{
+  --background: #2dd36f;
+  color: white;
+}
+
+.group {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.under {
+  text-decoration: underline;
+}
+
+.underline {
+  border-bottom: 1px solid lightslategray;
+}
+
+.endline-text {
+  border-bottom: 1px solid lightslategray;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+}
+.endline-text.last {
+  border-bottom: none;
+}
+
 .text-center {
   text-align: center;
 }

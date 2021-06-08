@@ -9,8 +9,8 @@ import { AlertController, LoadingController, NavController, ToastController } fr
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
@@ -30,6 +30,7 @@ export class RestService {
       gopy: '',
       nguoigopy: ''
     },
+    rate: {i: 0, j: 0, k: 0},
     hoanthanh: false,
     init: false,
     init2: false,
@@ -52,7 +53,7 @@ export class RestService {
     list: [],
     filter: {
       page: 1,
-      start: new Date((new Date().getTime() - 1000 * 60 * 60 * 24 * 3)).toISOString(),
+      start: new Date().toISOString(),
       end: (new Date()).toISOString()
     },
     id: 0

@@ -30,19 +30,19 @@
           <th>  </th>
           <th> Nhân viên </th>
           <th> Hoàn thành </th>
+          <th> Đánh giá </th>
           <th> Chưa hoàn thành </th>
+          <th></th>
         </tr>
         <tr *ngFor="let thongke of rest.fivemin.thongke.dulieu; let i = index">
           <td> {{i + 1}} </td>
           <td> <ion-checkbox [(ngModel)]="list[thongke.id]"></ion-checkbox> </td>
           <td> {{thongke.nhanvien}} </td>
-          <td> {{thongke.hoanthanh}}
-            <ion-button size="small" shape="round" color="secondary" (click)="hoanthanh(thongke.id, 1)">
-              xem
-            </ion-button>  
-          </td>
-          <td> {{thongke.chuahoanthanh}} 
-            <ion-button size="small" shape="round" color="secondary" (click)="hoanthanh(thongke.id, 0)">
+          <td> {{thongke.hoanthanh}} </td>
+          <td> {{thongke.chuahoanthanh}}  </td>
+          <td> {{thongke.danhgia}} </td>
+          <td> 
+            <ion-button size="small" shape="round" color="secondary" (click)="hoanthanh(thongke.id)">
               xem
             </ion-button>  
           </td>

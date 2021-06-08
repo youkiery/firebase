@@ -76,12 +76,12 @@ export class FiveminPage {
   }
 
   public async removeSubmit(id: number) {
-    this.rest.freeze('Đang xóa dữ liệu...')
+    await this.rest.freeze('Đang xóa dữ liệu...')
     this.rest.check({
       action: 'fivemin-remove',
       id: id,
       page: this.rest.fivemin.filter.page
-    }).then((response) => {
+    }).then(() => {
       this.rest.fivemin.list = this.rest.fivemin.list.filter(item => {
         return id != item.id
       })

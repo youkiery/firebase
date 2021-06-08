@@ -5,33 +5,37 @@
 </ion-toolbar>
 
 <ion-content>
-  <table *ngFor="let dulieu of rest.fivemin.thongke.danhsach; let i = index">
-    <tr>
-      <th colspan="3">
-        {{rest.timetodate(dulieu.time * 1000)}} 
-      </th>
-    </tr>
-    <tr>
-      <th> STT </th>
-      <th> Nội dung </th>
-      <th> Hình ảnh </th>
-    </tr>
-    <tr *ngFor="let thongke of dulieu.danhsach; let j = index">
-      <td> {{i + 1}} </td>
-      <td> <b> {{thongke.tieuchi}}: </b> {{thongke.noidung}} </td>
-      <td> 
-        <ion-button *ngIf="thongke.image.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(i, j)">
-          xem ảnh
-        </ion-button>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3">
-        <span *ngIf="dulieu.gopy.length"> <b> {{dulieu.nguoigopy}} góp ý: </b> {{dulieu.gopy}} </span>
+  <ion-card *ngFor="let danhsach of rest.fivemin.thongke.danhsach; let i = index">
+    <ion-card-header class="header">
+      {{rest.timetodate(danhsach.time * 1000)}} 
+    </ion-card-header>
+    <ion-card-content>
+      <div class="group" *ngFor="let dulieu of danhsach.dulieu; let j = index">
+        <p> <b class="under">{{tieuchi[dulieu.tieuchi]}}</b> </p>
+        <div class="overflow underline" *ngFor="let thongke of dulieu.danhsach; let k = index">
+          {{k + 1}}. {{thongke.noidung}}
+          <ion-button *ngIf="thongke.hoanthanh > 0" size="small" color="secondary" shape="round" class="right">
+            HT
+          </ion-button>
+          <ion-button *ngIf="thongke.hoanthanh == '0'" size="small" color="danger" shape="round" class="right">
+            CHT
+          </ion-button>
+          <ion-button size="small" color="secondary" shape="round" class="right" (click)="rate(i, j, k)">
+            {{thongke.sao}} <ion-icon name="star" color="warning"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="thongke.image.length" size="small" color="secondary" shape="round" class="right" (click)="viewImage(i, j, k)">
+            <ion-icon name="image-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </ion-card-content>
+    <ion-card-title>
+      <div class="overflow">
+        <span *ngIf="danhsach.gopy.length"> <b> {{danhsach.nguoigopy}} góp ý: </b> {{danhsach.gopy}} </span>
         <ion-button class="right" size="small" shape="round" color="secondary" (click)="gopy(i)">
           góp ý
         </ion-button>  
-      </td>
-    </tr>
-  </table>
+      </div>
+    </ion-card-title>
+  </ion-card>
 </ion-content>

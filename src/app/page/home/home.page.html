@@ -24,13 +24,28 @@
     </div>
   </div>
 
-  <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('kaimin')">
+  <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('fivemin')">
+    <ion-img src="assets/image/fivemin.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Kế hoạch 5 phút
+    </div>
+  </div>
+
+  <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('kaizen')">
+    <ion-img src="assets/image/kaizen.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Chiến lược Kaizen
+      <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="rest.config.kaizen > 0" class="box" (click)="rest.router.navigateByUrl('kaimin')">
     <ion-img src="assets/image/kaimin.png" class="box-image"></ion-img>
     <div class="box-title">
       5 phút/Kaizen
       <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
     </div>
-  </div>
+  </div> -->
 
   <div *ngIf="rest.config.schedule > 0" class="box" (click)="rest.router.navigateByUrl('schedule')">
     <ion-img src="assets/image/schedule.png" class="box-image"></ion-img>
@@ -53,12 +68,12 @@
     </div>
   </div>
 
-  <div *ngIf="rest.config.expire > 0" class="box" (click)="rest.router.navigateByUrl('expire')">
+  <!-- <div *ngIf="rest.config.expire > 0" class="box" (click)="rest.router.navigateByUrl('expire')">
     <ion-img src="assets/image/stopire.png" class="box-image"></ion-img>
     <div class="box-title">
       Quản lý kho
     </div>
-  </div>
+  </div> -->
   
   <div *ngIf="rest.config.blood > 0" class="box" (click)="rest.router.navigateByUrl('blood')">
     <ion-img src="assets/image/blood.png" class="box-image"></ion-img>
