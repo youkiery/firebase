@@ -7,13 +7,28 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./insert.page.scss'],
 })
 export class InsertPage implements OnInit {
+  public thoigian = [
+    'Thời gian',
+    '07h - 08h',
+    '08h - 09h',
+    '09h - 10h',
+    '10h - 11h',
+    '11h - 12h',
+    '12h - 13h',
+    '13h - 14h',
+    '14h - 15h',
+    '15h - 16h',
+    '16h - 17h',
+    '17h - 18h',
+    '18h - 19h'
+  ]
   public dulieu = [
-    {ten: 'muctieu', truong: [{giatri: ''}], tieude: 'Mục tiêu doanh số'},
-    {ten: 'chamsoc', truong: [{giatri: ''}], tieude: 'Chăm sóc khách hàng'},
-    {ten: 'tugiac', truong: [{giatri: ''}], tieude: 'Tính tự giác'},
-    {ten: 'chuyenmin', truong: [{giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
-    {ten: 'dongdoi', truong: [{giatri: ''}], tieude: 'Tính đồng đội'},
-    {ten: 'giaiphap', truong: [{giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
+    {ten: 'muctieu', truong: [{thoigian: 0, giatri: ''}], tieude: 'Mục tiêu doanh số'},
+    {ten: 'chamsoc', truong: [{thoigian: 0, giatri: ''}], tieude: 'Chăm sóc khách hàng'},
+    {ten: 'tugiac', truong: [{thoigian: 0, giatri: ''}], tieude: 'Tính tự giác'},
+    {ten: 'chuyenmin', truong: [{thoigian: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'dongdoi', truong: [{thoigian: 0, giatri: ''}], tieude: 'Tính đồng đội'},
+    {ten: 'giaiphap', truong: [{thoigian: 0, giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
     // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},
     // {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
     // {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
@@ -27,7 +42,7 @@ export class InsertPage implements OnInit {
   }
 
   public themTruong(chimuctieuchi: number) {
-    this.dulieu[chimuctieuchi].truong.push({giatri: ''})
+    this.dulieu[chimuctieuchi].truong.push({thoigian: 0, giatri: ''})
     console.log(this.dulieu)
   }
 
@@ -35,7 +50,7 @@ export class InsertPage implements OnInit {
     let list = this.dulieu[chimuctieuchi].truong.filter((item, index) => {
       return index !== chimuc
     })
-    if (!list.length) list = [{giatri: ''}]
+    if (!list.length) list = [{thoigian: 0, giatri: ''}]
     
     this.dulieu[chimuctieuchi].truong = list
   }

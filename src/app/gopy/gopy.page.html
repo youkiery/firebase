@@ -1,0 +1,26 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="xacnhangopy()" color="light" fill="clear">
+    Góp ý
+  </ion-button>
+</ion-toolbar>
+
+<ion-content class="pad">
+  <p> <b> Góp ý cải thiện phần mềm </b> </p>
+  <p> Mục góp ý sẽ được gửi cho nhân viên kỹ thuật, và hoàn toàn ẩn danh </p>
+
+  <ion-textarea [(ngModel)]="gopy"> </ion-textarea>
+
+  <div *ngIf="rest.admin.type">
+    <ion-card *ngFor="let item of rest.dsgopy">
+      <ion-card-content>
+        {{item.noidung}}
+        <ion-button class="right" size="small" color="secondary" shape="round" (click)="done(item.id)">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

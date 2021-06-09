@@ -2,10 +2,10 @@
   <ion-button color="light" fill="clear" (click)="modal.dismiss()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button slot="end" (click)="upload()"color="light" fill="clear">
+  <ion-button *ngIf="!rest.fivemin.disable" slot="end" (click)="upload()"color="light" fill="clear">
     Thêm ảnh
   </ion-button>
-  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+  <ion-button *ngIf="!rest.fivemin.disable" slot="end" (click)="save()" color="light" fill="clear">
     Lưu
   </ion-button>
 </ion-toolbar>

@@ -78,7 +78,11 @@ const routes: Routes = [
   {
     path: 'kaimin',
     loadChildren: () => import('./page/kaimin/kaimin.module').then( m => m.KaiminPageModule)
+  },  {
+    path: 'gopy',
+    loadChildren: () => import('./gopy/gopy.module').then( m => m.GopyPageModule)
   }
+
 ];
 
 @NgModule({

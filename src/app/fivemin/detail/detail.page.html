@@ -16,10 +16,10 @@
       <ion-card-content>
         <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]; let chimuc = index">
           <b> {{chimuc + 1}}. </b> {{hang.noidung}}
-          <ion-button *ngIf="!hang.hoanthanh" [disabled]="rest.fivemin.disable" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+          <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
             báo cáo <ion-icon name="checkmark-circle-outline"></ion-icon>
           </ion-button>
-          <ion-button *ngIf="hang.hoanthanh" [disabled]="rest.fivemin.disable" size="small" color="danger" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
+          <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
             báo cáo <ion-icon name="close-circle-outline"></ion-icon>
           </ion-button>
           <ion-icon *ngIf="hang.hinhanh.length" name="image-outline" class="right"></ion-icon>
