@@ -49,7 +49,7 @@ export class SuggestPage implements OnInit {
       action: 'expire-pick',
       name: this.name
     }).then(response => {
-      this.rest.expire.edit.rid = response.rid
+      this.rest.expire.edit.rid = response.id
       this.rest.expire.edit.name = this.name
       this.rest.defreeze()
       this.rest.navCtrl.pop()

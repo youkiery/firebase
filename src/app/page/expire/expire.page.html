@@ -38,7 +38,19 @@
     </div>
   </div>
 
-  <table border="1" *ngIf="expire == 1">
+  <div *ngIf="expire == 1">
+    <ion-card *ngFor="let item of rest.expire.list" [class]="item.color">
+      <ion-card-content>
+        {{item.name}}: {{item.number}} <br>
+        {{item.time}}
+        <ion-button class="right" color="danger" size="small" (click)="remove(item.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- <table border="1">
     <tr>
       <th>  </th>
       <th> Mặt hàng </th>
@@ -46,23 +58,17 @@
       <th> Hạn sử dụng </th>
       <th></th>
     </tr>
-    <tbody *ngFor="let item of rest.expire.list" [class]="item.color">
+    <tbody>
       <tr>
         <td> <ion-checkbox [(ngModel)]="list[item.id]"></ion-checkbox> </td>
-        <td> {{item.name}} </td>
-        <td> {{item.number}} </td>
-        <td> {{item.time}} </td>
+        <td>  </td>
+        <td>  </td>
+        <td>  </td>
         <td>
-          <!-- <ion-button color="secondary" size="small" (click)="edit(item.id)">
-            xem
-          </ion-button> -->
-          <ion-button color="danger" size="small" (click)="remove(item.id)">
-            <ion-icon name="trash-outline"></ion-icon>
-          </ion-button>
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
   <div *ngIf="expire == 2">
     <ion-card *ngFor="let item of rest.expire.item">
@@ -79,6 +85,11 @@
       <ion-tab-button (click)="rest.navCtrl.pop()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="expire = 0">
+        <ion-icon name="apps-outline"></ion-icon>
+        <ion-label> Chức năng </ion-label>
       </ion-tab-button>
 
       <ion-tab-button (click)="edit(0)">
@@ -100,6 +111,11 @@
       <ion-tab-button (click)="rest.navCtrl.pop()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="expire = 0">
+        <ion-icon name="apps-outline"></ion-icon>
+        <ion-label> Chức năng </ion-label>
       </ion-tab-button>
 
       <ion-tab-button (click)="updateItem()">
