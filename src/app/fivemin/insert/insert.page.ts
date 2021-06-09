@@ -60,7 +60,7 @@ export class InsertPage implements OnInit {
     this.dulieu.forEach((tieuchi) => {
       let dulieu = []
       tieuchi.truong.forEach(truong => {
-        dulieu.push(truong.giatri)
+        dulieu.push(truong)
       })
       danhsach[tieuchi.ten] = dulieu
     })

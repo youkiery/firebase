@@ -1,3 +1,25 @@
 .content {
   padding: 5px;
 }
+
+.item-native {
+  padding-inline-start: 0px;
+  padding-inline-end: 0px
+}
+
+ion-input {
+  margin-inline-end: 10px;
+}
+
+ion-button[slot="end"] {
+  margin-inline-start: 10px;
+}
+
+ion-card-content {
+  padding-inline-start: 10px;
+  padding-inline-end: 10px;
+}
+
+.item-inner {
+  --inner-padding-end: 0px;
+}

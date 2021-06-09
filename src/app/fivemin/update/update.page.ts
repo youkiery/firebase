@@ -7,13 +7,28 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./update.page.scss'],
 })
 export class UpdatePage implements OnInit {
+  public thoigian = [
+    'Thời gian',
+    '07h - 08h',
+    '08h - 09h',
+    '09h - 10h',
+    '10h - 11h',
+    '11h - 12h',
+    '12h - 13h',
+    '13h - 14h',
+    '14h - 15h',
+    '15h - 16h',
+    '16h - 17h',
+    '17h - 18h',
+    '18h - 19h'
+  ]
   public dulieu = [
-    {ten: 'muctieu', truong: [{id: 0, giatri: ''}], tieude: 'Mục tiêu doanh số'},
-    {ten: 'chamsoc', truong: [{id: 0, giatri: ''}], tieude: 'Chăm sóc khách hàng'},
-    {ten: 'tugiac', truong: [{id: 0, giatri: ''}], tieude: 'Tính tự giác'},
-    {ten: 'chuyenmin', truong: [{id: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
-    {ten: 'dongdoi', truong: [{id: 0, giatri: ''}], tieude: 'Tính đồng đội'},
-    {ten: 'giaiphap', truong: [{id: 0, giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
+    {ten: 'muctieu', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Mục tiêu doanh số'},
+    {ten: 'chamsoc', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Chăm sóc khách hàng'},
+    {ten: 'tugiac', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Tính tự giác'},
+    {ten: 'chuyenmin', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'dongdoi', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Tính đồng đội'},
+    {ten: 'giaiphap', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
     // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},
     // {ten: 'uytin', truong: [{giatri: ''}], tieude: 'Uy tín'},
     // {ten: 'trachnhiem', truong: [{giatri: ''}], tieude: 'Trách nhiệm'},
@@ -35,6 +50,7 @@ export class UpdatePage implements OnInit {
         this.rest.fivemin.data[item.ten].forEach(tieuchi => {
           dulieutam.push({
             id: tieuchi.id,
+            thoigian: Number(tieuchi.thoigian),
             giatri: tieuchi.noidung
           })
         });
@@ -46,6 +62,7 @@ export class UpdatePage implements OnInit {
   public themTruong(chimuctieuchi: number) {
     this.dulieu[chimuctieuchi].truong.push({
       id: 0,
+      thoigian: 0,
       giatri: ''
     })
     console.log(this.dulieu)

@@ -28,6 +28,7 @@ export class FiveminPage {
     await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.check({
       action: 'fivemin-get',
+      act: 1,
       id: id
     }).then(response => {
       this.rest.fivemin.data = response.data
@@ -45,6 +46,7 @@ export class FiveminPage {
     await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.check({
       action: 'fivemin-get',
+      act: 0,
       id: id
     }).then(response => {
       this.rest.fivemin.data = response.data

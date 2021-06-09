@@ -10,6 +10,21 @@ import { UploadPage } from '../upload/upload.page';
   styleUrls: ['./detail.page.scss'],
 })
 export class DetailPage implements OnInit {
+  public thoigian = [
+    'Thời gian',
+    '07h - 08h',
+    '08h - 09h',
+    '09h - 10h',
+    '10h - 11h',
+    '11h - 12h',
+    '12h - 13h',
+    '13h - 14h',
+    '14h - 15h',
+    '15h - 16h',
+    '16h - 17h',
+    '17h - 18h',
+    '18h - 19h'
+  ]
   public dulieu = [
     {ten: 'muctieu', tieude: 'Mục tiêu doanh số'},
     {ten: 'chamsoc', tieude: 'Chăm sóc khách hàng'},
