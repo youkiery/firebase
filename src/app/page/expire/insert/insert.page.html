@@ -21,7 +21,7 @@
     <ion-input [(ngModel)]="rest.expire.edit.expire"></ion-input>
     <ion-thumbnail slot="end">
       <img src="assets/image/calendar.png">
-      <ion-datetime [(ngModel)]="time" displayFormat="DD/MM/YYYY" (ionChange)="datepicker()">
+      <ion-datetime [(ngModel)]="time" displayFormat="DD/MM/YYYY" (ionChange)="datepicker()" max="2100">
       </ion-datetime>
     </ion-thumbnail>
   </ion-item>

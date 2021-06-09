@@ -27,7 +27,7 @@
     <ion-input [(ngModel)]="time.cometime"></ion-input>
     <ion-thumbnail slot="end">
       <img src="assets/image/calendar.png">
-      <ion-datetime [(ngModel)]="picker.cometime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('cometime')">
+      <ion-datetime [(ngModel)]="picker.cometime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('cometime')" max="2100">
       </ion-datetime>
     </ion-thumbnail>
   </ion-item>
@@ -36,7 +36,7 @@
     <ion-input [(ngModel)]="time.calltime"></ion-input>
     <ion-thumbnail slot="end">
       <img src="assets/image/calendar.png">
-      <ion-datetime [(ngModel)]="picker.calltime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')">
+      <ion-datetime [(ngModel)]="picker.calltime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')" max="2100">
       </ion-datetime>
     </ion-thumbnail>
   </ion-item>
