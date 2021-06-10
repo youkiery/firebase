@@ -9,8 +9,8 @@ import { AlertController, LoadingController, ModalController, NavController, Toa
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
@@ -146,6 +146,8 @@ export class RestService {
     role: 0
   }
   public vaccine = {
+    init: false,
+    new: [],
     data: [],
     filter: [],
     filterKey: '',
@@ -239,6 +241,8 @@ export class RestService {
     total: 0
   }
   public usg = {
+    init: false,
+    new: [],
     data: [],
     filter: [],
     filterKey: '',

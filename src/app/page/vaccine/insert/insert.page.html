@@ -48,4 +48,26 @@
       </ion-datetime>
     </ion-thumbnail>
   </ion-item>
+
+  <br>
+  <p class="text-center"> <b> Thêm hôm nay </b> </p>
+  <br>
+
+  <table border="1">
+    <thead>
+      <th> Tên chủ </th>
+      <th> Số điện thoại </th>
+      <th> Loại vaccine </th>
+      <th> Ngày tái chủng </th>
+    </thead>
+    <tbody *ngFor="let item of rest.vaccine.new; let i = index">
+      <tr>
+        <td> {{item.name}} </td>
+        <td> {{item.number}} </td>
+        <td> {{item.vaccine}} </td>
+        <td> {{rest.timetodate(item.calltime)}} </td>
+      </tr>
+    </tbody>
+  </table>
+
 </ion-content>

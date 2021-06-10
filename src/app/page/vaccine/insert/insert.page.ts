@@ -75,6 +75,11 @@ export class InsertPage implements OnInit {
         this.customer.phone = ''
         this.pets = []
         this.pet = 0
+        this.rest.vaccine.new = response.new
+        response.data.forEach((item: any, index: number) => {
+          response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
+        });
+        this.rest.vaccine.data = response.data
         this.rest.notify('Đã thêm lịch tiêm vaccine')
         this.rest.defreeze()
       }, () => {

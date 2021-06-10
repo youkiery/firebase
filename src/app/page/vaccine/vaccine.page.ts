@@ -15,10 +15,12 @@ export class VaccinePage implements OnInit {
   ) { }
 
   public async ionViewDidEnter() {
-    await this.rest.freeze('Đang tải danh sách')
-    this.filter().then(() => {
-      this.rest.defreeze()
-    })
+    if (!this.rest.vaccine.init) {
+      await this.rest.freeze('Đang tải danh sách')
+      this.filter().then(() => {
+        this.rest.defreeze()
+      })
+    }
   }
   
   public filter() {
@@ -27,6 +29,8 @@ export class VaccinePage implements OnInit {
         action: 'vaccine-auto',
         status: this.rest.vaccine.status
       }).then(response => {
+        this.rest.vaccine.init = true
+        this.rest.vaccine.new = response.new
         response.data.forEach((item: any, index: number) => {
           response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
         });

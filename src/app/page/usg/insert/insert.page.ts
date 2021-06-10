@@ -68,6 +68,8 @@ export class InsertPage implements OnInit {
         number: this.number,
         cometime: this.time.cometime,
         calltime: this.time.calltime,
+        keyword: this.rest.usg.filterKey,
+        status: this.rest.usg.status,
         note: this.note
       }).then((response) => {
         this.customer.name = ''
@@ -76,6 +78,8 @@ export class InsertPage implements OnInit {
         this.pet = 0
         this.number = 0
         this.note = ''
+        this.rest.usg.new = response.new
+        this.rest.usg.data = response.data
         this.rest.notify('Đã thêm lịch tiêm usg')
         this.rest.defreeze()
       }, () => {

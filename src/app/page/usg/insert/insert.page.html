@@ -48,4 +48,25 @@
     <ion-label position="stacked"> Ghi chú </ion-label>
     <ion-textarea [(ngModel)]="note"></ion-textarea>
   </ion-item>
+
+  <br>
+  <p class="text-center"> <b> Thêm hôm nay </b> </p>
+  <br>
+
+  <table border="1">
+    <thead>
+      <th> Tên chủ </th>
+      <th> Số điện thoại </th>
+      <th> Ngày siêu âm </th>
+      <th> Ngày siêu âm lại </th>
+    </thead>
+    <tbody *ngFor="let item of rest.usg.new; let i = index">
+      <tr>
+        <td> {{item.name}} </td>
+        <td> {{item.number}} </td>
+        <td> {{item.time}} </td>
+        <td> {{item.calltime}} </td>
+      </tr>
+    </tbody>
+  </table>
 </ion-content>

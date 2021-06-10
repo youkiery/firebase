@@ -15,10 +15,12 @@ export class UsgPage implements OnInit {
   ) { }
 
   public async ionViewDidEnter() {
-    await this.rest.freeze('Đang tải danh sách')
-    this.filter().then(() => {
-      this.rest.defreeze()
-    })
+    if (!this.rest.usg.init) {
+      await this.rest.freeze('Đang tải danh sách')
+      this.filter().then(() => {
+        this.rest.defreeze()
+      })
+    }
   }
 
   public insert() {
@@ -35,6 +37,8 @@ export class UsgPage implements OnInit {
         keyword: this.rest.usg.filterKey,
         status: this.rest.usg.status
       }).then(response => {
+        this.rest.usg.init = true
+        this.rest.usg.new = response.new
         this.rest.usg.data = response.data
         resolve('')
       }, () => {
