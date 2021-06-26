@@ -72,7 +72,7 @@ export class SpaPage implements OnInit {
       this.rest.check({
         action: 'spa-done',
         id: id,
-        current: this.rest.spa.current.time
+        current: this.rest.datetotime(this.rest.spa.current)
       }).then((response) => {
         this.rest.spa.time = response.time
         this.rest.spa.data = response.data
@@ -84,6 +84,8 @@ export class SpaPage implements OnInit {
   }
 
   public async pickDate() {
+    let current = this.rest.spa.current.split('/')
+    let target = current[2] + '-' + current[1] + '-' + current[0]
     let alert = await this.alert.create({
       header: 'Chọn ngày',
       inputs: [
@@ -91,7 +93,7 @@ export class SpaPage implements OnInit {
           label: 'Ngày',
           name: 'date',
           type: 'date',
-          value: this.rest.spa.current.datestring
+          value: target
         }
       ],
       buttons: [
@@ -103,7 +105,8 @@ export class SpaPage implements OnInit {
           text: 'Chọn ngày',
           cssClass: 'secondary',
           handler: (e) => {
-            this.rest.spa.current = this.rest.parseDate(e.date)
+            let result = e.date.split('-')
+            this.rest.spa.current = result[2] + '/' + result[1] + '/' + result[0]
             this.filterPickDate()
           }
         }
@@ -125,7 +128,7 @@ export class SpaPage implements OnInit {
       this.rest.check({
         action: 'spa-auto',
         time: this.rest.spa.time,
-        current: this.rest.spa.current.time
+        current: this.rest.datetotime(this.rest.spa.current)
       }).then((response) => {
         if (response.data && response.data != this.rest.spa.data) {
           this.rest.spa.data = response.data
@@ -141,8 +144,8 @@ export class SpaPage implements OnInit {
   }
 
   public async changeDate(amount: number) {
-    let time = this.rest.spa.current.time / 1000 + amount * 60 * 60 * 24
-    this.rest.spa.current = this.rest.parseDate(time)
+    let time = this.rest.datetotime(this.rest.spa.current) + amount * 60 * 60 * 24 * 1000
+    this.rest.spa.current = this.rest.timetodate(time)
     await this.rest.freeze('Lấy danh sách spa')
     this.filter().then(() => {
       this.rest.defreeze()

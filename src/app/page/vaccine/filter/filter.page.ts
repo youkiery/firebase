@@ -34,7 +34,7 @@ export class FilterPage implements OnInit {
         keyword: this.rest.vaccine.filterKey
       }).then(response => {
         response.data.forEach((item: any, index: number) => {
-          response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
+          response.data[index]['calltime'] = this.rest.timetodate(response.data[index]['calltime'])
         });
         this.rest.vaccine.filter = response.data
         this.rest.defreeze()

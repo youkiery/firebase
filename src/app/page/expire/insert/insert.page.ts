@@ -40,8 +40,7 @@ export class InsertPage implements OnInit {
   }
 
   public datepicker() {
-    let datetime = this.rest.parseDate(this.time)
-    this.rest.expire.edit.expire = datetime.datestring
+    this.rest.expire.edit.expire = this.rest.isodatetodate(this.time)
   }
 
   public suggest() {

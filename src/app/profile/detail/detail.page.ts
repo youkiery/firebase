@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-// import { Printer } from '@ionic-native/printer';
-// import { Printer, PrintOptions } from '@ionic-native/printer/ngx';
 
 @Component({
   selector: 'app-detail',

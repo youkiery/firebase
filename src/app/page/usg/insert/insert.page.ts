@@ -24,6 +24,7 @@ export class InsertPage implements OnInit {
     cometime: '',
     calltime: ''
   }
+  public editor = 0
   constructor(
     public rest: RestService,
     public modal: ModalController
@@ -44,6 +45,43 @@ export class InsertPage implements OnInit {
     this.rest.usg.select.name = ''
   }
 
+  public clear() {
+    this.customer.name = ''
+    this.customer.phone = ''
+    this.pets = []
+    this.pet = 0
+    this.number = 0
+    this.editor = 0
+  }
+
+  public edit(index: number) {
+    this.customer.name = this.rest.usg.new[index].name
+    this.customer.phone = this.rest.usg.new[index].number
+    this.number = this.rest.usg.new[index].birth
+    
+    this.picker.calltime = this.rest.datetoisodate(this.rest.usg.new[index].calltime)
+
+    this.rest.temp = this.rest.usg.new[index]
+    this.editor = this.rest.usg.new[index].id
+  }
+
+  public async update() {
+    await this.rest.freeze('Đang thêm tiêm phòng')
+    this.rest.check({
+      action: 'usg-update',
+      id: this.editor,
+      number: this.number,
+      calltime: this.time.calltime,
+    }).then((response) => {
+      this.clear()
+      this.rest.usg.new = response.new
+      this.rest.notify('Đã cập nhật lịch siêu âm')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async suggest(name: string) {
     this.rest.usg.suggest = this.customer[name]
     this.rest.usg.suggestList = [] 
@@ -51,8 +89,7 @@ export class InsertPage implements OnInit {
   }
 
   public datepicker(name: string) {
-    let datetime = this.rest.parseDate(this.picker[name])
-    this.time[name] = datetime.datestring
+    this.time[name] = this.rest.isodatetodate(this.picker[name])
   }
 
   public async save() {
@@ -72,15 +109,10 @@ export class InsertPage implements OnInit {
         status: this.rest.usg.status,
         note: this.note
       }).then((response) => {
-        this.customer.name = ''
-        this.customer.phone = ''
-        this.pets = []
-        this.pet = 0
-        this.number = 0
-        this.note = ''
+        this.clear()
         this.rest.usg.new = response.new
         this.rest.usg.data = response.data
-        this.rest.notify('Đã thêm lịch tiêm usg')
+        this.rest.notify('Đã thêm lịch siêu âm')
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()

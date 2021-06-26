@@ -25,7 +25,7 @@ export class RidePage implements OnInit {
     this.rest.check({
       action: 'ride-init',
       type: this.rest.ride.selected,
-      time: this.rest.ride.current.time / 1000
+      time: this.rest.datetotime(this.rest.ride.current) / 1000
     }).then(response => {
       this.rest.ride.list = response.list
       this.rest.defreeze()
@@ -61,7 +61,7 @@ export class RidePage implements OnInit {
     this.rest.check({
       action: 'ride-remove',
       id: id,
-      time: this.rest.ride.current.time / 1000,
+      time: this.rest.datetotime(this.rest.ride.current) / 1000,
       type: this.rest.ride.selected
     }).then(response => {
       this.rest.ride.list[this.rest.ride.selected] = response.list
@@ -97,7 +97,7 @@ export class RidePage implements OnInit {
           label: 'Ngày',
           name: 'date',
           type: 'date',
-          value: this.rest.ride.current.datestring
+          value: this.rest.ride.current
         }
       ],
       buttons: [
@@ -109,7 +109,7 @@ export class RidePage implements OnInit {
           text: 'Chọn ngày',
           cssClass: 'secondary',
           handler: (e) => {
-            this.rest.ride.current = this.rest.parseDate(e.date)
+            this.rest.ride.current = e.date
             this.pickDateSubmit()
           }
         }
@@ -128,7 +128,7 @@ export class RidePage implements OnInit {
     this.rest.check({
       action: 'ride-auto',
       type: this.rest.ride.selected,
-      time: this.rest.ride.current.time / 1000
+      time: this.rest.datetotime(this.rest.ride.current) / 1000
     }).then(response => {
       this.rest.ride.list[this.rest.ride.selected] = response.list
       this.rest.defreeze()
@@ -138,8 +138,8 @@ export class RidePage implements OnInit {
   }
 
   public changeDate(amount: number) {
-    let time = this.rest.ride.current.time / 1000 + amount * 60 * 60 * 24
-    this.rest.ride.current = this.rest.parseDate(time)
+    let time = this.rest.datetotime(this.rest.ride.current) / 1000 + amount * 60 * 60 * 24
+    this.rest.ride.current = this.rest.timetodate(time)
     this.filter()
   }
 }

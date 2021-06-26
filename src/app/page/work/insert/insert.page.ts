@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
@@ -18,6 +18,10 @@ export class InsertPage {
     cometime: '',
     calltime: ''
   }
+  public date: {
+    cometime: null,
+    calltime: null,
+  }
   constructor(
     public rest: RestService,
     public modal: ModalController
@@ -31,8 +35,7 @@ export class InsertPage {
   }
 
   public datepicker(name: string) {
-    let datetime = this.rest.parseDate(this.picker[name])
-    this.time[name] = datetime.datestring
+    this.time[name] = this.rest.isodatetodate(this.picker[name])
   }
 
   public async insert() {

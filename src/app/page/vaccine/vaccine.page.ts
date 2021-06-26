@@ -31,9 +31,6 @@ export class VaccinePage implements OnInit {
       }).then(response => {
         this.rest.vaccine.init = true
         this.rest.vaccine.new = response.new
-        response.data.forEach((item: any, index: number) => {
-          response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
-        });
         this.rest.vaccine.data = response.data
         resolve('')
       }, () => {
@@ -87,9 +84,6 @@ export class VaccinePage implements OnInit {
       status: this.rest.vaccine.status
     }).then(response => {
       this.rest.notify('Đã thay đổi trạng thái')
-      response.data.forEach((item: any, index: number) => {
-        response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
-      });
       this.rest.vaccine.data = response.data
       this.rest.defreeze()
     }, () => {

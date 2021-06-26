@@ -36,6 +36,10 @@ ion-input, ion-textarea, ion-datetime, textarea.alert-input {
   margin-bottom: 3px !important;
 }
 
+ion-datetime {
+  display: none;
+}
+
 .overflow {
   overflow: auto;
 }

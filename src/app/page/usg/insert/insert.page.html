@@ -2,51 +2,51 @@
   <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button slot="end" (click)="save()" color="light" fill="clear">
+  <ion-button slot="end" *ngIf="editor == 0" (click)="save()" color="light" fill="clear">
     Lưu
+  </ion-button>
+  <ion-button slot="end" *ngIf="editor > 0" (click)="clear()" color="danger" fill="clear">
+    Hủy
+  </ion-button>
+  <ion-button slot="end" *ngIf="editor > 0" (click)="update()" color="light" fill="clear">
+    Cập nhật
   </ion-button>
 </ion-toolbar>
 
 <ion-content>
   <ion-item class="relative">
     <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="customer.name" (click)="suggest('name')"> </ion-input>
+    <ion-input [(ngModel)]="customer.name" (click)="suggest('name')" [disabled]="editor > 0"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="customer.phone" (click)="suggest('phone')"> </ion-input>
+    <ion-input [(ngModel)]="customer.phone" (click)="suggest('phone')" [disabled]="editor > 0"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Thú cưng </ion-label>
-    <ion-select [(ngModel)]="pet">
+    <ion-select [(ngModel)]="pet" [disabled]="editor > 0">
       <ion-select-option *ngFor="let item of pets" [value]="item.id"> {{item.name}} </ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày siêu âm </ion-label>
-    <ion-input [(ngModel)]="time.cometime"></ion-input>
-    <ion-thumbnail slot="end">
-      <img src="assets/image/calendar.png">
-      <ion-datetime [(ngModel)]="picker.cometime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('cometime')" max="2100">
-      </ion-datetime>
-    </ion-thumbnail>
+    <ion-input [(ngModel)]="time.cometime" [disabled]="editor > 0"></ion-input>
+    <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
+    <ion-datetime [(ngModel)]="picker.cometime" #cometime displayFormat="DD/MM/YYYY"
+      (ionChange)="datepicker('cometime')" max="2100" [disabled]="editor > 0">
+    </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày dự sinh </ion-label>
     <ion-input [(ngModel)]="time.calltime"></ion-input>
-    <ion-thumbnail slot="end">
-      <img src="assets/image/calendar.png">
-      <ion-datetime [(ngModel)]="picker.calltime" displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')" max="2100">
-      </ion-datetime>
-    </ion-thumbnail>
+    <ion-icon slot="end" name="calendar-outline" (click)="calltime.open()"></ion-icon>
+    <ion-datetime [(ngModel)]="picker.calltime" #calltime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')"
+      max="2100">
+    </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số con dự kiến </ion-label>
     <ion-input [(ngModel)]="number"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked"> Ghi chú </ion-label>
-    <ion-textarea [(ngModel)]="note"></ion-textarea>
   </ion-item>
 
   <br>
@@ -57,15 +57,21 @@
     <thead>
       <th> Tên chủ </th>
       <th> Số điện thoại </th>
-      <th> Ngày siêu âm </th>
+      <th> Số thai </th>
       <th> Ngày siêu âm lại </th>
+      <th></th>
     </thead>
     <tbody *ngFor="let item of rest.usg.new; let i = index">
       <tr>
         <td> {{item.name}} </td>
         <td> {{item.number}} </td>
-        <td> {{item.time}} </td>
+        <td> {{item.birth}} </td>
         <td> {{item.calltime}} </td>
+        <td>
+          <ion-button size="small" color="secondary" (click)="edit(i)">
+            <ion-icon name="create-outline"></ion-icon>
+          </ion-button>
+        </td>
       </tr>
     </tbody>
   </table>

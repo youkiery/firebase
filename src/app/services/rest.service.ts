@@ -9,8 +9,8 @@ import { AlertController, LoadingController, ModalController, NavController, Toa
 })
 export class RestService {
   public branch = 'test'
-  // public baseurl: string = 'http://localhost/server/index.php?';
-  public baseurl: string = '/server/index.php?';
+  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
@@ -21,6 +21,7 @@ export class RestService {
 
     }
   }
+  public temp: any = {}
   public dsgopy = []
   public ktgopy = false
   public fivemin = {
@@ -179,10 +180,7 @@ export class RestService {
     suggest: '',
     suggestList: [],
     data: [],
-    current: {
-      time: 0,
-      datestring: ''
-    },
+    current: '',
     time: 0
   }
   public expire = {
@@ -201,10 +199,7 @@ export class RestService {
     item: []
   }
   public ride = {
-    current: {
-      time: 0,
-      datestring: ''
-    },
+    current: '',
     selected: '0',
     clock: 0,
     list: [
@@ -363,38 +358,41 @@ export class RestService {
     this.load.dismiss()
   }
 
-  // datestring, datetime, time, dateiso
-  public parseDate(obj: any) {
-    // transform to datetime
-    if (!obj) obj = new Date()
-    else {
-      obj = obj.toString()
-      let datetime = obj.split("T")[0].split('-')
-      if (datetime.length == 3) obj = new Date(datetime[0], Number(datetime[1]) - 1, datetime[2] )
-      else if (Number(obj)) obj = new Date(Number(obj) * 1000)
-      else {
-        let dateobj = obj.split('/')
-        if (dateobj.length == 3) {
-          obj = new Date(dateobj[2], dateobj[1] - 1, dateobj[0])
-        }
-        else obj = new Date()
-      }
-    }
-    // transform time
-    // datestring
-    let datestring = this.timetodate(obj.getTime())
-    // datetime
-    let datetime = obj
-    // dateiso
-    let dateiso = this.todate(datestring)
-    // time
-    let time = obj.getTime()
-    return {
-      'datestring': datestring,
-      'datetime': datetime,
-      'dateiso': dateiso,
-      'time': time
-    }
+  public timetodate(time: number) {
+    let datetime = new Date(Number(time))
+    let date = datetime.getDate().toString()
+    date = (Number(date) < 10 ? '0' + date : date)
+    let month = (datetime.getMonth() + 1).toString()
+    month = (Number(month) < 10 ? '0' + month : month)
+    let year = datetime.getFullYear()
+    return date + '/' + month + '/' + year
+  }
+
+  public timetoisodate(time: number) {
+    return this.datetoisodate(this.timetodate(time))
+  }
+
+  public isodatetotime(time: string) {
+    let datetime = time.split("T")[0].split('-')
+    if (datetime.length === 3) return (new Date(Number(datetime[0]), Number(datetime[1]) - 1, Number(datetime[2]))).getTime()
+    return 0
+  }
+
+  public isodatetodate(time: string) {
+    let datetime = time.split("T")[0].split('-')
+    
+    return datetime[2] + '/' + datetime[1] + '/' + datetime[0]
+  }
+
+  public datetotime(date: string) {
+    let datestring = date.split("/")
+    let datetime = new Date(Number(datestring['2']), Number(datestring['1']) - 1, Number(datestring[0]))
+    return datetime.getTime()
+  }
+
+  public datetoisodate(date: string) {
+    let datestring = date.split("/")
+    return datestring['2'] +'-'+ datestring['1'] + '-'+ datestring[0] + 'T00:00:00.000Z'
   }
 
   public check(param: Object): Promise<any> {
@@ -492,8 +490,8 @@ export class RestService {
       this.list.employ = data['employ']
       this.list.except = data['except']
       this.today = data['today']
-      this.spa.current = this.parseDate(data['today'])
-      this.ride.current = this.parseDate(data['today'])
+      this.spa.current = data['today']
+      this.ride.current = data['today']
       for (const key in data['config']) {
         if (Object.prototype.hasOwnProperty.call(data['config'], key)) {
           this.config[key] = Number(data['config'][key])
@@ -547,32 +545,10 @@ export class RestService {
     return ''
   }
 
-  public datetotime(date: string) {
-    let datestring = date.split("/")
-    let datetime = new Date(Number(datestring['2']), Number(datestring['1']) - 1, Number(datestring[0]))
-    return datetime.getTime()
-  }
-
-  public timetodate(time: number) {
-    let datetime = new Date(Number(time))
-    let date = datetime.getDate().toString()
-    date = (Number(date) < 10 ? '0' + date : date)
-    let month = (datetime.getMonth() + 1).toString()
-    month = (Number(month) < 10 ? '0' + month : month)
-    let year = datetime.getFullYear()
-    return date + '/' + month + '/' + year
-  }
-
   public totime(time: any) {
     let datetime = time.split("T")[0].split('-')
     if (datetime.length === 3) return (Number(datetime['2']) + 1) + '/' + datetime['1'] + '/' + datetime['0']
     return ''
-  }
-
-  public isodatetotime(time: any) {
-    let datetime = time.split("T")[0].split('-')
-    if (datetime.length === 3) return (new Date(datetime[0], Number(datetime[1]) - 1, datetime[2])).getTime()
-    return 0
   }
 
   public async notify(text: string, duration: number = 1000) {

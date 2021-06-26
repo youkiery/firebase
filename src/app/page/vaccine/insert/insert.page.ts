@@ -23,6 +23,7 @@ export class InsertPage implements OnInit {
     cometime: '',
     calltime: ''
   }
+  public editor = 0
   constructor(
     public rest: RestService,
     public modal: ModalController
@@ -53,10 +54,51 @@ export class InsertPage implements OnInit {
   }
 
   public datepicker(name: string) {
-    let datetime = this.rest.parseDate(this.picker[name])
-    this.time[name] = datetime.datestring
+    this.time[name] = this.rest.isodatetodate(this.picker[name])
   }
 
+  public clear() {
+    this.customer.name = ''
+    this.customer.phone = ''
+    this.pets = []
+    this.pet = 0
+    this.editor = 0
+  }
+
+  public edit(index: number) {
+    this.customer.name = this.rest.vaccine.new[index].name
+    this.customer.phone = this.rest.vaccine.new[index].number
+    this.rest.vaccine.disease.forEach((item, i_index) => {
+      if (item.name == this.rest.vaccine.new[index].vaccine) this.disease = i_index
+    })
+    
+    this.picker.calltime = this.rest.datetoisodate(this.rest.vaccine.new[index].calltime)
+
+    this.rest.temp = this.rest.vaccine.new[index]
+    this.editor = this.rest.vaccine.new[index].id
+  }
+
+  public async update() {
+    await this.rest.freeze('Đang thêm tiêm phòng')
+    this.rest.check({
+      action: 'vaccine-update',
+      id: this.editor,
+      disease: this.rest.vaccine.disease[this.disease].id,
+      calltime: this.time.calltime
+    }).then((response) => {
+      this.customer.name = ''
+      this.customer.phone = ''
+      this.pets = []
+      this.pet = 0
+      this.editor = 0
+      this.rest.vaccine.new = response.new
+      this.rest.notify('Đã cập nhật lịch tiêm vaccine')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+  
   public async save() {
     if (!this.customer.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.customer.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
@@ -76,9 +118,6 @@ export class InsertPage implements OnInit {
         this.pets = []
         this.pet = 0
         this.rest.vaccine.new = response.new
-        response.data.forEach((item: any, index: number) => {
-          response.data[index]['calltime'] = this.rest.parseDate(response.data[index]['calltime'])
-        });
         this.rest.vaccine.data = response.data
         this.rest.notify('Đã thêm lịch tiêm vaccine')
         this.rest.defreeze()
