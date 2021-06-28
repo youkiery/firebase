@@ -7,6 +7,7 @@
 <ion-content>
   <ion-item>
     <ion-input [(ngModel)]="rest.vaccine.suggest" (keyup)="suggest()" #input> </ion-input>
+    <ion-button slot="end" color="secondary" (click)="pick()"> chọn </ion-button>
   </ion-item>
   <div *ngIf="rest.vaccine.suggestList.length">
     <ion-item *ngFor="let item of rest.vaccine.suggestList" (click)="select(item.name, item.phone, item.pet)">

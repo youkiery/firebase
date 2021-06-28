@@ -9,8 +9,8 @@ import { AlertController, LoadingController, ModalController, NavController, Toa
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
@@ -147,6 +147,23 @@ export class RestService {
     role: 0
   }
   public vaccine = {
+    edit: {
+      customer: {
+        name: '',
+        phone: ''
+      },
+      pet: 0,
+      pets: [],
+      disease: 0,
+      time: {
+        cometime: '', 
+        calltime: ''
+      },
+      picker: {
+        cometime: '',
+        calltime: ''
+      }
+    },
     init: false,
     new: [],
     data: [],
@@ -155,6 +172,7 @@ export class RestService {
     status: '0',
     role: 0,
     suggest: '',
+    suggesttype: '',
     suggestList: [],
     select: {
       name: '',
@@ -236,6 +254,25 @@ export class RestService {
     total: 0
   }
   public usg = {
+    edit: {
+      customer: {
+        name: '',
+        phone: ''
+      },
+      number: 0,
+      pet: 0,
+      note: '',
+      pets: [],
+      time: {
+        cometime: '', 
+        calltime: ''
+      },
+      picker: {
+        cometime: '',
+        calltime: ''
+      }
+    },
+    suggesttype: '',
     init: false,
     new: [],
     data: [],

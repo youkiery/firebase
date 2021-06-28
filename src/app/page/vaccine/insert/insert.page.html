@@ -16,21 +16,21 @@
 <ion-content>
   <ion-item class="relative">
     <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="customer.name" (click)="suggest('name')" [disabled]="editor > 0"> </ion-input>
+    <ion-input [(ngModel)]="rest.vaccine.edit.customer.name" (click)="suggest('name')" [disabled]="editor > 0"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="customer.phone" (click)="suggest('phone')" [disabled]="editor > 0"> </ion-input>
+    <ion-input [(ngModel)]="rest.vaccine.edit.customer.phone" (click)="suggest('phone')" [disabled]="editor > 0"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Thú cưng </ion-label>
-    <ion-select [(ngModel)]="pet" [disabled]="editor > 0">
-      <ion-select-option *ngFor="let item of pets" [value]="item.id"> {{item.name}} </ion-select-option>
+    <ion-select [(ngModel)]="rest.vaccine.edit.pet" [disabled]="editor > 0">
+      <ion-select-option *ngFor="let item of rest.vaccine.edit.pets" [value]="item.id"> {{item.name}} </ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Loại tiêm phòng </ion-label>
-    <ion-select [(ngModel)]="disease">
+    <ion-select [(ngModel)]="rest.vaccine.edit.disease">
       <ion-select-option *ngFor="let item of rest.vaccine.disease; let i = index" [value]="i">
         {{item.name}}
       </ion-select-option>
@@ -38,17 +38,17 @@
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày tiêm phòng </ion-label>
-    <ion-input [(ngModel)]="time.cometime" [disabled]="editor > 0"></ion-input>
+    <ion-input [(ngModel)]="rest.vaccine.edit.time.cometime" [disabled]="editor > 0"></ion-input>
     <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
-    <ion-datetime class="none" [(ngModel)]="picker.cometime" #cometime displayFormat="DD/MM/YYYY"
+    <ion-datetime class="none" [(ngModel)]="rest.vaccine.edit.picker.cometime" #cometime displayFormat="DD/MM/YYYY"
       (ionChange)="datepicker('cometime')" max="2100" [disabled]="editor > 0">
     </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày tái chủng </ion-label>
-    <ion-input [(ngModel)]="time.calltime"></ion-input>
+    <ion-input [(ngModel)]="rest.vaccine.edit.time.calltime"></ion-input>
     <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
-    <ion-datetime class="none" [(ngModel)]="picker.calltime" #calltime displayFormat="DD/MM/YYYY"
+    <ion-datetime class="none" [(ngModel)]="rest.vaccine.edit.picker.calltime" #calltime displayFormat="DD/MM/YYYY"
       (ionChange)="datepicker('calltime')" max="2100">
     </ion-datetime>
   </ion-item>

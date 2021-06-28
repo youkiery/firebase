@@ -16,37 +16,37 @@
 <ion-content>
   <ion-item class="relative">
     <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="customer.name" (click)="suggest('name')" [disabled]="editor > 0"> </ion-input>
+    <ion-input [(ngModel)]="rest.usg.edit.customer.name" (click)="suggest('name')" [disabled]="editor > 0"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="customer.phone" (click)="suggest('phone')" [disabled]="editor > 0"> </ion-input>
+    <ion-input [(ngModel)]="rest.usg.edit.customer.phone" (click)="suggest('phone')" [disabled]="editor > 0"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Thú cưng </ion-label>
-    <ion-select [(ngModel)]="pet" [disabled]="editor > 0">
-      <ion-select-option *ngFor="let item of pets" [value]="item.id"> {{item.name}} </ion-select-option>
+    <ion-select [(ngModel)]="rest.usg.edit.pet" [disabled]="editor > 0">
+      <ion-select-option *ngFor="let item of rest.usg.edit.pets" [value]="item.id"> {{item.name}} </ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày siêu âm </ion-label>
-    <ion-input [(ngModel)]="time.cometime" [disabled]="editor > 0"></ion-input>
+    <ion-input [(ngModel)]="rest.usg.edit.time.cometime" [disabled]="editor > 0"></ion-input>
     <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
-    <ion-datetime class="none" [(ngModel)]="picker.cometime" #cometime displayFormat="DD/MM/YYYY"
+    <ion-datetime class="none" [(ngModel)]="rest.usg.edit.picker.cometime" #cometime displayFormat="DD/MM/YYYY"
       (ionChange)="datepicker('cometime')" max="2100" [disabled]="editor > 0">
     </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày dự sinh </ion-label>
-    <ion-input [(ngModel)]="time.calltime"></ion-input>
+    <ion-input [(ngModel)]="rest.usg.edit.time.calltime"></ion-input>
     <ion-icon slot="end" name="calendar-outline" (click)="calltime.open()"></ion-icon>
-    <ion-datetime class="none" [(ngModel)]="picker.calltime" #calltime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')"
+    <ion-datetime class="none" [(ngModel)]="rest.usg.edit.picker.calltime" #calltime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')"
       max="2100">
     </ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số con dự kiến </ion-label>
-    <ion-input [(ngModel)]="number"></ion-input>
+    <ion-input [(ngModel)]="rest.usg.edit.number"></ion-input>
   </ion-item>
 
   <br>

@@ -8,22 +8,6 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./insert.page.scss'],
 })
 export class InsertPage implements OnInit {
-  public customer = {
-    name: '',
-    phone: ''
-  }
-  public number: number = 0
-  public pet: number
-  public note: string = ''
-  public pets = []
-  public time = {
-    cometime: '', 
-    calltime: ''
-  }
-  public picker = {
-    cometime: '',
-    calltime: ''
-  }
   public editor = 0
   constructor(
     public rest: RestService,
@@ -34,32 +18,32 @@ export class InsertPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.time.cometime = this.rest.today
-    this.time.calltime = this.rest.today
+    this.rest.usg.edit.time.cometime = this.rest.today
+    this.rest.usg.edit.time.calltime = this.rest.today
     if (this.rest.usg.select.name.length) {
-      this.customer.name = this.rest.usg.select.name
-      this.customer.phone = this.rest.usg.select.phone
-      this.pets = JSON.parse(this.rest.usg.select.pet)
-      this.pet = this.pets[0].id
+      this.rest.usg.edit.customer.name = this.rest.usg.select.name
+      this.rest.usg.edit.customer.phone = this.rest.usg.select.phone
+      this.rest.usg.edit.pets = JSON.parse(this.rest.usg.select.pet)
+      this.rest.usg.edit.pet = this.rest.usg.edit.pets[0].id
     }
     this.rest.usg.select.name = ''
   }
 
   public clear() {
-    this.customer.name = ''
-    this.customer.phone = ''
-    this.pets = []
-    this.pet = 0
-    this.number = 0
+    this.rest.usg.edit.customer.name = ''
+    this.rest.usg.edit.customer.phone = ''
+    this.rest.usg.edit.pets = []
+    this.rest.usg.edit.pet = 0
+    this.rest.usg.edit.number = 0
     this.editor = 0
   }
 
   public edit(index: number) {
-    this.customer.name = this.rest.usg.new[index].name
-    this.customer.phone = this.rest.usg.new[index].number
-    this.number = this.rest.usg.new[index].birth
+    this.rest.usg.edit.customer.name = this.rest.usg.new[index].name
+    this.rest.usg.edit.customer.phone = this.rest.usg.new[index].number
+    this.rest.usg.edit.number = this.rest.usg.new[index].birth
     
-    this.picker.calltime = this.rest.datetoisodate(this.rest.usg.new[index].calltime)
+    this.rest.usg.edit.picker.calltime = this.rest.datetoisodate(this.rest.usg.new[index].calltime)
 
     this.rest.temp = this.rest.usg.new[index]
     this.editor = this.rest.usg.new[index].id
@@ -70,8 +54,8 @@ export class InsertPage implements OnInit {
     this.rest.check({
       action: 'usg-update',
       id: this.editor,
-      number: this.number,
-      calltime: this.time.calltime,
+      number: this.rest.usg.edit.number,
+      calltime: this.rest.usg.edit.time.calltime,
     }).then((response) => {
       this.clear()
       this.rest.usg.new = response.new
@@ -83,31 +67,32 @@ export class InsertPage implements OnInit {
   }
 
   public async suggest(name: string) {
-    this.rest.usg.suggest = this.customer[name]
+    this.rest.usg.suggesttype = name
+    this.rest.usg.suggest = this.rest.usg.edit.customer[name]
     this.rest.usg.suggestList = [] 
     this.rest.router.navigateByUrl('/usg/suggest')
   }
 
   public datepicker(name: string) {
-    this.time[name] = this.rest.isodatetodate(this.picker[name])
+    this.rest.usg.edit.time[name] = this.rest.isodatetodate(this.rest.usg.edit.picker[name])
   }
 
   public async save() {
-    if (!this.customer.name.length) this.rest.notify('Chưa nhập tên khách hàng')
-    else if (!this.customer.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
+    if (!this.rest.usg.edit.customer.name.length) this.rest.notify('Chưa nhập tên khách hàng')
+    else if (!this.rest.usg.edit.customer.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
       await this.rest.freeze('Đang thêm tiêm phòng')
       this.rest.check({
         action: 'usg-insert',
-        customer: this.customer.name,
-        phone: this.customer.phone,
-        pet: this.pet,
-        number: this.number,
-        cometime: this.time.cometime,
-        calltime: this.time.calltime,
+        customer: this.rest.usg.edit.customer.name,
+        phone: this.rest.usg.edit.customer.phone,
+        pet: this.rest.usg.edit.pet,
+        number: this.rest.usg.edit.number,
+        cometime: this.rest.usg.edit.time.cometime,
+        calltime: this.rest.usg.edit.time.calltime,
         keyword: this.rest.usg.filterKey,
         status: this.rest.usg.status,
-        note: this.note
+        note: this.rest.usg.edit.note
       }).then((response) => {
         this.clear()
         this.rest.usg.new = response.new

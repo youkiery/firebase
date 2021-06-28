@@ -33,12 +33,18 @@ export class SuggestPage implements OnInit {
     }, 300);
   }
 
-  public select(name: string, phone: string, pet: string) {
-    this.rest.vaccine.select = {
-      name: name,
-      phone: phone,
-      pet: pet
-    } 
+  public async pick() {
+    this.rest.vaccine.edit.customer[this.rest.vaccine.suggesttype] = this.rest.vaccine.suggest
+    this.rest.vaccine.edit.pets = []
+    this.rest.vaccine.edit.pet = 0
+    this.rest.navCtrl.pop()
+  }
+
+  public select(name: string, phone: string, pet: any[]) {
+    this.rest.vaccine.edit.customer.name = name
+    this.rest.vaccine.edit.customer.phone = phone
+    this.rest.vaccine.edit.pets = pet
+    this.rest.vaccine.edit.pet = pet[0].id
     this.rest.navCtrl.pop()
   }
 }
