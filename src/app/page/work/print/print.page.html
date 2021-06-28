@@ -13,7 +13,9 @@
       &lt;
     </div>
     <div style="float: left; width: calc(100% - 100px); line-height: 50px; text-align: center; color: white">
-     <ion-datetime [(ngModel)]="time" displayFormat="DD/MM/YYYY"></ion-datetime>
+      <ion-icon name="calendar-outline" (click)="time.open()"></ion-icon>
+      {{rest.isodatetodate(data.time)}}
+      <ion-datetime class="none" #time [(ngModel)]="data.time" displayFormat="DD/MM/YYYY"></ion-datetime>
     </div>
     <div style="float: left; width: 50px; line-height: 50px; text-align: center; color: white; font-weight: bold; cursor: pointer;" (click)="changeWeek(1)">
       &gt;

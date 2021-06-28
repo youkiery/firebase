@@ -37,7 +37,15 @@ ion-input, ion-textarea, ion-datetime, textarea.alert-input {
 }
 
 ion-datetime {
+  width: 100%;
+}
+
+ion-datetime.none {
   display: none;
+}
+
+.click {
+  cursor: pointer;
 }
 
 .overflow {

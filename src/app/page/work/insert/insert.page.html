@@ -27,13 +27,13 @@
       <ion-label position="fixed"> Bắt đầu </ion-label>
       <ion-input [(ngModel)]="time.cometime" displayFormat="DD/MM/YYYY"></ion-input>
       <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
-      <ion-datetime [(ngModel)]="picker.cometime" #cometime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('cometime')" max="2100"> </ion-datetime>
+      <ion-datetime class="none" [(ngModel)]="picker.cometime" #cometime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('cometime')" max="2100"> </ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="fixed"> Hạn chót </ion-label>
       <ion-input [(ngModel)]="time.calltime" displayFormat="DD/MM/YYYY"></ion-input>
       <ion-icon slot="end" name="calendar-outline" (click)="calltime.open()"></ion-icon>
-      <ion-datetime [(ngModel)]="picker.calltime" #calltime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')" max="2100"> </ion-datetime>
+      <ion-datetime class="none" [(ngModel)]="picker.calltime" #calltime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')" max="2100"> </ion-datetime>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -20,6 +20,6 @@
     <ion-label position="stacked"> Hạn sử dụng </ion-label>
     <ion-input [(ngModel)]="rest.expire.edit.expire"></ion-input>
     <ion-icon slot="end" name="calendar-outline" (click)="time.open()"></ion-icon>
-    <ion-datetime [(ngModel)]="time" #time displayFormat="DD/MM/YYYY" (ionChange)="datepicker()" max="2100"> </ion-datetime>
+    <ion-datetime class="none" [(ngModel)]="data.time" #time displayFormat="DD/MM/YYYY" (ionChange)="datepicker()" max="2100"> </ion-datetime>
   </ion-item>
 </ion-content>

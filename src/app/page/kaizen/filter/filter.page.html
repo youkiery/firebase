@@ -12,22 +12,22 @@
     <ion-label position="stacked"> Từ khóa </ion-label>
     <ion-input [(ngModel)]="rest.kaizen.filter.keyword"></ion-input>
   </ion-item>
-  <ion-item (click)="clear('starttime')">
+  <ion-item class="click" (click)="clear('starttime')">
     <ion-label color="danger">
       Xóa ngày bắt đầu
     </ion-label>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày bắt đầu </ion-label>
-    <ion-datetime [(ngModel)]="rest.kaizen.filter.starttime" displayFormat="DD/MM/YYYY"></ion-datetime>
+    <ion-datetime [(ngModel)]="rest.kaizen.filter.starttime" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
   </ion-item>
-  <ion-item (click)="clear('endtime')">
+  <ion-item class="click" (click)="clear('endtime')">
     <ion-label color="danger">
       Xóa ngày kết thúc
     </ion-label>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày kết thúc </ion-label>
-    <ion-datetime [(ngModel)]="rest.kaizen.filter.endtime" displayFormat="DD/MM/YYYY"></ion-datetime>
+    <ion-datetime [(ngModel)]="rest.kaizen.filter.endtime" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
   </ion-item>
 </ion-content>

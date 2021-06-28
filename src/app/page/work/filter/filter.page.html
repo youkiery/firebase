@@ -22,17 +22,17 @@
     <ion-label position="fixed"> Từ khóa </ion-label>
     <ion-input [(ngModel)]="rest.work.filter.keyword"></ion-input>
   </ion-item>
-  <ion-item (click)="clear()">
+  <ion-item class="click" (click)="clear()">
     <ion-label color="danger">
       Xóa ngày bắt đầu
     </ion-label>
   </ion-item>
   <ion-item>
     <ion-label position="fixed"> Ngày bắt đầu </ion-label>
-    <ion-datetime [(ngModel)]="rest.work.filter.startdate" displayFormat="DD/MM/YYYY"></ion-datetime>
+    <ion-datetime [(ngModel)]="rest.work.filter.startdate" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label position="fixed"> Hạn chót </ion-label>
-    <ion-datetime [(ngModel)]="rest.work.filter.enddate" displayFormat="DD/MM/YYYY"></ion-datetime>
+    <ion-datetime [(ngModel)]="rest.work.filter.enddate" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
   </ion-item>
 </ion-content>

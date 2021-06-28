@@ -7,7 +7,9 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./insert.page.scss'],
 })
 export class InsertPage implements OnInit {
-  public time: any
+  public data = {
+    time: ''
+  }
   constructor(
     public rest: RestService
   ) { }
@@ -40,7 +42,7 @@ export class InsertPage implements OnInit {
   }
 
   public datepicker() {
-    this.rest.expire.edit.expire = this.rest.isodatetodate(this.time)
+    this.rest.expire.edit.expire = this.rest.isodatetodate(this.data.time)
   }
 
   public suggest() {

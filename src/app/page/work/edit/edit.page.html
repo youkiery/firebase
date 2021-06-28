@@ -24,7 +24,7 @@
 
   <ion-item *ngIf="rest.config.work > 1">
     <ion-label position="fixed"> Hạn chót </ion-label>
-    <ion-datetime [(ngModel)]="rest.work.edit.calltime" displayFormat="DD/MM/YYYY"></ion-datetime>
+    <ion-datetime [(ngModel)]="rest.work.edit.calltime" displayFormat="DD/MM/YYYY" max="2100"></ion-datetime>
   </ion-item>
 
   <ion-item>

@@ -32,7 +32,7 @@
     <ion-label position="stacked"> Ngày siêu âm </ion-label>
     <ion-input [(ngModel)]="time.cometime" [disabled]="editor > 0"></ion-input>
     <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
-    <ion-datetime [(ngModel)]="picker.cometime" #cometime displayFormat="DD/MM/YYYY"
+    <ion-datetime class="none" [(ngModel)]="picker.cometime" #cometime displayFormat="DD/MM/YYYY"
       (ionChange)="datepicker('cometime')" max="2100" [disabled]="editor > 0">
     </ion-datetime>
   </ion-item>
@@ -40,7 +40,7 @@
     <ion-label position="stacked"> Ngày dự sinh </ion-label>
     <ion-input [(ngModel)]="time.calltime"></ion-input>
     <ion-icon slot="end" name="calendar-outline" (click)="calltime.open()"></ion-icon>
-    <ion-datetime [(ngModel)]="picker.calltime" #calltime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')"
+    <ion-datetime class="none" [(ngModel)]="picker.calltime" #calltime displayFormat="DD/MM/YYYY" (ionChange)="datepicker('calltime')"
       max="2100">
     </ion-datetime>
   </ion-item>

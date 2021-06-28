@@ -12,7 +12,9 @@ export class PrintPage implements OnInit {
   public doc: string = ''
   public name: string = ''
   public preview: SafeResourceUrl
-  public time: any
+  public data = {
+    time: ''
+  }
   constructor(
     public rest: RestService,
     public modal: ModalController,
@@ -21,14 +23,14 @@ export class PrintPage implements OnInit {
   ) { }
 
   ngOnInit() { 
-    this.time = this.rest.todate(this.rest.today)
+    this.data.time = this.rest.todate(this.rest.today)
   }
 
   public async ionViewDidEnter() {
     await this.rest.freeze('Đang tạo file')
     this.rest.check({
       action: 'word-work-print',
-      time: this.rest.totime(this.time)
+      time: this.rest.totime(this.data.time)
     }).then(data => {
       this.doc = data['doc']
       this.name = data['name']
@@ -40,12 +42,12 @@ export class PrintPage implements OnInit {
   }
 
   public async changeWeek(increaseWeek: number) {
-    let time = this.rest.datetotime(this.rest.totime(this.time)) + 60 * 60 * 24 * 7 * 1000 * increaseWeek
-    this.time = this.rest.todate(this.rest.timetodate(time))
+    let time = this.rest.datetotime(this.rest.totime(this.data.time)) + 60 * 60 * 24 * 7 * 1000 * increaseWeek
+    this.data.time = this.rest.todate(this.rest.timetodate(time))
     await this.rest.freeze('Đang tạo file')
     this.rest.check({
       action: 'word-work-print',
-      time: this.rest.totime(this.time)
+      time: this.rest.totime(this.data.time)
     }).then(data => {
       this.doc = data['doc']
       this.name = data['name']
