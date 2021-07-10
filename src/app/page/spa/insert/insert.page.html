@@ -8,13 +8,13 @@
 </ion-toolbar>
 
 <ion-content>
-  <ion-item class="relative">
+  <ion-item (click)="suggest('name')">
     <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="rest.spa.edit.name" (click)="suggest('name')"> </ion-input>
+    <ion-input [(ngModel)]="rest.spa.edit.name"> </ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item (click)="suggest('phone')">
     <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="rest.spa.edit.phone" (click)="suggest('phone')"> </ion-input>
+    <ion-input [(ngModel)]="rest.spa.edit.phone"> </ion-input>
   </ion-item>
   <ion-item *ngFor="let item of rest.spa.edit.type; let i = index">
     <ion-label> {{item.name}} </ion-label>

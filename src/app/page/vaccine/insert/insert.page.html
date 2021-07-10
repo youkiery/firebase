@@ -14,13 +14,13 @@
 </ion-toolbar>
 
 <ion-content>
-  <ion-item class="relative">
+  <ion-item (click)="suggest('name')">
     <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="rest.vaccine.edit.customer.name" (click)="suggest('name')" [disabled]="editor > 0"> </ion-input>
+    <ion-input [(ngModel)]="rest.vaccine.edit.customer.name" [disabled]="editor > 0"> </ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item (click)="suggest('phone')">
     <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="rest.vaccine.edit.customer.phone" (click)="suggest('phone')" [disabled]="editor > 0"> </ion-input>
+    <ion-input [(ngModel)]="rest.vaccine.edit.customer.phone" [disabled]="editor > 0"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Thú cưng </ion-label>
@@ -47,7 +47,7 @@
   <ion-item>
     <ion-label position="stacked"> Ngày tái chủng </ion-label>
     <ion-input [(ngModel)]="rest.vaccine.edit.time.calltime"></ion-input>
-    <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
+    <ion-icon slot="end" name="calendar-outline" (click)="calltime.open()"></ion-icon>
     <ion-datetime class="none" [(ngModel)]="rest.vaccine.edit.picker.calltime" #calltime displayFormat="DD/MM/YYYY"
       (ionChange)="datepicker('calltime')" max="2100">
     </ion-datetime>

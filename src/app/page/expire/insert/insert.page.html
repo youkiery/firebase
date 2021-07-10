@@ -8,9 +8,9 @@
 </ion-toolbar>
 
 <ion-content>
-  <ion-item>
+  <ion-item (click)="suggest()">
     <ion-label position="stacked"> Mặt hàng </ion-label>
-    <ion-input [(ngModel)]="rest.expire.edit.name" (click)="suggest()"></ion-input>
+    <ion-input [(ngModel)]="rest.expire.edit.name"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Số lượng </ion-label>
