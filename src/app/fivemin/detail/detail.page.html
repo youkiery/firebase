@@ -17,10 +17,14 @@
         <div class="tieuchi" *ngFor="let hang of rest.fivemin.data[tieuchi.ten]; let chimuc = index">
           <b> <span *ngIf="hang.thoigian !== '0'"> ({{thoigian[hang.thoigian]}}) </span> {{chimuc + 1}}. </b> {{hang.noidung}}
           <ion-button *ngIf="!hang.hoanthanh" size="small" color="secondary" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
-            báo cáo <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span *ngIf="!rest.fivemin.disable"> báo cáo </span>
+            <span *ngIf="rest.fivemin.disable"> xem báo cáo </span>
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
           </ion-button>
           <ion-button *ngIf="hang.hoanthanh" size="small" color="danger" shape="round" class="right" (click)="viewImage(tieuchi.ten, chimuc, hang.id)">
-            báo cáo <ion-icon name="close-circle-outline"></ion-icon>
+            <span *ngIf="!rest.fivemin.disable"> báo cáo </span>
+            <span *ngIf="rest.fivemin.disable"> xem báo cáo </span>
+            <ion-icon name="close-circle-outline"></ion-icon>
           </ion-button>
           <ion-icon *ngIf="hang.hinhanh.length" name="image-outline" class="right"></ion-icon>
         </div>
