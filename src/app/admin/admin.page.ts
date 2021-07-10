@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { RestService } from '../services/rest.service';
 import { AdminDetail } from './detail/detail.page';
 
@@ -11,7 +11,8 @@ import { AdminDetail } from './detail/detail.page';
 export class AdminPage implements OnInit {
   constructor(
     public rest: RestService,
-    public modal: ModalController
+    public modal: ModalController,
+    public alert: AlertController
   ) { }
 
   public async ionViewDidEnter() {
@@ -39,6 +40,39 @@ export class AdminPage implements OnInit {
   // }
 
   ngOnInit() {
+  }
+
+  public async remove(userid: number) {
+    let alert = await this.alert.create({
+      message: 'Xóa nhân viên?',
+      buttons: [
+        {
+          text: 'Bỏ',
+          role: 'cancel',
+          cssClass: 'default'
+        }, {
+          text: 'Xác nhận',
+          cssClass: 'secondary',
+          handler: (e) => {
+            this.removeSubmit(userid)
+          }
+        }
+      ]
+    })
+    alert.present()
+  }
+
+  public async removeSubmit(userid: number) {
+    this.rest.freeze('Đang xóa...')
+    this.rest.checkpost('admin-remove', {
+      id: userid
+    }).then(resp => {
+      this.rest.defreeze()
+      this.rest.admin.users = resp.users
+      this.rest.notify('Đã xóa nhân viên')
+    }, () => {
+      this.rest.defreeze()
+    })
   }
 
   public async detail(index: number) {
