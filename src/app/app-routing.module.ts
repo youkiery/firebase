@@ -86,7 +86,11 @@ const routes: Routes = [
   {
     path: 'modal/admin',
     loadChildren: () => import('./modal/admin/admin.module').then( m => m.AdminPageModule)
+  },  {
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
   }
+
 
 ];
 
