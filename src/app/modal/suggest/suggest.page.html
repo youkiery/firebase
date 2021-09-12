@@ -1,0 +1,20 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-input [(ngModel)]="key" (keyup)="suggest()" #input> </ion-input>
+    <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
+  </ion-item>
+  <div *ngIf="list.length">
+    <ion-item class="underline" *ngFor="let item of list" (click)="select(item.name, item.phone)">
+      {{item.name}} - {{item.phone}}
+    </ion-item>
+  </div>
+  <div *ngIf="!list.length" class="text-center">
+    Nhập số điện thoại khách hàng
+  </div>
+</ion-content>

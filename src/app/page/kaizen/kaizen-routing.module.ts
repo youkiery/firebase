@@ -8,18 +8,6 @@ const routes: Routes = [
     path: '',
     component: KaizenPage
   },
-  {
-    path: 'edit',
-    loadChildren: () => import('./edit/edit.module').then( m => m.EditPageModule)
-  },
-  {
-    path: 'notify',
-    loadChildren: () => import('./notify/notify.module').then( m => m.NotifyPageModule)
-  },
-  {
-    path: 'filter',
-    loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
-  }
 ];
 
 @NgModule({

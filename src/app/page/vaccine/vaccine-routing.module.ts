@@ -8,18 +8,6 @@ const routes: Routes = [
     path: '',
     component: VaccinePage
   },
-  {
-    path: 'insert',
-    loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
-  },
-  {
-    path: 'suggest',
-    loadChildren: () => import('./suggest/suggest.module').then( m => m.SuggestPageModule)
-  },
-  {
-    path: 'filter',
-    loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
-  }
 ];
 
 @NgModule({

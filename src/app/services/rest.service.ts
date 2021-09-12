@@ -187,6 +187,8 @@ export class RestService {
     disease: []
   }
   public spa = {
+    time: 0,
+    init: 0,
     type: [],
     edit: {
       id: 0,
@@ -202,9 +204,8 @@ export class RestService {
     },
     suggest: '',
     suggestList: [],
-    data: [],
-    current: '',
-    time: 0
+    list: [],
+    current: ''
   }
   public expire = {
     id: 0,
@@ -466,18 +467,20 @@ export class RestService {
       })
     })
   }
-
-  public checkpost(action: string, param: Object): Promise<any> {
+  
+  public async checkpost(action: string, param: Object): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.post(this.baseurl + 'action='+action+'&userid='+ this.user.userid, JSON.stringify(param)).toPromise().then((data) => {
+      param['userid'] = this.user.userid
+      param['action'] = action
+      this.http.post(this.baseurl, JSON.stringify(param)).toPromise().then((data) => {
         if (data['overtime']) {
           this.notify("Đã hết thời gian sử dụng")
           this.router.navigateByUrl('/home')
           reject(data)
         }
-        else if (data['no_branch']) {
-          this.notify("Tài khoản không có trong chi nhánh")
-          this.router.navigateByUrl('/')
+        else if (data['nogin']) {
+          this.notify("Phiên đăng nhập hết hạn")
+          this.logout()
           reject(data)
         }
         else {
@@ -491,11 +494,39 @@ export class RestService {
         if (error['messenger']) this.notify(error['messenger'])
         else this.notify('Có lỗi xảy ra >.<')
         reject(1)
-        // this.error = JSON.stringify(error)
-        // this.notify(JSON.stringify(error))
       })
     })
   }
+
+  // public checkpost(action: string, param: Object): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     this.http.post(this.baseurl + 'action='+action+'&userid='+ this.user.userid, JSON.stringify(param)).toPromise().then((data) => {
+  //       if (data['overtime']) {
+  //         this.notify("Đã hết thời gian sử dụng")
+  //         this.router.navigateByUrl('/home')
+  //         reject(data)
+  //       }
+  //       else if (data['no_branch']) {
+  //         this.notify("Tài khoản không có trong chi nhánh")
+  //         this.router.navigateByUrl('/')
+  //         reject(data)
+  //       }
+  //       else {
+  //         if (data['messenger']) this.notify(data['messenger'])
+  //         if (data['status']) resolve(data)
+  //         else {
+  //           reject(data)
+  //         }
+  //       }
+  //     }, (error) => {
+  //       if (error['messenger']) this.notify(error['messenger'])
+  //       else this.notify('Có lỗi xảy ra >.<')
+  //       reject(1)
+  //       // this.error = JSON.stringify(error)
+  //       // this.notify(JSON.stringify(error))
+  //     })
+  //   })
+  // }
 
   public buildHttpParam(obj: Object) {
     let param = []

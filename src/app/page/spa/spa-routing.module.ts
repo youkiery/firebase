@@ -8,14 +8,6 @@ const routes: Routes = [
     path: '',
     component: SpaPage
   },
-  {
-    path: 'insert',
-    loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
-  },
-  {
-    path: 'suggest',
-    loadChildren: () => import('./suggest/suggest.module').then( m => m.SuggestPageModule)
-  }
 ];
 
 @NgModule({

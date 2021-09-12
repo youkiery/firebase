@@ -10,7 +10,7 @@
     </ion-buttons>
 
     <ion-buttons slot="start">
-      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+      <ion-img src="assets/image/logo.png" class="logo" (click)="rest.router.navigateByUrl('/home')"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -23,10 +23,37 @@
   </ion-fab>
 
   <div>
-    Ngày hiển thị: {{ rest.spa.current }}
+    Ngày hiển thị: {{ time.timetodate(rest.spa.time) }}
   </div>
 
-  <table border="1">
+  <div *ngFor="let item of this.rest.spa.list; let i = index" [class]="status[item.status]">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item.phone}} <br>
+      Cân nặng: {{weight[item.weight]}}
+    </div>
+    <div class="col-xs-6">
+      Người nhận: {{item.user}} <br>
+      Thời gian nhận: {{item.time}} <br>
+      Trạng thái: {{status_text[item.status]}} 
+    </div>
+    <div>
+      Dịch vụ: {{item.service}}
+    </div>
+    <div>
+      Ghi chú: {{item.note}}
+    </div>
+    
+    <div *ngIf="item.image.length">
+      <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
+    </div>
+    <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+    <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+    <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
+    <img *ngIf="rest.config.spa > 1" class="right" src="/assets/icon/update.png" (click)="update(i)">
+  </div>
+
+  <!-- <table border="1">
     <thead>  
       <tr>
         <th> STT </th>
@@ -54,13 +81,13 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 </ion-content>
 
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.navCtrl.pop()">
+      <ion-tab-button (click)="rest.router.navigateByUrl('/home')">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>

@@ -7,14 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: DrugPage
-  },
-  {
-    path: 'insert',
-    loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
-  },
-  {
-    path: 'detail',
-    loadChildren: () => import('./detail/detail.module').then( m => m.DetailPageModule)
   }
 ];
 

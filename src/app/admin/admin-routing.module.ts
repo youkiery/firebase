@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: AdminPage
   },
-  {
-    path: 'detail',
-    loadChildren: () => import('./detail/detail.module').then( m => m.AdminDetailModule)
-  },
 ];
 
 @NgModule({

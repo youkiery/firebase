@@ -86,12 +86,159 @@ const routes: Routes = [
   {
     path: 'modal/admin',
     loadChildren: () => import('./modal/admin/admin.module').then( m => m.AdminPageModule)
-  },  {
+  },
+  {
     path: 'cart',
     loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
+  },
+  {
+    path: 'modal/suggest',
+    loadChildren: () => import('./modal/suggest/suggest.module').then( m => m.SuggestPageModule)
+  },
+  {
+    path: 'spa/insert',
+    loadChildren: () => import('./page/spa/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'vaccine/insert',
+    loadChildren: () => import('./page/vaccine/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'expire/insert',
+    loadChildren: () => import('./page/expire/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'usg/insert',
+    loadChildren: () => import('./page/usg/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'blood/insert',
+    loadChildren: () => import('./page/blood/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'blood/statistic',
+    loadChildren: () => import('./page/blood/statistic/statistic.module').then( m => m.StatisticPageModule)
+  },
+  {
+    path: 'blood/in',
+    loadChildren: () => import('./page/blood/in/in.module').then( m => m.InPageModule)
+  },
+  {
+    path: 'blood/out',
+    loadChildren: () => import('./page/blood/out/out.module').then( m => m.OutPageModule)
+  },
+  {
+    path: 'expire/suggest',
+    loadChildren: () => import('./page/expire/suggest/suggest.module').then( m => m.SuggestPageModule)
+  },
+  {
+    path: 'expire/insert-item',
+    loadChildren: () => import('./page/expire/insert-item/insert-item.module').then( m => m.InsertItemPageModule)
+  },
+  {
+    path: 'kaizen/edit',
+    loadChildren: () => import('./page/kaizen/edit/edit.module').then( m => m.EditPageModule)
+  },
+  {
+    path: 'kaizen/notify',
+    loadChildren: () => import('./page/kaizen/notify/notify.module').then( m => m.NotifyPageModule)
+  },
+  {
+    path: 'kaizen/filter',
+    loadChildren: () => import('./page/kaizen/filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
+    path: 'spa/modal',
+    loadChildren: () => import('./page/spa/modal/modal.module').then( m => m.ModalPageModule)
+  },
+  {
+    path: 'usg/filter',
+    loadChildren: () => import('./page/usg/filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
+    path: 'usg/suggest',
+    loadChildren: () => import('./page/usg/suggest/suggest.module').then( m => m.SuggestPageModule)
+  },
+  {
+    path: 'vaccine/suggest',
+    loadChildren: () => import('./page/vaccine/suggest/suggest.module').then( m => m.SuggestPageModule)
+  },
+  {
+    path: 'vaccine/filter',
+    loadChildren: () => import('./page/vaccine/filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
+    path: 'work/insert',
+    loadChildren: () => import('./page/work/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'work/edit',
+    loadChildren: () => import('./page/work/edit/edit.module').then( m => m.EditPageModule)
+  },
+  {
+    path: 'work/filter',
+    loadChildren: () => import('./page/work/filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
+    path: 'work/notify',
+    loadChildren: () => import('./page/work/notify/notify.module').then( m => m.NotifyPageModule)
+  },
+  {
+    path: 'work/detail',
+    loadChildren: () => import('./page/work/detail/detail.module').then( m => m.DetailPageModule)
+  },
+  {
+    path: 'work/print',
+    loadChildren: () => import('./page/work/print/print.module').then( m => m.PrintPageModule)
+  },
+  {
+    path: 'admin/detail',
+    loadChildren: () => import('./admin/detail/detail.module').then( m => m.AdminDetailModule)
+  },
+  {
+    path: 'drug/insert',
+    loadChildren: () => import('./drug/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'drug/detail',
+    loadChildren: () => import('./drug/detail/detail.module').then( m => m.DetailPageModule)
+  },
+  {
+    path: 'fivemin/update',
+    loadChildren: () => import('./fivemin/update/update.module').then( m => m.UpdatePageModule)
+  },
+  {
+    path: 'fivemin/detail',
+    loadChildren: () => import('./fivemin/detail/detail.module').then( m => m.DetailPageModule)
+  },
+  {
+    path: 'fivemin/insert',
+    loadChildren: () => import('./fivemin/insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'fivemin/preview',
+    loadChildren: () => import('./fivemin/preview/preview.module').then( m => m.PreviewPageModule)
+  },
+  {
+    path: 'fivemin/statistic',
+    loadChildren: () => import('./fivemin/statistic/statistic.module').then( m => m.StatisticPageModule)
+  },
+  {
+    path: 'fivemin/image',
+    loadChildren: () => import('./fivemin/image/image.module').then( m => m.ImagePageModule)
+  },
+  {
+    path: 'fivemin/upload',
+    loadChildren: () => import('./fivemin/upload/upload.module').then( m => m.UploadPageModule)
+  },
+  {
+    path: 'fivemin/static',
+    loadChildren: () => import('./fivemin/static/static.module').then( m => m.StaticPageModule)
+  },
+  {
+    path: 'fivemin/rate',
+    loadChildren: () => import('./fivemin/rate/rate.module').then( m => m.RatePageModule)
   }
-
-
 ];
 
 @NgModule({

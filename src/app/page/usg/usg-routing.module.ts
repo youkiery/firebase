@@ -8,18 +8,6 @@ const routes: Routes = [
     path: '',
     component: UsgPage
   },
-  {
-    path: 'insert',
-    loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
-  },
-  {
-    path: 'filter',
-    loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
-  },
-  {
-    path: 'suggest',
-    loadChildren: () => import('./suggest/suggest.module').then( m => m.SuggestPageModule)
-  },
 ];
 
 @NgModule({
