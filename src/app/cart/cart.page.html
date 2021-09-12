@@ -16,6 +16,7 @@
 </ion-header>
 
 <ion-content>
+  <div> {{text}} </div>
   <div class="cart-boxed" *ngFor="let item of rest.cart.list; let i = index" (click)="detail(i)">
     Khách hàng: {{item.customer}} <br>
     Thời gian: {{item.time}} <br>

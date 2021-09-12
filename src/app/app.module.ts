@@ -14,6 +14,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
+// const cloudSettings: CloudSettings = {
+//   'core': {
+//     'app_id': 'io.ionic.starter',
+//   },
+//   'push': {
+//     'sender_id': '816396321770',
+//     'pluginConfig': {
+//       'android': {
+//         'sound': true,
+//         'vibrate': true
+//       }
+//     }
+//   }
+// };
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -33,7 +48,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
       appId: "1:816396321770:web:193e84ee21b16d41"
     }, 'Petcoffee'), // imports firebase/app needed for everything
     // AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireStorageModule // imports firebase/storage only needed for storage features
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    // CloudModule.forRoot(cloudSettings) // <-- add this
   ],
   providers: [
     StatusBar,
