@@ -46,6 +46,21 @@
   background: #ffd;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.stl-card.red .bold {
+  color: red;
+}
+.stl-card.yellow .bold {
+  color: orange;
+}
+.stl-card.green .bold {
+  color: green;
+}
+
+
 .pad {
   padding: 10px;
 }

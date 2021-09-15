@@ -37,6 +37,8 @@
   <ion-list>
     <ion-item *ngFor="let item of rest.drug.list; let i = index">
       {{i + 1}}. {{item.name}}
+
+      <img *ngIf="item.image.length" [src]="item.image[0]" style="max-width: 24px; max-height: 24px;">
       <ion-button slot="end" color="secondary" (click)="detail(i)">
         <ion-icon name="information-circle-outline"></ion-icon>
       </ion-button>

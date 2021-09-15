@@ -238,7 +238,16 @@ const routes: Routes = [
   {
     path: 'fivemin/rate',
     loadChildren: () => import('./fivemin/rate/rate.module').then( m => m.RatePageModule)
+  },
+  {
+    path: 'drug/modal',
+    loadChildren: () => import('./drug/modal/modal.module').then( m => m.ModalPageModule)
+  },  {
+    path: 'modal',
+    loadChildren: () => import('./page/drug/modal/modal.module').then( m => m.ModalPageModule)
   }
+
+
 ];
 
 @NgModule({

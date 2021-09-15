@@ -2,15 +2,20 @@
   <ion-button color="light" fill="clear" (click)="modal.dismiss()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button *ngIf="!rest.drug.update" slot="end" (click)="insert()" color="light" fill="clear">
+  <ion-button *ngIf="!rest.drug.update" slot="end" (click)="drugInsert()" color="light" fill="clear">
     Thêm thuốc
   </ion-button>
-  <ion-button *ngIf="rest.drug.update" slot="end" (click)="update()" color="light" fill="clear">
+  <ion-button *ngIf="rest.drug.update" slot="end" (click)="drugUpdate()" color="light" fill="clear">
     Cập nhật
   </ion-button>
 </ion-toolbar>
 
 <ion-content>
+  
+  <div id="pwa" style="display: none;">
+    <input type="file" multiple id="pwaphoto" #pwaphoto accept="image/x-png,image/jpeg" (change)="uploadPWA()">
+  </div>
+
   <ion-item>
     <ion-label position="stacked"> Tên thuốc </ion-label>
     <ion-input [(ngModel)]="name"></ion-input>
@@ -31,4 +36,9 @@
     <ion-label position="stacked"> Cơ chế hoạt động </ion-label>
     <ion-textarea [(ngModel)]="mechanic" autoGrow="true"></ion-textarea>
   </ion-item>
+  
+  <img class="thumbnail" src="/assets/image/insert.png" (click)="upload()">
+  <div class="thumbnail-box" *ngFor="let item of image; let i = index" (click)="remove(i)">
+    <img class="thumbnail" [src]="item">
+  </div>
 </ion-content>

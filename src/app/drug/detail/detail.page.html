@@ -24,9 +24,15 @@
       <b> Tác dụng phụ: </b> <br>
       {{rest.drug.list[rest.drug.index].sideeffect}}
     </div>
-    <div class="endline-text end">
+    <div class="endline-text">
       <b> Cơ chế hoạt động: </b> <br>
       {{rest.drug.list[rest.drug.index].mechanic}}
+    </div>
+    
+    <div class="endline-text">
+      <div *ngIf="rest.drug.list[rest.drug.index].image.length">
+        <img class="thumbnail-sm" *ngFor="let image of rest.drug.list[rest.drug.index].image" [src]="image" (click)="view(image)">
+      </div>
     </div>
   </div>
 </ion-content>
