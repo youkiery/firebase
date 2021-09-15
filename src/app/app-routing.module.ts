@@ -245,6 +245,10 @@ const routes: Routes = [
   },  {
     path: 'modal',
     loadChildren: () => import('./page/drug/modal/modal.module').then( m => m.ModalPageModule)
+  },
+  {
+    path: 'his',
+    loadChildren: () => import('./page/his/his.module').then( m => m.HisPageModule)
   }
 
 
