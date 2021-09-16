@@ -1,9 +1,40 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>detail</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+  <ion-button slot="end" (click)="update()" color="light" fill="clear">
+    Cập nhật
+  </ion-button>
+</ion-toolbar>
 
 <ion-content>
-
+  <ion-card>
+    <ion-card-content>
+      <div class="col-xs-6">
+        Khách hàng: {{rest.his.list[rest.tam.i].customer}} <br>
+        Điện thoại: {{rest.his.list[rest.tam.i].phone}} <br>
+        Thú cưng: {{rest.his.list[rest.tam.i].pet}}
+      </div>
+      <div class="col-xs-6">
+        Người điều trị: {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].doctor}} <br>
+        Ngày điều trị: {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].time}} <br>
+        Tình trạng bệnh: {{status[rest.his.list[rest.tam.i].detail[this.rest.tam.j].status].name}}
+      </div>
+      <div>
+        Tiền sử bệnh: {{rest.his.list[rest.tam.i].his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis()">
+      </div>
+      <div class="endline-text">
+        <b>Niêm mạc: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].eye}}
+      </div>
+      <div class="endline-text">
+        <b>Nhiệt độ: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].temperate}}
+      </div>
+      <div class="endline-text">
+        <b>Triệu chứng: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].other}}
+      </div>
+      <div class="endline-text last">
+        <b>Thuốc điều trị: </b> {{rest.his.list[rest.tam.i].detail[this.rest.tam.j].treat}}
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

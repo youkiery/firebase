@@ -30,6 +30,7 @@ export class AdminPage implements OnInit {
       //   }
       // });
       this.rest.admin.users = users
+      this.rest.admin.config = data.config
       this.rest.defreeze()
     }, () => {})
   }

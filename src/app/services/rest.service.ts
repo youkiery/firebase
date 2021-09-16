@@ -14,6 +14,8 @@ export class RestService {
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
+    config: [],
+    module: {},
     type: 0,
     index: 0,
     users: [],
@@ -22,12 +24,18 @@ export class RestService {
     }
   }
   public temp: any = {}
+  public tam: any = {}
   public dsgopy = []
   public ktgopy = false
   public cart = {
     init: false,
     select: 0,
     list: []
+  }
+  public his = {
+    list: [],
+    init: 0,
+
   }
   public fivemin = {
     image: [''],
@@ -371,6 +379,7 @@ export class RestService {
     drug: 0,
     target: 0,
     profile: 0,
+    his: 0,
   }
   toast: any
   load: any

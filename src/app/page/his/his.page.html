@@ -1,9 +1,65 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>his</ion-title>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab>
+  
+  <div *ngFor="let item of rest.his.list; let i = index" [class]="insult[item.insult]">
+    <div class="row">
+      <div class="col-xs-6">
+        Khách hàng: {{item.customer}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Thú cưng: {{item.pet}}
+      </div>
+      <div class="col-xs-6">
+        Người nhận: {{item.doctor}} <br>
+        Ngày nhận: {{item.time}} <br>
+        Tình trạng bệnh: {{status[item.status].name}}
+      </div>
+      <div>
+        Tình trạng xuất viện: {{item.insult}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)">
+      </div>
+      <div>
+        Tiền sử bệnh: {{item.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)">
+      </div>
+      <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i, j)">
+        {{detail.time}}
+      </span>
+      <img src="/assets/icon/insert-xs.png" (click)="insertDetail(i)">
+    </div>
+  </div>
 </ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insert()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

@@ -38,9 +38,13 @@ export class SuggestPage {
     this.rest.navCtrl.pop()
   } 
 
-  public select(name:string, phone: string) {
-    this.rest.temp.name = name
-    this.rest.temp.phone = phone
+  public select(i: number) {
+    this.rest.temp.name = this.list[i].name
+    this.rest.temp.phone = this.list[i].phone
+    if (this.rest.temp.petlist) {
+      this.rest.temp.petlist = this.list[i].petlist
+      if (this.list[i].petlist[0]) this.rest.temp.pet = this.list[i].petlist[0].id
+    }
     this.rest.navCtrl.pop()
   }
     

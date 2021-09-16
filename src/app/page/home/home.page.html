@@ -110,6 +110,13 @@
     </div>
   </div>
 
+  <div *ngIf="rest.config.his > 0" class="box" (click)="rest.router.navigateByUrl('his')">
+    <ion-img src="assets/image/his.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Quản lý lưu bệnh
+    </div>
+  </div>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
     <ion-fab-button>
       Góp ý

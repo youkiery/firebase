@@ -10,7 +10,7 @@
     <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
   </ion-item>
   <div *ngIf="list.length">
-    <ion-item class="underline" *ngFor="let item of list" (click)="select(item.name, item.phone)">
+    <ion-item class="underline" *ngFor="let item of list; let i = index;" (click)="select(i)">
       {{item.name}} - {{item.phone}}
     </ion-item>
   </div>
