@@ -32,6 +32,8 @@ export class InsertPage implements OnInit {
 
   public async save() {
     await this.rest.freeze('Đang thêm dữ liệu...')
+    let temp = JSON.parse(JSON.stringify(this.rest.his.filter))
+    temp.filter = this.rest.his.filter
     this.rest.checkpost('his-insert', this.rest.temp).then((resp) => {
       this.rest.his.list = resp.list
       this.rest.defreeze()

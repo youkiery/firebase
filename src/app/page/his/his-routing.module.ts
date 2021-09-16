@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'insert',
     loadChildren: () => import('./insert/insert.module').then( m => m.InsertPageModule)
+  },
+  {
+    path: 'statistic',
+    loadChildren: () => import('./statistic/statistic.module').then( m => m.StatisticPageModule)
   }
 ];
 

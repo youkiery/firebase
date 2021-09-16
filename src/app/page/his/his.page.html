@@ -22,6 +22,22 @@
     </ion-fab-button>
   </ion-fab>
   
+  <ion-item>
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.his.filter.from" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="rest.his.filter.end" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+  
   <div *ngFor="let item of rest.his.list; let i = index" [class]="insult[item.insult]">
     <div class="row">
       <div class="col-xs-6">
@@ -35,15 +51,20 @@
         Tình trạng bệnh: {{status[item.status].name}}
       </div>
       <div>
-        Tình trạng xuất viện: {{item.insult}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)">
+        Tình trạng xuất viện: <span class="bold"> {{insult_text[item.insult]}} </span> 
       </div>
       <div>
-        Tiền sử bệnh: {{item.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)">
+        Tiền sử bệnh: {{item.his}} <img src="/assets/icon/insert-xs.png" (click)="insertHis(i)" *ngIf="item.insult < 1">
       </div>
       <span class="pos" *ngFor="let detail of item.detail; let j = index" (click)="view(i, j)">
         {{detail.time}}
       </span>
-      <img src="/assets/icon/insert-xs.png" (click)="insertDetail(i)">
+      <img src="/assets/icon/insert-xs.png" (click)="insertDetail(i)" *ngIf="item.insult < 1">
+      <div>
+        <img class="right icon" src="/assets/icon/dead.png" (click)="dead(i)" *ngIf="item.insult < 1">
+        <img class="right icon" src="/assets/icon/return.png" (click)="return(i)" *ngIf="item.insult < 1">
+        <img *ngIf="rest.config.his > 1" class="right icon" src="/assets/icon/delete.png" (click)="remove(i)">
+      </div>
     </div>
   </div>
 </ion-content>
@@ -59,6 +80,11 @@
       <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="statistic()">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+        <ion-label> Thống kê </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

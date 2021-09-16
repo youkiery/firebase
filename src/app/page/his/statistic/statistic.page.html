@@ -1,0 +1,31 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked"> Từ ngày </ion-label>
+    <ion-datetime [(ngModel)]="filter.from" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked"> Đến ngày </ion-label>
+    <ion-datetime [(ngModel)]="filter.end" displayFormat="DD/MM/YYYY" max="2100">
+    </ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="statistic()">
+    Thống kê
+  </ion-button>
+
+  <div *ngFor="let item of data" [class]="insult[item.balance]">
+    <b>Bác sĩ:</b>  {{item.name}} <br>
+    <b>Đang điều trị:</b>  {{item[0]}} <br>
+    <b>Xuất viện:</b>  {{item[1]}} <br>
+    <b>Đã chết:</b>  {{item[2]}} <br>
+    <b>Tổng ca:</b>  {{item[3]}} <br>
+  </div>
+</ion-content>

@@ -46,6 +46,14 @@
   background: #ffd;
 }
 
+
+@media (min-width: 768px) {
+  .stl-card {
+    margin: 0.5%;
+    width: 49%;
+  }
+}
+
 .bold {
   font-weight: bold;
 }

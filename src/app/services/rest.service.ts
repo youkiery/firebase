@@ -35,7 +35,10 @@ export class RestService {
   public his = {
     list: [],
     init: 0,
-
+    filter: {
+      from: null,
+      end: null
+    }
   }
   public fivemin = {
     image: [''],

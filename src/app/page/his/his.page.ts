@@ -34,18 +34,49 @@ export class HisPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.rest.his.init) this.filter()
+    if (!this.rest.his.init) {
+      let time = this.time.datetotime(this.rest.today)
+      this.rest.his.filter = {
+        from: this.time.timetoisodate(time - 60 * 60 * 24 * 30),
+        end: this.time.timetoisodate(time)
+      }
+      this.filter()
+    }
   }
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('his-filter', { }).then((resp) => {
+    this.rest.checkpost('his-filter', {
+      filter: this.rest.his.filter
+    }).then((resp) => {
       this.rest.his.init = 1
       this.rest.his.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public statistic() {
+    this.rest.navCtrl.navigateForward('/his/statistic')
+  }
+
+  public async insertDetail(i: number) {
+    this.rest.temp = {
+      index: i,
+      id: this.rest.his.list[i].id,
+      time: this.time.datetoisodate(this.rest.today),
+      name: this.rest.his.list[i].customer,
+      phone: this.rest.his.list[i].phone,
+      petlist: [],
+      pet: 0,
+      eye: '',
+      temperate: '',
+      other: '',
+      treat: '',
+      status: Number(this.rest.his.list[i].status),
+    }
+    this.rest.navCtrl.navigateForward('his/insert')    
   }
 
   public async insertHis(index: number) {
@@ -72,24 +103,6 @@ export class HisPage implements OnInit {
     await alert.present();
   }
 
-  public async insertDetail(i: number) {
-    this.rest.temp = {
-      index: i,
-      id: this.rest.his.list[i].id,
-      time: this.time.datetoisodate(this.rest.today),
-      name: this.rest.his.list[i].customer,
-      phone: this.rest.his.list[i].phone,
-      petlist: [],
-      pet: 0,
-      eye: '',
-      temperate: '',
-      other: '',
-      treat: '',
-      status: Number(this.rest.his.list[i].status),
-    }
-    this.rest.navCtrl.navigateForward('his/insert')    
-  }
-
   public async insertHisSubmit(index: number, his: string) {
     await this.rest.freeze('Đang thêm tiền sử')
     this.rest.checkpost('his-add', {
@@ -97,6 +110,100 @@ export class HisPage implements OnInit {
       his: his
     }).then((resp) => {
       this.rest.his.list[index].his = resp.his
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async dead(index: number) {
+    const alert = await this.alert.create({
+      message: 'Xác nhận lưu bệnh đã chết',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.deadSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async deadSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('his-dead', {
+      id: this.rest.his.list[index].id,
+    }).then((resp) => {
+      this.rest.his.list[index].insult = resp.insult
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async return(index: number) {
+    const alert = await this.alert.create({
+      message: 'Xác nhận lưu bệnh xuất viện',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.returnSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async returnSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('his-return', {
+      id: this.rest.his.list[index].id,
+    }).then((resp) => {
+      this.rest.his.list[index].insult = resp.insult
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public async remove(index: number) {
+    const alert = await this.alert.create({
+      message: 'Sau khi xóa hồ sơ sẽ biến mất vĩnh viễn',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.removeSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async removeSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('his-remove', {
+      id: this.rest.his.list[index].id,
+      filter: this.rest.his.filter
+    }).then((resp) => {
+      this.rest.his.list = resp.list
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
