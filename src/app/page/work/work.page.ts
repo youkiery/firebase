@@ -22,8 +22,8 @@ export class WorkPage implements OnInit {
 
   ngOnInit() { }
 
-  ionViewDidEnter() {
-    this.rest.freeze('Đang lấy dữ liệu...')
+  async ionViewDidEnter() {
+    await this.rest.freeze('Đang lấy dữ liệu...')
     this.rest.work.page = {
       'undone': 1,
       'done': 1
@@ -48,7 +48,7 @@ export class WorkPage implements OnInit {
     })
   }
 
-  public filter() {
+  public async filter() {
     return new Promise(resolve => {
       this.rest.check({
         action: 'work-auto',

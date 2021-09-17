@@ -16,7 +16,7 @@ export class AdminPage implements OnInit {
   ngOnInit() { }
 
   public async insert(id: number) {
-    this.rest.freeze('Đang thêm...')
+    await this.rest.freeze('Đang thêm...')
     this.rest.checkpost('admin-insert', {
       id: id,
       key: this.key
@@ -29,8 +29,8 @@ export class AdminPage implements OnInit {
     })
   }
 
-  public filter() {
-    this.rest.freeze('Đang lọc...')
+  public async filter() {
+    await this.rest.freeze('Đang lọc...')
     this.rest.checkpost('admin-filter', {
       key: this.key
     }).then(resp => {

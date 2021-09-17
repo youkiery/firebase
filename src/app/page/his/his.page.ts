@@ -37,7 +37,7 @@ export class HisPage implements OnInit {
     if (!this.rest.his.init) {
       let time = this.time.datetotime(this.rest.today)
       this.rest.his.filter = {
-        from: this.time.timetoisodate(time - 60 * 60 * 24 * 30),
+        from: this.time.timetoisodate(time - 60 * 60 * 24 * 30 * 1000),
         end: this.time.timetoisodate(time)
       }
       this.filter()

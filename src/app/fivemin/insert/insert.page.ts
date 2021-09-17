@@ -26,7 +26,7 @@ export class InsertPage implements OnInit {
     {ten: 'muctieu', truong: [{thoigian: 0, giatri: ''}], tieude: 'Mục tiêu doanh số'},
     {ten: 'chamsoc', truong: [{thoigian: 0, giatri: ''}], tieude: 'Chăm sóc khách hàng'},
     {ten: 'tugiac', truong: [{thoigian: 0, giatri: ''}], tieude: 'Tính tự giác'},
-    {ten: 'chuyenmin', truong: [{thoigian: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'chuyenmon', truong: [{thoigian: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
     {ten: 'dongdoi', truong: [{thoigian: 0, giatri: ''}], tieude: 'Tính đồng đội'},
     {ten: 'giaiphap', truong: [{thoigian: 0, giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
     // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},

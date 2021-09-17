@@ -29,7 +29,7 @@ export class DetailPage implements OnInit {
     {ten: 'muctieu', tieude: 'Mục tiêu doanh số'},
     {ten: 'chamsoc', tieude: 'Chăm sóc khách hàng'},
     {ten: 'tugiac', tieude: 'Tính tự giác'},
-    {ten: 'chuyenmin', tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'chuyenmon', tieude: 'Mục tiêu chuyên môn'},
     {ten: 'dongdoi', tieude: 'Tính đồng đội'},
     {ten: 'giaiphap', tieude: 'Ý tưởng và pháp pháp'},
     // {ten: 'ketqua', tieude: 'Kết quả'},

@@ -202,9 +202,8 @@ export class SchedulePage implements OnInit {
 
   public async managerRegisterSubmit(list: any[]) {
     await this.rest.freeze('Đang đăng ký công việc')
-    this.rest.check({
-      action: 'schedule-regist',
-      list: JSON.stringify(list),
+    this.rest.checkpost('schedule-regist', {
+      list: list,
       time: this.rest.schedule.filter.time
     }).then(response => {
       this.rest.schedule.data = response['data']
@@ -218,9 +217,8 @@ export class SchedulePage implements OnInit {
 
   public async registerSubmit(list: any[]) {
     await this.rest.freeze('Đang đăng ký công việc')
-    this.rest.check({
-      action: 'schedule-regist-manager',
-      list: JSON.stringify(list),
+    this.rest.checkpost('schedule-regist-manager', {
+      list: list,
       time: this.rest.schedule.filter.time
     }).then(response => {
       this.rest.schedule.data = response['data']

@@ -64,7 +64,7 @@ export class AdminPage implements OnInit {
   }
 
   public async removeSubmit(userid: number) {
-    this.rest.freeze('Đang xóa...')
+    await this.rest.freeze('Đang xóa...')
     this.rest.checkpost('admin-remove', {
       id: userid
     }).then(resp => {

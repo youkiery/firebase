@@ -26,7 +26,7 @@ export class UpdatePage implements OnInit {
     {ten: 'muctieu', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Mục tiêu doanh số'},
     {ten: 'chamsoc', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Chăm sóc khách hàng'},
     {ten: 'tugiac', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Tính tự giác'},
-    {ten: 'chuyenmin', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
+    {ten: 'chuyenmon', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Mục tiêu chuyên môn'},
     {ten: 'dongdoi', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Tính đồng đội'},
     {ten: 'giaiphap', truong: [{id: 0, thoigian: 0, giatri: ''}], tieude: 'Ý tưởng và giải pháp'},
     // {ten: 'ketqua', truong: [{giatri: ''}], tieude: 'Kết quả'},

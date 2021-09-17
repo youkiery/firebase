@@ -14,7 +14,7 @@ export class StatisticPage implements OnInit {
     'muctieu': 'Mục tiêu doanh số',
     'chamsoc': 'Chăm sóc khách hàng',
     'tugiac': 'Tính tự giác',
-    'chuyenmin': 'Mục tiêu chuyên môn',
+    'chuyenmon': 'Mục tiêu chuyên môn',
     'dongdoi': 'Tính đồng đội',
     'giaiphap': 'Ý tưởng và pháp pháp',
   }

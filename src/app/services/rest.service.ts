@@ -11,6 +11,7 @@ export class RestService {
   public branch = 'test'
   public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
   public admin = {
