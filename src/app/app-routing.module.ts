@@ -242,14 +242,28 @@ const routes: Routes = [
   {
     path: 'drug/modal',
     loadChildren: () => import('./drug/modal/modal.module').then( m => m.ModalPageModule)
-  },  {
+  },
+  {
     path: 'modal',
     loadChildren: () => import('./page/drug/modal/modal.module').then( m => m.ModalPageModule)
   },
   {
     path: 'his',
     loadChildren: () => import('./page/his/his.module').then( m => m.HisPageModule)
+  },
+  {
+    path: 'item',
+    loadChildren: () => import('./page/item/item.module').then( m => m.ItemPageModule)
+  },
+  {
+    path: 'modal/item',
+    loadChildren: () => import('./modal/item/item.module').then( m => m.ItemPageModule)
+  },
+  {
+    path: 'modal/detail',
+    loadChildren: () => import('./modal/detail/detail.module').then( m => m.DetailPageModule)
   }
+
 
 
 ];

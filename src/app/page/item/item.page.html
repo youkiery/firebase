@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title style="text-align: center;">
+      THANHXUANPET
+    </ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="rest.router.navigateByUrl('/setting')">
+        <ion-icon slot="end" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="start">
+      <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
+    <ion-fab-button>
+      Góp ý
+    </ion-fab-button>
+  </ion-fab> -->
+
+  <ion-item>
+    <ion-label position="stacked"> Tìm kiếm tên hàng hóa </ion-label>
+    <ion-input [(ngModel)]="rest.item.keyword"></ion-input>
+  </ion-item>
+
+  <ion-button size="small" expand="block" (click)="filter()">
+    Lọc dữ liệu
+  </ion-button>
+
+  <ion-card>
+    <ion-card-content>
+      Hàng sắp hết: {{rest.item.purchase}}
+      <ion-button size="small" color="secondary" (click)="purchase()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
+      Hàng cần chuyển: {{rest.item.transfer}}
+      <ion-button size="small" color="secondary" (click)="transfer()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
+      Hàng sắp hết hạn: {{rest.item.expired}}
+      <ion-button size="small" color="secondary" (click)="expired()"> <ion-icon name="information-circle-outline"></ion-icon> </ion-button> <br>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="stl-card" *ngFor="let item of rest.item.list; let i = index">
+    Tên hàng: {{item.name}} <br>
+    Tồn kho: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img src="/assets/icon/storage-xs.png"> <br>
+    Vị trí: <span class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)"> {{pos.name}} </span>
+    <img class="right icon" src="/assets/icon/update.png" (click)="updateItem(i)">
+    <img class="right icon" src="/assets/icon/delete.png" (click)="removeItem(item.id)">
+  </div>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insertItem()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm hàng hóa </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="insertExpire()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Thêm HSD </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="position()">
+        <ion-icon name="stats-chart-outline"></ion-icon>
+        <ion-label> Vị trí </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

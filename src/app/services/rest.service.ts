@@ -9,11 +9,23 @@ import { AlertController, LoadingController, ModalController, NavController, Toa
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
   // public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
-  // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
+  public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
+  public action = ''
+  public item = {
+    init: 0,
+    purchase: 0,
+    transfer: 0,
+    expired: 0,
+    catlist: [],
+    image: {},
+    all: [],
+    keyword: '',
+    list: []
+  }
   public admin = {
     config: [],
     module: {},
@@ -384,6 +396,7 @@ export class RestService {
     target: 0,
     profile: 0,
     his: 0,
+    item: 0,
   }
   toast: any
   load: any

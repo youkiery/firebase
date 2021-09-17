@@ -11,12 +11,14 @@ export class SuggestPage {
   list: any = []
   timeout = null
   @ViewChild('input') input: any;
+  @ViewChild('input2') input2: any;
   constructor (
     public rest: RestService
   ) {}
 
   ionViewDidEnter() {
-    this.input.setFocus();
+    if (this.rest.action == 'item') this.input2.setFocus();
+    else this.input.setFocus();
   }
     
   public suggest() {
@@ -67,8 +69,9 @@ export class SuggestPage {
     this.rest.navCtrl.pop()
   } 
 
-  public selectItem(name:string) {
+  public selectItem(name:string, code: string) {
     this.rest.temp.name = name
+    this.rest.temp.code = code
     this.rest.navCtrl.pop()
   }
 }

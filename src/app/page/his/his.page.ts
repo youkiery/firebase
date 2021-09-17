@@ -34,6 +34,7 @@ export class HisPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.rest.action = 'his'
     if (!this.rest.his.init) {
       let time = this.time.datetotime(this.rest.today)
       this.rest.his.filter = {

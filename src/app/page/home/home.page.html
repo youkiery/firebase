@@ -53,6 +53,13 @@
       <ion-badge color="danger" slot="end" *ngIf="rest.kaizen.unread"> {{rest.kaizen.unread}} </ion-badge>
     </div>
   </div> -->
+  
+  <div *ngIf="rest.config.item > 0" class="box" (click)="rest.router.navigateByUrl('item')">
+    <ion-img src="assets/image/item.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Hàng hóa
+    </div>
+  </div>
 
   <div *ngIf="rest.config.schedule > 0" class="box" (click)="rest.router.navigateByUrl('schedule')">
     <ion-img src="assets/image/schedule.png" class="box-image"></ion-img>

@@ -5,16 +5,33 @@
 </ion-toolbar>
 
 <ion-content>
-  <ion-item>
-    <ion-input [(ngModel)]="key" (keyup)="suggest()" #input> </ion-input>
-    <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
-  </ion-item>
-  <div *ngIf="list.length">
-    <ion-item class="underline" *ngFor="let item of list; let i = index;" (click)="select(i)">
-      {{item.name}} - {{item.phone}}
+
+  <div *ngIf="rest.action == 'item'">
+    <ion-item>
+      <ion-input [(ngModel)]="key" (keyup)="suggestItem()" #input2> </ion-input>
+      <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrentItem()">
     </ion-item>
+    <div *ngIf="list.length">
+      <ion-item class="underline" *ngFor="let item of list" (click)="selectItem(item.name, item.code)">
+        {{item.code}}: - {{item.name}}
+      </ion-item>
+    </div>
+    <div *ngIf="!list.length" class="text-center">
+      Nhập tên hàng hóa
+    </div>
   </div>
-  <div *ngIf="!list.length" class="text-center">
-    Nhập số điện thoại khách hàng
+  <div *ngIf="rest.action != 'item'">
+    <ion-item>
+      <ion-input [(ngModel)]="key" (keyup)="suggest()" #input> </ion-input>
+      <img class="clear-img" src="/assets/icon/select.png" slot="end" (click)="selectcurrent()">
+    </ion-item>
+    <div *ngIf="list.length">
+      <ion-item class="underline" *ngFor="let item of list; let i = index;" (click)="select(i)">
+        {{item.name}} - {{item.phone}}
+      </ion-item>
+    </div>
+    <div *ngIf="!list.length" class="text-center">
+      Nhập số điện thoại khách hàng
+    </div>
   </div>
 </ion-content>
