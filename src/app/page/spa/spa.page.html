@@ -26,31 +26,33 @@
     Ngày hiển thị: {{ time.timetodate(rest.spa.time) }}
   </div>
 
-  <div *ngFor="let item of this.rest.spa.list; let i = index" [class]="status[item.status]">
-    <div class="col-xs-6">
-      Tên khách: {{item.name}} <br>
-      Điện thoại: {{item.phone}} <br>
-      Cân nặng: {{weight[item.weight]}}
+  <div *ngFor="let item of this.rest.spa.list; let i = index">
+    <div *ngIf="(!rest.spa.toggle) || (rest.spa.toggle && item.status < 3)" [class]="status[item.status]">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Cân nặng: {{weight[item.weight]}}
+      </div>
+      <div class="col-xs-6">
+        Người nhận: {{item.user}} <br>
+        Thời gian nhận: {{item.time}} <br>
+        Trạng thái: <span class="bold"> {{status_text[item.status]}}  </span>
+      </div>
+      <div>
+        Dịch vụ: {{item.service}}
+      </div>
+      <div>
+        Ghi chú: {{item.note}}
+      </div>
+      
+      <div *ngIf="item.image.length">
+        <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
+      </div>
+      <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+      <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+      <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
+      <img *ngIf="rest.config.spa > 1" class="right" src="/assets/icon/update.png" (click)="update(i)">
     </div>
-    <div class="col-xs-6">
-      Người nhận: {{item.user}} <br>
-      Thời gian nhận: {{item.time}} <br>
-      Trạng thái: <span class="bold"> {{status_text[item.status]}}  </span>
-    </div>
-    <div>
-      Dịch vụ: {{item.service}}
-    </div>
-    <div>
-      Ghi chú: {{item.note}}
-    </div>
-    
-    <div *ngIf="item.image.length">
-      <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
-    </div>
-    <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
-    <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
-    <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
-    <img *ngIf="rest.config.spa > 1" class="right" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 
   <!-- <table border="1">
@@ -95,6 +97,15 @@
       <ion-tab-button (click)="insert()">
         <ion-icon name="add-circle-outline"></ion-icon>
         <ion-label> Thêm spa </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button *ngIf="rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        <ion-label> Chưa về </ion-label>
+      </ion-tab-button>
+      <ion-tab-button *ngIf="!rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
+        <ion-icon name="apps-outline"></ion-icon>
+        <ion-label> Toàn bộ </ion-label>
       </ion-tab-button>
 
       <ion-tab-button (click)="changeDate(-1)">

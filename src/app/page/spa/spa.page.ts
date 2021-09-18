@@ -26,7 +26,7 @@ export class SpaPage {
   }
   public weight = ['< 2kg', '2 - 4kg', '4 - 10kg', '10 - 15kg', '15 - 25kg', '25 - 35kg', '35 - 50kg', '> 50kg']
   public autoload = null
-  public check = false
+  public check = true
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -35,11 +35,12 @@ export class SpaPage {
   ) { }
 
   async ionViewDidEnter() {
+    this.autoload = setInterval(() => {
+      console.log(1);
+      if (this.rest.spa.init) this.auto()
+    }, 15000)
     if (!this.rest.spa.init) {
       this.rest.spa.time = (new Date()).getTime()
-      setInterval(() => {
-        this.auto()
-      }, 30000)
       this.filter()
     }
   }

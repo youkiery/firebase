@@ -211,6 +211,7 @@ export class RestService {
     disease: []
   }
   public spa = {
+    toggle: false,
     time: 0,
     init: 0,
     type: [],
