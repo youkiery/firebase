@@ -153,6 +153,12 @@
   </div>
 
   <div *ngIf="rest.temp.action == 'transfer' && rest.temp.step == 1">
+    <div class="stl-card" *ngFor="let item of rest.item.list; let i = index">
+      Tên hàng: {{item.name}} <br>
+      Tồn kho: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img src="/assets/icon/storage-xs.png"> <br>
+      Vị trí: <span class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)"> {{pos.name}} </span>
+    </div>
+
     <ion-item *ngFor="let item of rest.temp.list; let i = index">
       <ion-label> {{item.name}}: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img
           src="/assets/icon/storage-xs.png"> </ion-label>

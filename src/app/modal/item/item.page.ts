@@ -30,6 +30,10 @@ export class ItemPage implements OnInit {
     if (this.rest.temp.action == 'position') this.positionInit()
   }
 
+  ionViewWillLeave() {
+    this.rest.temp.prv = false
+  }
+
   public async positionInit() {
     await this.rest.freeze('Đang tải danh sách...')
     this.rest.checkpost('item-position_init', {}).then(resp => {
@@ -51,13 +55,15 @@ export class ItemPage implements OnInit {
   }
 
   public async transferInit() {
-    await this.rest.freeze('Đang tải danh sách...')
-    this.rest.checkpost('item-transfer_init', {}).then(resp => {
-      this.rest.temp.list = resp.list
-      this.rest.defreeze()
-    }, () => {
-      this.rest.defreeze()
-    })
+    if (!this.rest.temp.prv) {
+      await this.rest.freeze('Đang tải danh sách...')
+      this.rest.checkpost('item-transfer_init', {}).then(resp => {
+        this.rest.temp.list = resp.list
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
   }
 
   public async expiredInit() {
@@ -174,9 +180,15 @@ export class ItemPage implements OnInit {
   }
 
   public itemPosFilter() {
+    let key = this.key.toLowerCase()
     this.rest.temp.old = this.rest.item.all.filter((item: any, index: number) => {
-      return item.name.search(this.key) >= 0
+      return item.alias.search(key) >= 0
     })
+  }
+
+  public view(posid: number) {
+    this.rest.temp.image = this.rest.item.image[posid]
+    this.rest.navCtrl.navigateForward('modal/detail')
   }
 
   public async insertPosItemSubmit() {

@@ -15,4 +15,8 @@ export class DetailPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter() {
+    this.rest.temp.prv = true
+  }
+
 }
