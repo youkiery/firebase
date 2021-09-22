@@ -74,6 +74,15 @@
   border-top: 1px solid lightgray;
 }
 
+.item-label-class {
+  width: 50%;
+  display: inline-block;
+}
+
+.item-label-class ion-checkbox {
+  margin: 5px;
+}
+
 .endline-text {
   border-bottom: 1px solid lightgray;
   padding-bottom: 10px;

@@ -9,7 +9,7 @@ import { RestService } from 'src/app/services/rest.service';
   styleUrls: ['./insert.page.scss'],
 })
 export class InsertPage {
-  public option = [{ name: "wash_dog", value: "Tắm chó", check: false }, { name: "wash_cat", value: "Tắm mèo", check: false }, { name: "wash_white", value: "Tắm trắng", check: false }, { name: "cut_fur", value: "Cắt lông", check: false }, { name: "shave_foot", value: "Cạo lông chân", check: false }, { name: "shave_fur", value: "Cạo ông", check: false }, { name: "cut_claw", value: "Cắt, dũa móng", check: false }, { name: "cut_curly", value: "Cắt lông rối", check: false }, { name: "wash_ear", value: "Vệ sinh tai", check: false }, { name: "wash_mouth", value: "Vệ sinh răng miệng", check: false }, { name: "paint_footear", value: "Nhuộm chân, tai", check: false }, { name: "paint_all", value: "Nhuộm toàn thân", check: false }, { name: "pin_ear", value: "Bấm lỗ tai", check: false }, { name: "cut_ear", value: "Cắt lông tai", check: false }, { name: "dismell", value: "Vắt tuyết hôi", check: false }]
+  public option = []
   public weight = ['< 2kg', '2 - 4kg', '4 - 10kg', '10 - 15kg', '15 - 25kg', '25 - 35kg', '35 - 50kg', '> 50kg']
   public max = 640
   public count = 0
@@ -21,9 +21,13 @@ export class InsertPage {
   ) { }
 
   ionViewDidEnter() {
-    if (this.rest.temp.id) {
-      this.option = this.rest.temp.option
-    }
+    this.option = JSON.parse(JSON.stringify(this.rest.spa.type))
+    
+    this.rest.temp.option.forEach((id: number) => {
+      this.option.forEach((item, index) => {
+        if (this.option[index].id == id) this.option[index].check = 1
+      })
+    });
   }
 
   public suggest(param: number = 0) {
@@ -159,9 +163,9 @@ export class InsertPage {
   }
 
   public checkOption() {
-    let option = {}
+    let option = []
     this.option.forEach(item => {
-      option[item.name] = Number(item.check)
+      if (item.check) option.push(Number(item.id))
     });
     return option
   }

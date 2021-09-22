@@ -27,6 +27,7 @@ export class SpaPage {
   public weight = ['< 2kg', '2 - 4kg', '4 - 10kg', '10 - 15kg', '15 - 25kg', '25 - 35kg', '35 - 50kg', '> 50kg']
   public autoload = null
   public check = true
+  public keyword = ''
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -40,12 +41,24 @@ export class SpaPage {
     }, 15000)
     if (!this.rest.spa.init) {
       this.rest.spa.time = (new Date()).getTime()
-      this.filter()
+      this.init()
     }
   }
 
   ionViewWillLeave() {
     clearInterval(this.autoload)
+  }
+
+  public async init() {
+    this.check = false
+    this.rest.checkpost('spa-init', {
+      time: this.rest.spa.time,
+    }).then((resp) => {
+      this.check = true
+      this.rest.spa.init = new Date().getTime()
+      this.rest.spa.list = resp.list
+      this.rest.spa.type = resp.type
+    }, () => { })
   }
 
   public async auto() {
@@ -59,8 +72,9 @@ export class SpaPage {
         if (resp.list.length) {
           this.rest.spa.init = new Date().getTime()
           this.rest.spa.list = resp.list
+          if (this.keyword.length) this.search()
         }
-      }, () => {})
+      }, () => { })
     }
   }
 
@@ -75,6 +89,22 @@ export class SpaPage {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public search() {
+    this.rest.spa.keyword = this.keyword
+    this.rest.spa.old = []
+    let key = this.rest.alias(this.keyword)
+
+    this.rest.spa.list.forEach((item, index) => {
+      let name = this.rest.alias(item.name)
+      let phone = this.rest.alias(item.phone)
+      let name2 = this.rest.alias(item.name2)
+      let phone2 = this.rest.alias(item.phone2)
+
+      if (name.search(key) >= 0 || name2.search(key) >= 0 || phone.search(key) >= 0 || phone2.search(key) >= 0) this.rest.spa.old.push(index)
+    })
+    console.log(this.rest.spa.old);
   }
 
   public async detail(image: string) {
@@ -95,9 +125,10 @@ export class SpaPage {
       note: '',
       weight: 0,
       image: [],
+      option: [],
       time: this.rest.spa.time
     }
-    
+
     this.rest.navCtrl.navigateForward('/spa/insert')
   }
 
@@ -111,7 +142,7 @@ export class SpaPage {
       note: this.rest.spa.list[index].note,
       image: this.rest.spa.list[index].image,
       option: this.rest.spa.list[index].option,
-      weight: this.rest.spa.list[index].weight,
+      weight: Number(this.rest.spa.list[index].weight),
       time: this.rest.spa.time
     }
     this.rest.router.navigateByUrl('/spa/insert')

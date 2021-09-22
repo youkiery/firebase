@@ -27,13 +27,13 @@
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked"> Số điện thoại 2 </ion-label>
+    <ion-label position="stacked"> Số người nhận hộ (tùy chọn) </ion-label>
     <ion-input [(ngModel)]="rest.temp.phone2"> </ion-input>
     <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
       (click)="suggest(2)">
   </ion-item>
   <ion-item>
-    <ion-label position="stacked"> Khách hàng 2 </ion-label>
+    <ion-label position="stacked"> Người nhận hộ (tùy chọn) </ion-label>
     <ion-input [(ngModel)]="rest.temp.name2"> </ion-input>
   </ion-item>
 
@@ -53,8 +53,9 @@
   <div class="thumbnail-box" *ngFor="let item of rest.temp.image; let i = index" (click)="remove(i)">
     <img class="thumbnail" [src]="item">
   </div>
+  <div></div>
 
-  <ion-item *ngFor="let item of option; let i = index;">
+  <ion-item class="item-label-class" *ngFor="let item of option; let i = index;">
     <ion-label> {{item.value}} </ion-label>
     <ion-checkbox slot="start" [(ngModel)]="option[i].check"></ion-checkbox>
   </ion-item>
