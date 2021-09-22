@@ -36,7 +36,6 @@ export class SpaPage {
 
   async ionViewDidEnter() {
     this.autoload = setInterval(() => {
-      console.log(1);
       if (this.rest.spa.init) this.auto()
     }, 15000)
     if (!this.rest.spa.init) {
@@ -53,20 +52,24 @@ export class SpaPage {
     if (this.check) {
       this.check = false
       this.rest.checkpost('spa-auto', {
-        time: this.rest.spa.time
+        time: this.rest.spa.time,
+        ctime: this.rest.spa.init
       }).then((resp) => {
         this.check = true
-        this.rest.spa.list = resp.list
+        if (resp.list.length) {
+          this.rest.spa.init = new Date().getTime()
+          this.rest.spa.list = resp.list
+        }
       }, () => {})
     }
   }
 
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
-    this.rest.checkpost('spa-auto', {
+    this.rest.checkpost('spa-filter', {
       time: this.rest.spa.time
     }).then((resp) => {
-      this.rest.spa.init = 1
+      this.rest.spa.init = new Date().getTime()
       this.rest.spa.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -87,6 +90,8 @@ export class SpaPage {
       id: 0,
       name: '',
       phone: '',
+      name2: '',
+      phone2: '',
       note: '',
       weight: 0,
       image: [],
@@ -101,6 +106,8 @@ export class SpaPage {
       id: this.rest.spa.list[index].id,
       name: this.rest.spa.list[index].name,
       phone: this.rest.spa.list[index].phone,
+      name2: this.rest.spa.list[index].name2,
+      phone2: this.rest.spa.list[index].phone2,
       note: this.rest.spa.list[index].note,
       image: this.rest.spa.list[index].image,
       option: this.rest.spa.list[index].option,

@@ -31,6 +31,8 @@
       <div class="col-xs-6">
         Tên khách: {{item.name}} <br>
         Điện thoại: {{item.phone}} <br>
+        Tên khách 2: {{item.name2}} <br>
+        Điện thoại 2: {{item.phone2}} <br>
         Cân nặng: {{weight[item.weight]}}
       </div>
       <div class="col-xs-6">
@@ -38,7 +40,7 @@
         Thời gian nhận: {{item.time}} <br>
         Trạng thái: <span class="bold"> {{status_text[item.status]}}  </span>
       </div>
-      <div>
+      <div class="upperline">
         Dịch vụ: {{item.service}}
       </div>
       <div>
@@ -51,7 +53,7 @@
       <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
       <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
       <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
-      <img *ngIf="rest.config.spa > 1" class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <img class="right" src="/assets/icon/update.png" (click)="update(i)">
     </div>
   </div>
 

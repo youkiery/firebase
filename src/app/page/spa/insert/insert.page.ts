@@ -26,7 +26,8 @@ export class InsertPage {
     }
   }
 
-  public suggest() {
+  public suggest(param: number = 0) {
+    this.rest.temp.param = param
     this.rest.router.navigateByUrl('/modal/suggest')
   }
 
@@ -145,7 +146,7 @@ export class InsertPage {
     
     if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
-    else if (!this.rest.temp.image.length) this.insertSubmit()
+    else if (!this.rest.temp.image.length) this.updateSubmit()
     else this.rest.temp.image.forEach((image: any, index: number) => {
       if (image.length > 200) {
         this.uploadImage(image).then((url: string) => {
@@ -169,8 +170,8 @@ export class InsertPage {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa-insert', this.rest.temp).then(resp => {
       this.rest.spa.list = resp.list
-      this.rest.navCtrl.pop()
       this.rest.defreeze()
+      this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()
     })
@@ -180,8 +181,8 @@ export class InsertPage {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa-update', this.rest.temp).then(resp => {
       this.rest.spa.list = resp.list
-      this.rest.navCtrl.pop()
       this.rest.defreeze()
+      this.rest.navCtrl.pop()
     }, () => {
       this.rest.defreeze()
     })
