@@ -56,20 +56,21 @@ export class AdminDetail {
 
   public async save() {
     await this.rest.freeze('Đang lưu dữ liệu')
-    this.rest.check({
-      action: 'admin-save',
-      'work': this.module.work,
-      'kaizen': this.module.kaizen,
-      'schedule': this.module.schedule,
-      'vaccine': this.module.vaccine,
-      'spa': this.module.spa,
-      'expire': this.module.expire,
-      'blood': this.module.blood,
-      'usg': this.module.usg,
-      'drug': this.module.drug,
-      'profile': this.module.profile,
-      'his': this.module.his,
-      'item': this.module.item,
+    this.rest.checkpost('admin-save', {
+      'module': {
+        'work': this.module.work,
+        'kaizen': this.module.kaizen,
+        'schedule': this.module.schedule,
+        'vaccine': this.module.vaccine,
+        'spa': this.module.spa,
+        'expire': this.module.expire,
+        'blood': this.module.blood,
+        'usg': this.module.usg,
+        'drug': this.module.drug,
+        'profile': this.module.profile,
+        'his': this.module.his,
+        'item': this.module.item,
+      },
       'id': this.rest.admin.users[this.rest.admin.index].userid
     }).then(response => {
       this.rest.admin.users[this.rest.admin.index].module = response.data
