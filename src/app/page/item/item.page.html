@@ -46,8 +46,8 @@
     Tên hàng: {{item.name}} <br>
     Tồn kho: {{item.shop}} <img src="/assets/icon/shop-xs.png">, {{item.storage}} <img src="/assets/icon/storage-xs.png"> <br>
     Vị trí: <span class="pos" *ngFor="let pos of item.position" (click)="view(pos.id)"> {{pos.name}} </span>
-    <img class="right icon" src="/assets/icon/update.png" (click)="updateItem(i)">
-    <img class="right icon" src="/assets/icon/delete.png" (click)="removeItem(item.id)">
+    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/update.png" (click)="updateItem(i)">
+    <img *ngIf="rest.config.item > 1" class="right icon" src="/assets/icon/delete.png" (click)="removeItem(item.id)">
   </div>
 </ion-content>
 

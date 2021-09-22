@@ -27,6 +27,7 @@ export class InsertPage implements OnInit {
   }
 
   public suggest() {
+    this.rest.temp.param = 0
     this.rest.navCtrl.navigateForward('modal/suggest')
   }
 

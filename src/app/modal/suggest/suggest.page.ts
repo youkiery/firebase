@@ -36,13 +36,21 @@ export class SuggestPage {
   }
 
   public selectcurrent() {
-    this.rest.temp.phone = this.key
+    if (this.rest.temp.param) this.rest.temp.phone2 = this.key
+    else this.rest.temp.phone = this.key
     this.rest.navCtrl.pop()
   } 
 
   public select(i: number) {
-    this.rest.temp.name = this.list[i].name
-    this.rest.temp.phone = this.list[i].phone
+    if (this.rest.temp.param) {
+      this.rest.temp.name2 = this.list[i].name
+      this.rest.temp.phone2 = this.list[i].phone
+    }
+    else {
+      this.rest.temp.name = this.list[i].name
+      this.rest.temp.phone = this.list[i].phone
+    }
+    
     if (this.rest.temp.petlist) {
       this.rest.temp.petlist = this.list[i].petlist
       if (this.list[i].petlist[0]) this.rest.temp.pet = this.list[i].petlist[0].id
