@@ -3,12 +3,6 @@
     <ion-title style="text-align: center;">
       THANHXUANPET
     </ion-title>
-    <ion-buttons slot="secondary">
-      <ion-button (click)="rest.router.navigateByUrl('/setting')">
-        <ion-icon slot="end" name="settings-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
     <ion-buttons slot="start">
       <ion-img src="assets/image/logo.png" class="logo" (click)="this.rest.router.navigateByUrl('/home')"></ion-img>
     </ion-buttons>
@@ -121,6 +115,13 @@
     <ion-img src="assets/image/his.png" class="box-image"></ion-img>
     <div class="box-title">
       Quản lý lưu bệnh
+    </div>
+  </div>
+
+  <div class="box" (click)="rest.router.navigateByUrl('setting')">
+    <ion-img src="assets/image/user.png" class="box-image"></ion-img>
+    <div class="box-title">
+      Cài đặt người dùng
     </div>
   </div>
 

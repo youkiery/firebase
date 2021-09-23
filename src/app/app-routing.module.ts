@@ -24,10 +24,6 @@ const routes: Routes = [
     loadChildren: () => import('./page/setting/setting.module').then( m => m.SettingPageModule)
   },
   {
-    path: 'update',
-    loadChildren: () => import('./page/update/update.module').then( m => m.UpdatePageModule)
-  },
-  {
     path: 'kaizen',
     loadChildren: () => import('./page/kaizen/kaizen.module').then( m => m.KaizenPageModule)
   },
@@ -42,14 +38,6 @@ const routes: Routes = [
   {
     path: 'spa',
     loadChildren: () => import('./page/spa/spa.module').then( m => m.SpaPageModule)
-  },
-  {
-    path: 'expire',
-    loadChildren: () => import('./page/expire/expire.module').then( m => m.ExpirePageModule)
-  },
-  {
-    path: 'ride',
-    loadChildren: () => import('./page/ride/ride.module').then( m => m.RidePageModule)
   },
   {
     path: 'blood',
@@ -76,10 +64,6 @@ const routes: Routes = [
     loadChildren: () => import('./fivemin/fivemin.module').then( m => m.FiveminPageModule)
   },
   {
-    path: 'kaimin',
-    loadChildren: () => import('./page/kaimin/kaimin.module').then( m => m.KaiminPageModule)
-  },
-  {
     path: 'gopy',
     loadChildren: () => import('./gopy/gopy.module').then( m => m.GopyPageModule)
   },
@@ -104,10 +88,6 @@ const routes: Routes = [
     loadChildren: () => import('./page/vaccine/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
-    path: 'expire/insert',
-    loadChildren: () => import('./page/expire/insert/insert.module').then( m => m.InsertPageModule)
-  },
-  {
     path: 'usg/insert',
     loadChildren: () => import('./page/usg/insert/insert.module').then( m => m.InsertPageModule)
   },
@@ -126,14 +106,6 @@ const routes: Routes = [
   {
     path: 'blood/out',
     loadChildren: () => import('./page/blood/out/out.module').then( m => m.OutPageModule)
-  },
-  {
-    path: 'expire/suggest',
-    loadChildren: () => import('./page/expire/suggest/suggest.module').then( m => m.SuggestPageModule)
-  },
-  {
-    path: 'expire/insert-item',
-    loadChildren: () => import('./page/expire/insert-item/insert-item.module').then( m => m.InsertItemPageModule)
   },
   {
     path: 'kaizen/edit',
