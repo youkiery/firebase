@@ -4,76 +4,68 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./page/login/login.module').then( m => m.LoginPageModule),
+    loadChildren: () => import('./main/login/login.module').then( m => m.LoginPageModule),
     pathMatch: 'full'
   },
   {
     path: 'login',
-    loadChildren: () => import('./page/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./main/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./page/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./main/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'work',
-    loadChildren: () => import('./page/work/work.module').then( m => m.WorkPageModule)
+    loadChildren: () => import('./module/work/work.module').then( m => m.WorkPageModule)
   },
   {
     path: 'setting',
-    loadChildren: () => import('./page/setting/setting.module').then( m => m.SettingPageModule)
+    loadChildren: () => import('./main/setting/setting.module').then( m => m.SettingPageModule)
   },
   {
     path: 'kaizen',
-    loadChildren: () => import('./page/kaizen/kaizen.module').then( m => m.KaizenPageModule)
+    loadChildren: () => import('./module/kaizen/kaizen.module').then( m => m.KaizenPageModule)
   },
   {
     path: 'schedule',
-    loadChildren: () => import('./page/schedule/schedule.module').then( m => m.SchedulePageModule)
+    loadChildren: () => import('./module/schedule/schedule.module').then( m => m.SchedulePageModule)
   },
   {
     path: 'vaccine',
-    loadChildren: () => import('./page/vaccine/vaccine.module').then( m => m.VaccinePageModule)
+    loadChildren: () => import('./module/vaccine/vaccine.module').then( m => m.VaccinePageModule)
   },
   {
     path: 'spa',
-    loadChildren: () => import('./page/spa/spa.module').then( m => m.SpaPageModule)
+    loadChildren: () => import('./module/spa/spa.module').then( m => m.SpaPageModule)
   },
   {
     path: 'blood',
-    loadChildren: () => import('./page/blood/blood.module').then( m => m.BloodPageModule)
+    loadChildren: () => import('./module/blood/blood.module').then( m => m.BloodPageModule)
   },
   {
     path: 'usg',
-    loadChildren: () => import('./page/usg/usg.module').then( m => m.UsgPageModule)
-  },
-  {
-    path: 'drug',
-    loadChildren: () => import('./drug/drug.module').then( m => m.DrugPageModule)
+    loadChildren: () => import('./module/usg/usg.module').then( m => m.UsgPageModule)
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () => import('./module/admin/admin.module').then( m => m.AdminPageModule)
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./module/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
     path: 'fivemin',
-    loadChildren: () => import('./fivemin/fivemin.module').then( m => m.FiveminPageModule)
+    loadChildren: () => import('./module/fivemin/fivemin.module').then( m => m.FiveminPageModule)
   },
   {
     path: 'gopy',
-    loadChildren: () => import('./gopy/gopy.module').then( m => m.GopyPageModule)
+    loadChildren: () => import('./main/gopy/gopy.module').then( m => m.GopyPageModule)
   },
   {
     path: 'modal/admin',
     loadChildren: () => import('./modal/admin/admin.module').then( m => m.AdminPageModule)
-  },
-  {
-    path: 'cart',
-    loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
   },
   {
     path: 'modal/suggest',
@@ -81,151 +73,151 @@ const routes: Routes = [
   },
   {
     path: 'spa/insert',
-    loadChildren: () => import('./page/spa/insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./module/spa/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
     path: 'vaccine/insert',
-    loadChildren: () => import('./page/vaccine/insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./module/vaccine/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
     path: 'usg/insert',
-    loadChildren: () => import('./page/usg/insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./module/usg/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
     path: 'blood/insert',
-    loadChildren: () => import('./page/blood/insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./module/blood/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
     path: 'blood/statistic',
-    loadChildren: () => import('./page/blood/statistic/statistic.module').then( m => m.StatisticPageModule)
+    loadChildren: () => import('./module/blood/statistic/statistic.module').then( m => m.StatisticPageModule)
   },
   {
     path: 'blood/in',
-    loadChildren: () => import('./page/blood/in/in.module').then( m => m.InPageModule)
+    loadChildren: () => import('./module/blood/in/in.module').then( m => m.InPageModule)
   },
   {
     path: 'blood/out',
-    loadChildren: () => import('./page/blood/out/out.module').then( m => m.OutPageModule)
+    loadChildren: () => import('./module/blood/out/out.module').then( m => m.OutPageModule)
   },
   {
     path: 'kaizen/edit',
-    loadChildren: () => import('./page/kaizen/edit/edit.module').then( m => m.EditPageModule)
+    loadChildren: () => import('./module/kaizen/edit/edit.module').then( m => m.EditPageModule)
   },
   {
     path: 'kaizen/notify',
-    loadChildren: () => import('./page/kaizen/notify/notify.module').then( m => m.NotifyPageModule)
+    loadChildren: () => import('./module/kaizen/notify/notify.module').then( m => m.NotifyPageModule)
   },
   {
     path: 'kaizen/filter',
-    loadChildren: () => import('./page/kaizen/filter/filter.module').then( m => m.FilterPageModule)
+    loadChildren: () => import('./module/kaizen/filter/filter.module').then( m => m.FilterPageModule)
   },
   {
     path: 'spa/modal',
-    loadChildren: () => import('./page/spa/modal/modal.module').then( m => m.ModalPageModule)
+    loadChildren: () => import('./module/spa/modal/modal.module').then( m => m.ModalPageModule)
   },
   {
     path: 'usg/filter',
-    loadChildren: () => import('./page/usg/filter/filter.module').then( m => m.FilterPageModule)
+    loadChildren: () => import('./module/usg/filter/filter.module').then( m => m.FilterPageModule)
   },
   {
     path: 'usg/suggest',
-    loadChildren: () => import('./page/usg/suggest/suggest.module').then( m => m.SuggestPageModule)
+    loadChildren: () => import('./module/usg/suggest/suggest.module').then( m => m.SuggestPageModule)
   },
   {
     path: 'vaccine/suggest',
-    loadChildren: () => import('./page/vaccine/suggest/suggest.module').then( m => m.SuggestPageModule)
+    loadChildren: () => import('./module/vaccine/suggest/suggest.module').then( m => m.SuggestPageModule)
   },
   {
     path: 'vaccine/filter',
-    loadChildren: () => import('./page/vaccine/filter/filter.module').then( m => m.FilterPageModule)
+    loadChildren: () => import('./module/vaccine/filter/filter.module').then( m => m.FilterPageModule)
   },
   {
     path: 'work/insert',
-    loadChildren: () => import('./page/work/insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./module/work/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
     path: 'work/edit',
-    loadChildren: () => import('./page/work/edit/edit.module').then( m => m.EditPageModule)
+    loadChildren: () => import('./module/work/edit/edit.module').then( m => m.EditPageModule)
   },
   {
     path: 'work/filter',
-    loadChildren: () => import('./page/work/filter/filter.module').then( m => m.FilterPageModule)
+    loadChildren: () => import('./module/work/filter/filter.module').then( m => m.FilterPageModule)
   },
   {
     path: 'work/notify',
-    loadChildren: () => import('./page/work/notify/notify.module').then( m => m.NotifyPageModule)
+    loadChildren: () => import('./module/work/notify/notify.module').then( m => m.NotifyPageModule)
   },
   {
     path: 'work/detail',
-    loadChildren: () => import('./page/work/detail/detail.module').then( m => m.DetailPageModule)
+    loadChildren: () => import('./module/work/detail/detail.module').then( m => m.DetailPageModule)
   },
   {
     path: 'work/print',
-    loadChildren: () => import('./page/work/print/print.module').then( m => m.PrintPageModule)
+    loadChildren: () => import('./module/work/print/print.module').then( m => m.PrintPageModule)
   },
   {
     path: 'admin/detail',
-    loadChildren: () => import('./admin/detail/detail.module').then( m => m.AdminDetailModule)
+    loadChildren: () => import('./module/admin/detail/detail.module').then( m => m.AdminDetailModule)
   },
   {
     path: 'drug/insert',
-    loadChildren: () => import('./drug/insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./module/drug/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
     path: 'drug/detail',
-    loadChildren: () => import('./drug/detail/detail.module').then( m => m.DetailPageModule)
+    loadChildren: () => import('./module/drug/detail/detail.module').then( m => m.DetailPageModule)
   },
   {
     path: 'fivemin/update',
-    loadChildren: () => import('./fivemin/update/update.module').then( m => m.UpdatePageModule)
+    loadChildren: () => import('./module/fivemin/update/update.module').then( m => m.UpdatePageModule)
   },
   {
     path: 'fivemin/detail',
-    loadChildren: () => import('./fivemin/detail/detail.module').then( m => m.DetailPageModule)
+    loadChildren: () => import('./module/fivemin/detail/detail.module').then( m => m.DetailPageModule)
   },
   {
     path: 'fivemin/insert',
-    loadChildren: () => import('./fivemin/insert/insert.module').then( m => m.InsertPageModule)
+    loadChildren: () => import('./module/fivemin/insert/insert.module').then( m => m.InsertPageModule)
   },
   {
     path: 'fivemin/preview',
-    loadChildren: () => import('./fivemin/preview/preview.module').then( m => m.PreviewPageModule)
+    loadChildren: () => import('./module/fivemin/preview/preview.module').then( m => m.PreviewPageModule)
   },
   {
     path: 'fivemin/statistic',
-    loadChildren: () => import('./fivemin/statistic/statistic.module').then( m => m.StatisticPageModule)
+    loadChildren: () => import('./module/fivemin/statistic/statistic.module').then( m => m.StatisticPageModule)
   },
   {
     path: 'fivemin/image',
-    loadChildren: () => import('./fivemin/image/image.module').then( m => m.ImagePageModule)
+    loadChildren: () => import('./module/fivemin/image/image.module').then( m => m.ImagePageModule)
   },
   {
     path: 'fivemin/upload',
-    loadChildren: () => import('./fivemin/upload/upload.module').then( m => m.UploadPageModule)
+    loadChildren: () => import('./module/fivemin/upload/upload.module').then( m => m.UploadPageModule)
   },
   {
     path: 'fivemin/static',
-    loadChildren: () => import('./fivemin/static/static.module').then( m => m.StaticPageModule)
+    loadChildren: () => import('./module/fivemin/static/static.module').then( m => m.StaticPageModule)
   },
   {
     path: 'fivemin/rate',
-    loadChildren: () => import('./fivemin/rate/rate.module').then( m => m.RatePageModule)
+    loadChildren: () => import('./module/fivemin/rate/rate.module').then( m => m.RatePageModule)
   },
   {
     path: 'drug/modal',
-    loadChildren: () => import('./drug/modal/modal.module').then( m => m.ModalPageModule)
+    loadChildren: () => import('./module/drug/modal/modal.module').then( m => m.ModalPageModule)
   },
   {
     path: 'modal',
-    loadChildren: () => import('./page/drug/modal/modal.module').then( m => m.ModalPageModule)
+    loadChildren: () => import('./module/drug/modal/modal.module').then( m => m.ModalPageModule)
   },
   {
     path: 'his',
-    loadChildren: () => import('./page/his/his.module').then( m => m.HisPageModule)
+    loadChildren: () => import('./module/his/his.module').then( m => m.HisPageModule)
   },
   {
     path: 'item',
-    loadChildren: () => import('./page/item/item.module').then( m => m.ItemPageModule)
+    loadChildren: () => import('./module/item/item.module').then( m => m.ItemPageModule)
   },
   {
     path: 'modal/item',
