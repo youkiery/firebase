@@ -49,7 +49,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./module/admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () => import('./main/admin/admin.module').then( m => m.AdminPageModule)
   },
   {
     path: 'profile',
@@ -65,7 +65,7 @@ const routes: Routes = [
   },
   {
     path: 'modal/admin',
-    loadChildren: () => import('./modal/admin/admin.module').then( m => m.AdminPageModule)
+    loadChildren: () => import('./main/admin/admin/admin.module').then( m => m.AdminPageModule)
   },
   {
     path: 'modal/suggest',
@@ -157,7 +157,7 @@ const routes: Routes = [
   },
   {
     path: 'admin/detail',
-    loadChildren: () => import('./module/admin/detail/detail.module').then( m => m.AdminDetailModule)
+    loadChildren: () => import('./main/admin/detail/detail.module').then( m => m.AdminDetailModule)
   },
   {
     path: 'drug/insert',

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { PhotoService } from 'src/app/services/photo.service';
 import { RestService } from 'src/app/services/rest.service';
 import { UploadPage } from '../upload/upload.page';
 
@@ -40,7 +39,6 @@ export class DetailPage implements OnInit {
   public image = []
   constructor(
     public rest: RestService,
-    public photoService: PhotoService,
     public modal: ModalController
   ) { }
 

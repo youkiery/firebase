@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { GopyPage } from '../gopy/gopy.page';
-import { RestService } from '../services/rest.service';
-import { DetailPage } from './detail/detail.page';
+import { RestService } from 'src/app/services/rest.service';
 import { InsertPage } from './insert/insert.page';
 
 @Component({

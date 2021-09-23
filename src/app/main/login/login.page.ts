@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
-import { interval } from 'rxjs';
 import { RestService } from '../../services/rest.service';
 
 @Component({

@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ModalController } from '@ionic/angular';
-import { PhotoService } from 'src/app/services/photo.service';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -17,7 +16,6 @@ export class UploadPage implements OnInit {
   public max = 500
   @ViewChild('pwaphoto') pwaphoto: ElementRef;
   constructor(
-    public photoService: PhotoService,
     public rest: RestService,
     private storage: AngularFireStorage,
     public modal: ModalController

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { RestService } from '../services/rest.service';
-import { PhotoService } from '../services/photo.service';
 import { AlertController } from '@ionic/angular';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-fivemin',
@@ -11,7 +10,6 @@ import { AlertController } from '@ionic/angular';
 export class FiveminPage {
   constructor(
     public rest: RestService,
-    public photoService: PhotoService,
     public alert: AlertController
   ) { }
 
