@@ -2,82 +2,53 @@
   <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
     <ion-icon name="chevron-back-outline"></ion-icon>
   </ion-button>
-  <ion-button *ngIf="editor == 0" slot="end" (click)="save()" color="light" fill="clear">
-    Lưu
+
+  <ion-button *ngIf="!rest.temp.id" slot="end" (click)="insertSubmit()" color="light" fill="clear">
+    Thêm
   </ion-button>
-  <ion-button slot="end" *ngIf="editor > 0" (click)="clear()" color="danger" fill="clear">
-    Hủy
-  </ion-button>
-  <ion-button slot="end" *ngIf="editor > 0" (click)="update()" color="light" fill="clear">
+  <ion-button *ngIf="rest.temp.id" slot="end" (click)="updateSubmit()" color="light" fill="clear">
     Cập nhật
   </ion-button>
 </ion-toolbar>
 
 <ion-content>
-  <ion-item (click)="suggest('name')">
-    <ion-label position="stacked"> Khách hàng </ion-label>
-    <ion-input [(ngModel)]="rest.vaccine.edit.customer.name" [disabled]="editor > 0"> </ion-input>
-  </ion-item>
-  <ion-item (click)="suggest('phone')">
+  <ion-item>
     <ion-label position="stacked"> Số điện thoại </ion-label>
-    <ion-input [(ngModel)]="rest.vaccine.edit.customer.phone" [disabled]="editor > 0"> </ion-input>
+    <ion-input [(ngModel)]="rest.temp.phone" [disabled]="rest.temp.id"> </ion-input>
+    <img src="/assets/icon/customer-search.png" [class]="rest.temp.id ? 'none clear-img': 'clear-img'" slot="end"
+      (click)="suggest()">
   </ion-item>
   <ion-item>
-    <ion-label position="stacked"> Thú cưng </ion-label>
-    <ion-select [(ngModel)]="rest.vaccine.edit.pet" [disabled]="editor > 0">
-      <ion-select-option *ngFor="let item of rest.vaccine.edit.pets" [value]="item.id"> {{item.name}} </ion-select-option>
-    </ion-select>
+    <ion-label position="stacked"> Khách hàng </ion-label>
+    <ion-input [(ngModel)]="rest.temp.name" [disabled]="rest.temp.id"> </ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Loại tiêm phòng </ion-label>
-    <ion-select [(ngModel)]="rest.vaccine.edit.disease">
-      <ion-select-option *ngFor="let item of rest.vaccine.disease; let i = index" [value]="i">
+    <ion-select [(ngModel)]="rest.temp.vaccine">
+      <ion-select-option *ngFor="let item of rest.data.vaccine.disease; let i = index" [value]="i">
         {{item.name}}
       </ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày tiêm phòng </ion-label>
-    <ion-input [(ngModel)]="rest.vaccine.edit.time.cometime" [disabled]="editor > 0"></ion-input>
-    <ion-icon slot="end" name="calendar-outline" (click)="cometime.open()"></ion-icon>
-    <ion-datetime class="none" [(ngModel)]="rest.vaccine.edit.picker.cometime" #cometime displayFormat="DD/MM/YYYY"
-      (ionChange)="datepicker('cometime')" max="2100" [disabled]="editor > 0">
-    </ion-datetime>
+    <ion-input [(ngModel)]="rest.temp.cometime"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="stacked"> Ngày tái chủng </ion-label>
-    <ion-input [(ngModel)]="rest.vaccine.edit.time.calltime"></ion-input>
-    <ion-icon slot="end" name="calendar-outline" (click)="calltime.open()"></ion-icon>
-    <ion-datetime class="none" [(ngModel)]="rest.vaccine.edit.picker.calltime" #calltime displayFormat="DD/MM/YYYY"
-      (ionChange)="datepicker('calltime')" max="2100">
-    </ion-datetime>
+    <ion-input [(ngModel)]="rest.temp.calltime"></ion-input>
   </ion-item>
 
-  <br>
-  <p class="text-center"> <b> Thêm hôm nay </b> </p>
-  <br>
-
-  <table border="1">
-    <thead>
-      <th> Tên chủ </th>
-      <th> Số điện thoại </th>
-      <th> Loại vaccine </th>
-      <th> Ngày tái chủng </th>
-      <th> </th>
-    </thead>
-    <tbody *ngFor="let item of rest.vaccine.new; let i = index">
-      <tr>
-        <td> {{item.name}} </td>
-        <td> {{item.number}} </td>
-        <td> {{item.vaccine}} </td>
-        <td> {{item.calltime}} </td>
-        <td>
-          <ion-button size="small" color="secondary" (click)="edit(i)">
-            <ion-icon name="create-outline"></ion-icon>
-          </ion-button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+  <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.new; let i = index">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item.phone}}
+    </div>
+    <div class="col-xs-6">
+      Tái chủng: {{item.calltime}} <br>
+      Vaccine: {{item.vaccine}} <br>
+    </div>
+    <img src="/assets/icon/delete.png" (click)="remove(i)">
+    <img src="/assets/icon/update.png" (click)="update(i)">
+  </div>
 </ion-content>

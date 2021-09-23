@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
 
 @Component({
@@ -7,102 +7,100 @@ import { RestService } from 'src/app/services/rest.service';
   templateUrl: './insert.page.html',
   styleUrls: ['./insert.page.scss'],
 })
-export class InsertPage implements OnInit {
-  public editor = 0
+export class InsertPage {
   constructor(
     public rest: RestService,
-    public modal: ModalController
+    public alert: AlertController
   ) { }
 
-  ngOnInit() { }
-
   ionViewDidEnter() {
-    this.rest.vaccine.edit.time.cometime = this.rest.today
-    this.rest.vaccine.edit.time.calltime = this.rest.today
+    if (!this.rest.action.length) this.rest.navCtrl.navigateRoot('home')
   }
 
-  public dismiss() {
-    this.modal.dismiss()
+  public suggest() {
+    this.rest.router.navigateByUrl('/modal/suggest')
   }
 
-  public async suggest(name: string) {
-    this.rest.vaccine.suggesttype = name
-    this.rest.vaccine.suggest = this.rest.vaccine.edit.customer[name]
-    this.rest.vaccine.suggestList = [] 
-    this.rest.router.navigateByUrl('/vaccine/suggest')
+  public async insertSubmit() {
+    if (!this.rest.temp.name.length) this.rest.notify('Chưa nhập tên khách hàng')
+    else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
+    else {
+      await this.rest.freeze('Thêm lịch nhắc...')
+      this.rest.temp.disease = this.rest.vaccine.disease[this.rest.temp.vaccine].id
+      this.rest.temp.vaccine = this.rest.vaccine.disease[this.rest.temp.vaccine].id
+      this.rest.checkpost('vaccine-insert', this.rest.temp).then(resp => {
+        this.rest.vaccine.new = resp.new
+        if (resp.old.length) {
+          this.rest.vaccine.old = resp.old
+          this.rest.router.navigateByUrl('/modal/recall')
+        }
+        this.clear()
+        this.rest.defreeze()
+      }, () => {
+        this.rest.defreeze()
+      })
+    }
   }
 
-  public datepicker(name: string) {
-    this.rest.vaccine.edit.time[name] = this.rest.isodatetodate(this.rest.vaccine.edit.picker[name])
+  public async remove(index: number) {
+    const alert = await this.alert.create({
+      message: 'Xóa lịch tiêm phòng?',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: () => {
+            this.removeSubmit(this.rest.vaccine.new[index].id)
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
-  public clear() {
-    this.rest.vaccine.edit.customer.name = ''
-    this.rest.vaccine.edit.customer.phone = ''
-    this.rest.vaccine.edit.pets = []
-    this.rest.vaccine.edit.pet = 0
-    this.editor = 0
-  }
-
-  public edit(index: number) {
-    this.rest.vaccine.edit.customer.name = this.rest.vaccine.new[index].name
-    this.rest.vaccine.edit.customer.phone = this.rest.vaccine.new[index].number
-    this.rest.vaccine.disease.forEach((item, i_index) => {
-      if (item.name == this.rest.vaccine.new[index].vaccine) this.rest.vaccine.edit.disease = i_index
-    })
-    
-    this.rest.vaccine.edit.picker.calltime = this.rest.datetoisodate(this.rest.vaccine.new[index].calltime)
-
-    this.rest.temp = this.rest.vaccine.new[index]
-    this.editor = this.rest.vaccine.new[index].id
-  }
-
-  public async update() {
-    await this.rest.freeze('Đang thêm tiêm phòng')
-    this.rest.check({
-      action: 'vaccine-update',
-      id: this.editor,
-      disease: this.rest.vaccine.disease[this.rest.vaccine.edit.disease].id,
-      calltime: this.rest.vaccine.edit.time.calltime
-    }).then((response) => {
-      this.rest.vaccine.edit.customer.name = ''
-      this.rest.vaccine.edit.customer.phone = ''
-      this.rest.vaccine.edit.pets = []
-      this.rest.vaccine.edit.pet = 0
-      this.editor = 0
-      this.rest.vaccine.new = response.new
-      this.rest.notify('Đã cập nhật lịch tiêm vaccine')
+  public async removeSubmit(id: number) {
+    await this.rest.freeze('Xóa lịch nhắc...')
+    this.rest.checkpost('vaccine-remove', {
+      id: id
+    }).then(resp => {
+      this.rest.vaccine.new = resp.new
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
     })
   }
-  
-  public async save() {
-    if (!this.rest.vaccine.edit.customer.name.length) this.rest.notify('Chưa nhập tên khách hàng')
-    else if (!this.rest.vaccine.edit.customer.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
-    else {
-      await this.rest.freeze('Đang thêm tiêm phòng')
-      this.rest.check({
-        action: 'vaccine-insert',
-        customer: this.rest.vaccine.edit.customer.name,
-        phone: this.rest.vaccine.edit.customer.phone,
-        pet: this.rest.vaccine.edit.pet,
-        disease: this.rest.vaccine.disease[this.rest.vaccine.edit.disease].id,
-        cometime: this.rest.vaccine.edit.time.cometime,
-        calltime: this.rest.vaccine.edit.time.calltime
-      }).then((response) => {
-        this.rest.vaccine.edit.customer.name = ''
-        this.rest.vaccine.edit.customer.phone = ''
-        this.rest.vaccine.edit.pets = []
-        this.rest.vaccine.edit.pet = 0
-        this.rest.vaccine.new = response.new
-        this.rest.vaccine.data = response.data
-        this.rest.notify('Đã thêm lịch tiêm vaccine')
-        this.rest.defreeze()
-      }, () => {
-        this.rest.defreeze()
-      })
-    } 
+
+  public update(index: number) {
+    this.rest.temp = {
+      id: this.rest.vaccine.new[index].id,
+      name: this.rest.vaccine.new[index].name,
+      phone: this.rest.vaccine.new[index].phone,
+      vaccine: Number(this.rest.diseaseIndex(this.rest.vaccine.new[index].vaccine)),
+      cometime: this.rest.vaccine.new[index].cometime,
+      calltime: this.rest.vaccine.new[index].calltime,
+    }
+  }
+
+  public async updateSubmit() {
+    await this.rest.freeze('Thêm lịch nhắc...')
+    this.rest.temp.disease = this.rest.vaccine.disease[this.rest.temp.vaccine].id
+    this.rest.temp.filter = this.rest.vaccine.filter
+    this.rest.checkpost('vaccine-update', this.rest.temp).then(resp => {
+      this.rest.vaccine.new = resp.new
+      this.rest.vaccine.list = resp.list
+      this.clear()
+      this.rest.defreeze()
+      if (this.rest.vaccine.filter) this.rest.navCtrl.pop()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
+  public clear() {
+    this.rest.temp.id = 0
+    this.rest.temp.name = ''
+    this.rest.temp.phone = ''
   }
 }

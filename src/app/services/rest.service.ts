@@ -176,6 +176,7 @@ export class RestService {
     role: 0
   }
   public vaccine = {
+    old: [],
     edit: {
       customer: {
         name: '',
@@ -194,6 +195,7 @@ export class RestService {
       }
     },
     init: false,
+    list: [],
     new: [],
     data: [],
     filter: [],
@@ -404,6 +406,7 @@ export class RestService {
   toast: any
   load: any
   public today: string = ''
+  public next: string = ''
   public error: string = ''
   public link: string = ''
   constructor(
@@ -638,6 +641,17 @@ export class RestService {
     let datetime = time.split("T")[0].split('-')
     if (datetime.length === 3) return (Number(datetime['2']) + 1) + '/' + datetime['1'] + '/' + datetime['0']
     return ''
+  }
+  
+  public diseaseIndex(name: string) {
+    let check = '0'
+    for (const key in this.vaccine.disease) {
+      if (Object.prototype.hasOwnProperty.call(this.vaccine.disease, key)) {
+        const item = this.vaccine.disease[key];
+        if (item['name'] == name) check = key
+      }
+    }
+    return check
   }
 
   public async notify(text: string, duration: number = 1000) {

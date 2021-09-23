@@ -124,14 +124,6 @@ const routes: Routes = [
     loadChildren: () => import('./module/usg/suggest/suggest.module').then( m => m.SuggestPageModule)
   },
   {
-    path: 'vaccine/suggest',
-    loadChildren: () => import('./module/vaccine/suggest/suggest.module').then( m => m.SuggestPageModule)
-  },
-  {
-    path: 'vaccine/filter',
-    loadChildren: () => import('./module/vaccine/filter/filter.module').then( m => m.FilterPageModule)
-  },
-  {
     path: 'work/insert',
     loadChildren: () => import('./module/work/insert/insert.module').then( m => m.InsertPageModule)
   },

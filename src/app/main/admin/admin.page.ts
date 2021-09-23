@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
-import { RestService } from '../services/rest.service';
+import { RestService } from 'src/app/services/rest.service';
 import { AdminDetail } from './detail/detail.page';
 
 @Component({
