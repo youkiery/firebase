@@ -13,41 +13,43 @@
 <ion-content>
   <ion-item>
     <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
-    <ion-input [(ngModel)]="rest.data.vaccine.filter.keyword"> </ion-input>
+    <ion-input [(ngModel)]="rest.vaccine.filter.keyword"> </ion-input>
     <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="filter()">
   </ion-item>
-  
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="rest.router.navigateByUrl('gopy')">
     <ion-fab-button>
       Góp ý
     </ion-fab-button>
   </ion-fab>
 
-  <div *ngFor="let item of this.rest.data.vaccine.list; let i = index" [class]="status[item.status]">
+  <div *ngFor="let item of this.rest.vaccine.list; let i = index" [class]="status[item.status]">
     <div class="col-xs-6">
       Tên khách: {{item.name}} <br>
       Điện thoại: {{item.phone}} <br>
       Địa chỉ: {{item.address}}
     </div>
     <div class="col-xs-6">
-      Tái chủng: {{item.calltime}} <br>
-      Vaccine: {{item.vaccine}} <br>
-      Gọi cuối: {{item.called}}
+      Ngày nhắc: {{item.calltime}} <br>
+      Loại nhắc: {{item.vaccine}} <br>
+      Gọi cuối: {{item.called}} <br>
+      Người làm: {{item.doctor}}
     </div>
-    <div>
+    <div class="upperline">
       Ghi chú: {{item.note}}
     </div>
     <img class="icon" src="/assets/icon/called.png" (click)="called(i)">
     <img class="icon" src="/assets/icon/uncalled.png" (click)="uncalled(i)">
-    <img class="icon" *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/done.png" (click)="dead(i)">
-    <img class="right" *ngIf="rest.config.module.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">
+    <img class="icon" *ngIf="rest.config.vaccine > 1" src="/assets/icon/done.png" (click)="done(i)">
+    <img class="icon" *ngIf="rest.config.vaccine > 1" src="/assets/icon/dead.png" (click)="dead(i)">
+    <img class="right" *ngIf="rest.config.vaccine > 1" src="/assets/icon/update.png" (click)="update(i)">
   </div>
 </ion-content>
 
 <ion-toolbar>
   <ion-tabs>
     <ion-tab-bar>
-      <ion-tab-button (click)="rest.back()">
+      <ion-tab-button (click)="rest.navCtrl.pop()">
         <ion-icon name="arrow-back-outline"></ion-icon>
         <ion-label> Trở về </ion-label>
       </ion-tab-button>
@@ -57,9 +59,12 @@
         <ion-label> Thêm </ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="filter()">
-        <ion-icon name="filter-outline"></ion-icon>
-        <ion-label> Tìm kiếm </ion-label>
+      <ion-tab-button (click)="manager()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label>
+          Quản lý
+          <ion-badge *ngIf="rest.vaccine.temp.length"> {{rest.vaccine.temp.length}} </ion-badge>
+        </ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

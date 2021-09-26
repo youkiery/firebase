@@ -26,8 +26,8 @@ export class InsertPage {
     else if (!this.rest.temp.phone.length) this.rest.notify('Chưa nhập số điện thoại khách')
     else {
       await this.rest.freeze('Thêm lịch nhắc...')
-      this.rest.temp.disease = this.rest.vaccine.disease[this.rest.temp.vaccine].id
-      this.rest.temp.vaccine = this.rest.vaccine.disease[this.rest.temp.vaccine].id
+      this.rest.temp.type = this.rest.vaccine.type[this.rest.temp.vaccine].id
+      this.rest.temp.vaccine = this.rest.vaccine.type[this.rest.temp.vaccine].id
       this.rest.checkpost('vaccine-insert', this.rest.temp).then(resp => {
         this.rest.vaccine.new = resp.new
         if (resp.old.length) {
@@ -77,7 +77,7 @@ export class InsertPage {
       id: this.rest.vaccine.new[index].id,
       name: this.rest.vaccine.new[index].name,
       phone: this.rest.vaccine.new[index].phone,
-      vaccine: Number(this.rest.diseaseIndex(this.rest.vaccine.new[index].vaccine)),
+      vaccine: Number(this.rest.typeIndex(this.rest.vaccine.new[index].vaccine)),
       cometime: this.rest.vaccine.new[index].cometime,
       calltime: this.rest.vaccine.new[index].calltime,
     }
@@ -85,14 +85,23 @@ export class InsertPage {
 
   public async updateSubmit() {
     await this.rest.freeze('Thêm lịch nhắc...')
-    this.rest.temp.disease = this.rest.vaccine.disease[this.rest.temp.vaccine].id
+    this.rest.temp.type = this.rest.vaccine.type[this.rest.temp.vaccine].id
     this.rest.temp.filter = this.rest.vaccine.filter
     this.rest.checkpost('vaccine-update', this.rest.temp).then(resp => {
-      this.rest.vaccine.new = resp.new
-      this.rest.vaccine.list = resp.list
-      this.clear()
-      this.rest.defreeze()
-      if (this.rest.vaccine.filter) this.rest.navCtrl.pop()
+      if (this.rest.temp.prv) {
+        this.rest.vaccine.temp = resp.list
+        console.log(this.rest.temp.prv);
+        this.rest.action = this.rest.temp.prv
+        this.rest.defreeze()
+        this.rest.navCtrl.pop()
+      }
+      else {
+        this.rest.vaccine.new = resp.new
+        this.rest.vaccine.list = resp.list
+        this.clear()
+        this.rest.defreeze()
+        if (this.rest.vaccine.filter) this.rest.navCtrl.pop()
+      }
     }, () => {
       this.rest.defreeze()
     })

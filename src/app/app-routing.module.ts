@@ -219,9 +219,6 @@ const routes: Routes = [
     path: 'modal/detail',
     loadChildren: () => import('./modal/detail/detail.module').then( m => m.DetailPageModule)
   }
-
-
-
 ];
 
 @NgModule({

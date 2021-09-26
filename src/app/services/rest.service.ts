@@ -177,40 +177,14 @@ export class RestService {
   }
   public vaccine = {
     old: [],
-    edit: {
-      customer: {
-        name: '',
-        phone: ''
-      },
-      pet: 0,
-      pets: [],
-      disease: 0,
-      time: {
-        cometime: '', 
-        calltime: ''
-      },
-      picker: {
-        cometime: '',
-        calltime: ''
-      }
-    },
+    temp: [],
+    doctor: [],
     init: false,
     list: [],
     new: [],
     data: [],
     filter: [],
-    filterKey: '',
-    status: '0',
-    role: 0,
-    suggest: '',
-    suggesttype: '',
-    suggestList: [],
-    select: {
-      name: '',
-      phone: '',
-      pet: '',
-    },
-    disease: []
+    type: []
   }
   public spa = {
     toggle: false,
@@ -574,7 +548,7 @@ export class RestService {
     }).then((data) => {
       this.work.unread = data['work']
       this.kaizen.unread = data['kaizen']
-      this.vaccine.disease = data['disease']
+      this.vaccine.type = data['type']
       this.spa.type = data.type
       
       // this.config = data.config
@@ -643,11 +617,11 @@ export class RestService {
     return ''
   }
   
-  public diseaseIndex(name: string) {
+  public typeIndex(name: string) {
     let check = '0'
-    for (const key in this.vaccine.disease) {
-      if (Object.prototype.hasOwnProperty.call(this.vaccine.disease, key)) {
-        const item = this.vaccine.disease[key];
+    for (const key in this.vaccine.type) {
+      if (Object.prototype.hasOwnProperty.call(this.vaccine.type, key)) {
+        const item = this.vaccine.type[key];
         if (item['name'] == name) check = key
       }
     }

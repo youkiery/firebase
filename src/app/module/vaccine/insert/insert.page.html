@@ -23,31 +23,32 @@
     <ion-input [(ngModel)]="rest.temp.name" [disabled]="rest.temp.id"> </ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="stacked"> Loại tiêm phòng </ion-label>
+    <ion-label position="stacked"> Loại nhắc </ion-label>
     <ion-select [(ngModel)]="rest.temp.vaccine">
-      <ion-select-option *ngFor="let item of rest.data.vaccine.disease; let i = index" [value]="i">
+      <ion-select-option *ngFor="let item of rest.vaccine.type; let i = index" [value]="i">
         {{item.name}}
       </ion-select-option>
     </ion-select>
   </ion-item>
   <ion-item>
-    <ion-label position="stacked"> Ngày tiêm phòng </ion-label>
+    <ion-label position="stacked"> Ngày đến </ion-label>
     <ion-input [(ngModel)]="rest.temp.cometime"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="stacked"> Ngày tái chủng </ion-label>
+    <ion-label position="stacked"> Ngày nhắc </ion-label>
     <ion-input [(ngModel)]="rest.temp.calltime"></ion-input>
   </ion-item>
 
-  <div class="stl-card" *ngFor="let item of this.rest.data.vaccine.new; let i = index">
+  <div class="stl-card" *ngFor="let item of this.rest.vaccine.new; let i = index">
     <div class="col-xs-6">
       Tên khách: {{item.name}} <br>
       Điện thoại: {{item.phone}}
     </div>
     <div class="col-xs-6">
-      Tái chủng: {{item.calltime}} <br>
-      Vaccine: {{item.vaccine}} <br>
+      Ngày nhắc: {{item.calltime}} <br>
+      Loại nhắc: {{item.vaccine}} <br>
     </div>
+    <div class="upperline"> </div>
     <img src="/assets/icon/delete.png" (click)="remove(i)">
     <img src="/assets/icon/update.png" (click)="update(i)">
   </div>

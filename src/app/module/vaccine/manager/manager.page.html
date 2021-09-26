@@ -1,0 +1,146 @@
+<ion-toolbar color="success">
+  <ion-button *ngIf="!(rest.action == 'insert-type' || rest.action == 'insert-doctor')" color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button *ngIf="rest.action == 'insert-type' || rest.action == 'insert-doctor'" color="light" fill="clear" (click)="back()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+
+  <ion-button *ngIf="rest.action == 'vaccine'" slot="end" color="light" fill="clear" (click)="uploadPWA()">
+    Tải lên
+  </ion-button>
+  <ion-button *ngIf="rest.action == 'insert-type' && !input.id" slot="end" color="light" fill="clear" (click)="insertTypeSubmit()">
+    Thêm loại nhắc
+  </ion-button>
+  <ion-button *ngIf="rest.action == 'insert-type' && input.id" slot="end" color="light" fill="clear" (click)="updateTypeSubmit()">
+    Cập nhật
+  </ion-button>
+
+  <ion-button *ngIf="rest.action == 'insert-doctor' && !input.id" slot="end" color="light" fill="clear" (click)="insertDoctorSubmit()">
+    Thêm bác sĩ
+  </ion-button>
+  <ion-button *ngIf="rest.action == 'insert-doctor' && input.id" slot="end" color="light" fill="clear" (click)="updateDoctorSubmit()">
+    Cập nhật
+  </ion-button>
+</ion-toolbar>
+
+<ion-content>
+  <div *ngIf="rest.action == 'insert-type'">
+    <ion-item>
+      <ion-label position="stacked"> Mã hàng </ion-label>
+      <ion-input [(ngModel)]="input.code"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Loại nhắc </ion-label>
+      <ion-input [(ngModel)]="input.name"></ion-input>
+    </ion-item>
+  </div>
+
+  <div *ngIf="rest.action == 'insert-doctor'">
+    <ion-item>
+      <ion-label position="stacked"> Tên người dùng </ion-label>
+      <ion-input [(ngModel)]="input.username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"> Tên bác sĩ </ion-label>
+      <ion-input [(ngModel)]="input.name"></ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="searchDoctor()">
+      Tìm kiếm
+    </ion-button>
+
+    <div class="stl-card green" *ngIf="list.length">
+      <div class="botterline" *ngFor="let item of list">
+        {{item.username}}: {{item.name}}
+        <img class="img-xs" src="/assets/icon/select.png" (click)="select(item.userid, item.username, item.name)">
+      </div>
+    </div>
+  </div>
+
+  <div class="stl-card green" *ngIf="rest.action == 'type'">
+    Danh sách loại nhắc:
+    <div class="upperline" *ngFor="let item of rest.vaccine.type; let i = index">
+      {{item.code}}: {{item.name}}
+      <img src="/assets/icon/info-xs.png" (click)="updateType(i)">
+      <img src="/assets/icon/remove-xs.png" (click)="removeTypeSubmit(item.id)">
+    </div>
+    <div class="upperline">
+      <img src="/assets/icon/insert-xs.png" (click)="insertType()">
+    </div>
+  </div>
+
+  <div class="stl-card green" *ngIf="rest.action == 'doctor'">
+    Danh sách bác sĩ:
+    <div class="upperline" *ngFor="let item of rest.vaccine.doctor; let i = index">
+      {{item.username}}: {{item.name}}
+      <img src="/assets/icon/info-xs.png" (click)="updateDoctor(i)">
+      <img src="/assets/icon/remove-xs.png" (click)="removeDoctorSubmit(item.id)">
+    </div>
+    <div class="upperline">
+      <img src="/assets/icon/insert-xs.png" (click)="insertDoctor(i)">
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'vaccine'">
+    <div class="avatar-box" (click)="upload()">
+      <ion-img style="width: 256px; margin: auto;" src="/assets/image/excel.png"></ion-img>
+    </div>  
+    <div id="pwa" style="display: none;">
+      <input type="file" id="pwaphoto" #pwaphoto accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    </div>
+  </div>
+
+  <div *ngIf="rest.action == 'temp'">
+    <div *ngFor="let item of rest.vaccine.temp; let i = index" class="stl-card">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}} <br>
+        Địa chỉ: {{item.address}}
+      </div>
+      <div class="col-xs-6">
+        Ngày đến: {{item.cometime}} <br>
+        Nhắc lại: {{item.calltime}} <br>
+        Loại nhắc: {{item.vaccine}} <br>
+        Người làm: {{item.doctor}}
+      </div>
+      <div class="upperline">
+        Ghi chú: {{item.note}}
+      </div>
+      <img class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <img class="icon" src="/assets/icon/done.png" (click)="done(i)">
+      <img class="right" src="/assets/icon/delete.png" (click)="remove(i)">
+    </div>
+  </div>
+</ion-content>
+
+<ion-toolbar>
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button (click)="rest.navCtrl.pop()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        <ion-label> Trở về </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="change('temp')">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Xác nhận </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="change('type')">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Loại nhắc </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="change('doctor')">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Bác sĩ </ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="change('vaccine')">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> Import </ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-toolbar>

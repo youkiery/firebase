@@ -33,7 +33,9 @@ export class VaccinePage {
         this.rest.vaccine.init = true
         this.rest.vaccine.new = resp.new
         this.rest.vaccine.list = resp.list
-        this.rest.vaccine.disease = resp.disease
+        this.rest.vaccine.temp = resp.temp
+        this.rest.vaccine.type = resp.type
+        this.rest.vaccine.doctor = resp.doctor
         this.rest.defreeze()
       }, () => {
         this.rest.defreeze()
@@ -65,7 +67,7 @@ export class VaccinePage {
       id: this.rest.vaccine.list[index].id,
       name: this.rest.vaccine.list[index].name,
       phone: this.rest.vaccine.list[index].phone,
-      vaccine: Number(this.rest.diseaseIndex(this.rest.vaccine.list[index].vaccine)),
+      vaccine: Number(this.rest.typeIndex(this.rest.vaccine.list[index].vaccine)),
       cometime: this.rest.vaccine.list[index].cometime,
       calltime: this.rest.vaccine.list[index].calltime,
     }
@@ -76,10 +78,11 @@ export class VaccinePage {
     let note = 'Gọi nhắc ngày: ' + this.rest.today
     if (this.rest.vaccine.list[index].note.length) note = this.rest.vaccine.list[index].note
     const alert = await this.alert.create({
-      message: 'Đã gọi khách hàng, lịch nhắc sẽ lặp lại sau 1 tuần',
+      header: 'Xác nhận đã gọi',
+      subHeader: 'Đã gọi khách hàng, lịch nhắc sẽ lặp lại sau 1 tuần',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
-        label: 'Ghi chú',
         name: 'note',
         value: note
       }],
@@ -117,10 +120,11 @@ export class VaccinePage {
     let note = 'Gọi nhắc ngày: ' + this.rest.today
     if (this.rest.vaccine.list[index].note.length) note = this.rest.vaccine.list[index].note
     const alert = await this.alert.create({
-      message: 'Đã gọi nhưng khách không bắt máy, mai gọi lại',
+      header: 'Xác nhận không gọi được',
+      subHeader: 'Không gọi được khách, lịch nhắc ngày mai hiển thị',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
-        label: 'Ghi chú',
         name: 'note',
         value: note
       }],
@@ -154,12 +158,46 @@ export class VaccinePage {
     })
   }
 
+  public async done(index: number) {
+    const alert = await this.alert.create({
+      header: 'Xác nhận tiêm phòng',
+      subHeader: 'Khách đã tiêm phòng, lịch sẽ không nhắc lại nữa',
+      buttons: [
+        {
+          text: 'Trở về',
+          role: 'cancel',
+        }, {
+          text: 'Xác nhận',
+          handler: (e) => {
+            this.doneSubmit(index)
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  public async doneSubmit(index: number) {
+    await this.rest.freeze('Đang thay đổi trạng thái')
+    this.rest.checkpost('vaccine-done', {
+      id: this.rest.vaccine.list[index].id,
+      filter: this.rest.vaccine.filter
+    }).then((resp) => {
+      this.rest.vaccine.list = resp.list
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
+    })
+  }
+
   public async dead(index: number) {
     const alert = await this.alert.create({
-      message: 'Hoàn thành tiêm phòng, lịch nhắc sẽ không xuất hiện nữa',
+      header: 'Xác nhận không tiêm phòng',
+      subHeader: 'Khách không tiêm phòng, lịch sẽ không nhắc lại nữa',
+      message: 'Ghi chú: ',
       inputs: [{
         type: 'text',
-        label: 'Ghi chú',
         name: 'note',
         value: this.rest.vaccine.list[index].note
       }],
@@ -191,5 +229,11 @@ export class VaccinePage {
     }, () => {
       this.rest.defreeze()
     })
+  }
+
+  public manager() {
+    this.rest.temp = {}
+    this.rest.action = 'temp'
+    this.rest.navCtrl.navigateForward('vaccine/manager')
   }
 }

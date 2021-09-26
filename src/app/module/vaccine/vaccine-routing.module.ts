@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: VaccinePage
+  },  {
+    path: 'manager',
+    loadChildren: () => import('./manager/manager.module').then( m => m.ManagerPageModule)
   },
+
 ];
 
 @NgModule({

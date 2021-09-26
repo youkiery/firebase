@@ -25,6 +25,22 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+.img-xs {
+  width: 16px;
+}
+
+.botterline {
+  margin-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgray;
+}
+
+
+.alert-message, .alert-input-group {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
 .stl-card {
   color: black;
   border-radius: 10px;

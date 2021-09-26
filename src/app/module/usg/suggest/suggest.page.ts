@@ -36,7 +36,7 @@ export class SuggestPage implements OnInit {
   public async pick() {
     this.rest.usg.edit.customer[this.rest.usg.suggesttype] = this.rest.usg.suggest
     this.rest.usg.edit.pets = []
-    this.rest.vaccine.edit.pet = 0
+    this.rest.usg.edit.pet = 0
     this.rest.navCtrl.pop()
   }
 
