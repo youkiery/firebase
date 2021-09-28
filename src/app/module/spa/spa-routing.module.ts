@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: SpaPage
+  },  {
+    path: 'search',
+    loadChildren: () => import('./search/search.module').then( m => m.SearchPageModule)
   },
+
 ];
 
 @NgModule({

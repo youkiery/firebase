@@ -19,83 +19,45 @@
   <ion-item>
     <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
     <ion-input [(ngModel)]="keyword"> </ion-input>
+    <ion-button slot="end" (click)="search()">
+      Tìm kiếm
+    </ion-button>
   </ion-item>
-  <ion-button expand="full" (click)="search()">
-    Tìm kiếm
-  </ion-button>
 
   <div>
     Ngày hiển thị: {{ time.timetodate(rest.spa.time) }}
   </div>
 
-  <div *ngIf="rest.spa.keyword.length">
-    <div *ngFor="let item of this.rest.spa.old; let i = index">
-      <div *ngIf="(!rest.spa.toggle) || (rest.spa.toggle && rest.spa.list[item].status < 3)" [class]="status[rest.spa.list[item].status]">
-        <div class="col-xs-6">
-          Tên khách: {{rest.spa.list[item].name}} <br>
-          Điện thoại: {{rest.spa.list[item].phone}} <br>
-          Người nhận hộ: {{rest.spa.list[item].name2}} <br>
-          Điện thoại: {{rest.spa.list[item].phone2}} <br>
-          Cân nặng: {{weight[rest.spa.list[item].weight]}}
-        </div>
-        <div class="col-xs-6">
-          Người nhận: {{rest.spa.list[item].user}} <br>
-          Thời gian nhận: {{rest.spa.list[item].luser}} <br>
-          <span *ngIf="rest.spa.list[item].duser"> Người làm: {{rest.spa.list[item].duser}} <br>  </span>
-          <span *ngIf="rest.spa.list[item].luser"> {{rest.spa.list[item].luser}} lúc {{rest.spa.list[item].ltime}} <br> </span> 
-          Cập nhật cuối:  <br>
-          Trạng thái: <span class="bold"> {{status_text[rest.spa.list[item].status]}}  </span>
-        </div>
-        <div class="upperline">
-          Dịch vụ: {{rest.spa.list[item].service}}
-        </div>
-        <div>
-          Ghi chú: {{rest.spa.list[item].note}}
-        </div>
-        
-        <div *ngIf="rest.spa.list[item].image.length">
-          <img class="thumbnail-sm" *ngFor="let image of rest.spa.list[item].image" [src]="image" (click)="detail(image)">
-        </div>
-        <img *ngIf="rest.spa.list[item].status < 1" class="icon" src="/assets/icon/done.png" (click)="done(item)">
-        <img *ngIf="rest.spa.list[item].status < 2" class="icon" src="/assets/icon/called.png" (click)="called(item)">
-        <img *ngIf="rest.spa.list[item].status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(item)">
-        <img class="right" src="/assets/icon/update.png" (click)="update(item)">
+  <div *ngFor="let item of this.rest.spa.list; let i = index">
+    <div *ngIf="(!rest.spa.toggle) || (rest.spa.toggle && item.status < 3)" [class]="status[item.status]">
+      <div class="col-xs-6">
+        Tên khách: {{item.name}} <br>
+        Điện thoại: {{item.phone}} <br>
+        <span *ngIf="item.name2.length"> Người nhận hộ: {{item.name2}} <br> </span>
+        <span *ngIf="item.phone2.length"> Điện thoại: {{item.phone2}} <br> </span>
+        Cân nặng: {{weight[item.weight]}}
       </div>
-    </div>
-  </div>
+      <div class="col-xs-6">
+        Người nhận: {{item.user}} <br>
+        Thời gian nhận: {{item.time}} <br>
+        <span *ngIf="item.duser"> Người làm: {{item.duser}} <br> </span>
+        <span *ngIf="item.luser"> Cập nhật cuối: {{item.luser}} lúc {{item.ltime}} <br> </span>
+        Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
+      </div>
+      <div class="upperline">
+        Dịch vụ: {{item.service}}
+      </div>
+      <div>
+        Ghi chú: {{item.note}}
+      </div>
 
-  <div *ngIf="!rest.spa.keyword.length">
-    <div *ngFor="let item of this.rest.spa.list; let i = index">
-      <div *ngIf="(!rest.spa.toggle) || (rest.spa.toggle && item.status < 3)" [class]="status[item.status]">
-        <div class="col-xs-6">
-          Tên khách: {{item.name}} <br>
-          Điện thoại: {{item.phone}} <br>
-          Người nhận hộ: {{item.name2}} <br>
-          Điện thoại: {{item.phone2}} <br>
-          Cân nặng: {{weight[item.weight]}}
-        </div>
-        <div class="col-xs-6">
-          Người nhận: {{item.user}} <br>
-          Thời gian nhận: {{item.time}} <br>
-          <span *ngIf="item.duser"> Người làm: {{item.duser}} <br> </span> 
-          <span *ngIf="item.luser"> Cập nhật cuối: {{item.luser}} lúc {{item.ltime}} <br> </span> 
-          Trạng thái: <span class="bold"> {{status_text[item.status]}}  </span>
-        </div>
-        <div class="upperline">
-          Dịch vụ: {{item.service}}
-        </div>
-        <div>
-          Ghi chú: {{item.note}}
-        </div>
-        
-        <div *ngIf="item.image.length">
-          <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
-        </div>
-        <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
-        <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
-        <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
-        <img class="right" src="/assets/icon/update.png" (click)="update(i)">
+      <div *ngIf="item.image.length">
+        <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
       </div>
+      <img *ngIf="item.status < 1" class="icon" src="/assets/icon/done.png" (click)="done(i)">
+      <img *ngIf="item.status < 2" class="icon" src="/assets/icon/called.png" (click)="called(i)">
+      <img *ngIf="item.status < 3" class="icon" src="/assets/icon/return.png" (click)="returned(i)">
+      <img class="right" src="/assets/icon/update.png" (click)="update(i)">
     </div>
   </div>
 </ion-content>
@@ -117,7 +79,7 @@
         <ion-icon name="ellipsis-vertical-outline"></ion-icon>
         <ion-label> Chưa về </ion-label>
       </ion-tab-button>
-      <ion-tab-button *ngIf="!rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
+        <ion-tab-button *ngIf="!rest.spa.toggle" (click)="rest.spa.toggle = !rest.spa.toggle">
         <ion-icon name="apps-outline"></ion-icon>
         <ion-label> Toàn bộ </ion-label>
       </ion-tab-button>

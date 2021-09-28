@@ -28,6 +28,8 @@ export class SpaPage {
   public autoload = null
   public check = true
   public keyword = ''
+  public option = []
+  
   constructor(
     public rest: RestService,
     public time: TimeService,
@@ -58,6 +60,17 @@ export class SpaPage {
       this.rest.spa.init = new Date().getTime()
       this.rest.spa.list = resp.list
       this.rest.spa.type = resp.type
+      this.rest.spa.doctor = resp.doctor
+      this.rest.spa.init = resp.time
+      this.rest.spa.doctor.forEach(item => {
+        this.option.push({
+          name: 'userid',
+          type: 'radio',
+          label: item.name,
+          value: item.userid,
+          checked: (this.rest.user.userid == item.userid ? true : false)
+        })
+      });
     }, () => { })
   }
 
@@ -70,7 +83,7 @@ export class SpaPage {
       }).then((resp) => {
         this.check = true
         if (resp.list.length) {
-          this.rest.spa.init = new Date().getTime()
+          this.rest.spa.init = resp.time
           this.rest.spa.list = resp.list
           if (this.keyword.length) this.search()
         }
@@ -81,9 +94,9 @@ export class SpaPage {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('spa-filter', {
-      time: this.rest.spa.time
+      time: this.rest.spa.time,
     }).then((resp) => {
-      this.rest.spa.init = new Date().getTime()
+      this.rest.spa.init = resp.time
       this.rest.spa.list = resp.list
       this.rest.defreeze()
     }, () => {
@@ -91,20 +104,17 @@ export class SpaPage {
     })
   }
 
-  public search() {
-    this.rest.spa.keyword = this.keyword
-    this.rest.spa.old = []
-    let key = this.rest.alias(this.keyword)
-
-    this.rest.spa.list.forEach((item, index) => {
-      let name = this.rest.alias(item.name)
-      let phone = this.rest.alias(item.phone)
-      let name2 = this.rest.alias(item.name2)
-      let phone2 = this.rest.alias(item.phone2)
-
-      if (name.search(key) >= 0 || name2.search(key) >= 0 || phone.search(key) >= 0 || phone2.search(key) >= 0) this.rest.spa.old.push(index)
+  public async search() {
+    await this.rest.freeze('Đang tải danh sách')
+    this.rest.checkpost('spa-search', {
+      keyword: this.keyword
+    }).then((resp) => {
+      this.rest.spa.old = resp.list
+      this.rest.navCtrl.navigateForward('spa/search')
+      this.rest.defreeze()
+    }, () => {
+      this.rest.defreeze()
     })
-    console.log(this.rest.spa.old);
   }
 
   public async detail(image: string) {
@@ -126,7 +136,8 @@ export class SpaPage {
       weight: 0,
       image: [],
       option: [],
-      time: this.rest.spa.time
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }
 
     this.rest.navCtrl.navigateForward('/spa/insert')
@@ -143,13 +154,14 @@ export class SpaPage {
       image: this.rest.spa.list[index].image,
       option: this.rest.spa.list[index].option,
       weight: Number(this.rest.spa.list[index].weight),
-      time: this.rest.spa.time
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }
     this.rest.router.navigateByUrl('/spa/insert')
   }
 
   public async called(index: number) {
-    const alert = await this.alert.create({
+    let alert = await this.alert.create({
       message: 'Đã gọi cho khách?',
       buttons: [
         {
@@ -164,15 +176,23 @@ export class SpaPage {
       ]
     });
 
+    if (!this.rest.spa.list[index].duser.length) {
+      alert['inputs'] = this.option
+    }
+
     await alert.present();
   }
 
-  public async calledSubmit(index: number) {
+  public async calledSubmit(index: number, uid: number = 0) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa-called', {
       id: this.rest.spa.list[index].id,
+      uid: uid,
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }).then((resp) => {
-      this.rest.spa.list[index].status = resp.status
+      this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -180,7 +200,7 @@ export class SpaPage {
   }
 
   public async returned(index: number) {
-    const alert = await this.alert.create({
+    let alert = await this.alert.create({
       message: 'Thú cưng đã đón về?',
       buttons: [
         {
@@ -194,16 +214,23 @@ export class SpaPage {
         }
       ]
     });
+    if (!this.rest.spa.list[index].duser.length) {
+      alert['inputs'] = this.option
+    }
 
     await alert.present();
   }
 
-  public async returnedSubmit(index: number) {
+  public async returnedSubmit(index: number, uid: number = 0) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa-returned', {
       id: this.rest.spa.list[index].id,
+      uid: uid,
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }).then((resp) => {
-      this.rest.spa.list[index].status = resp.status
+      this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()
@@ -211,7 +238,7 @@ export class SpaPage {
   }
 
   public async done(index: number) {
-    const alert = await this.alert.create({
+    let alert = await this.alert.create({
       message: 'Hoàn thành mục spa?',
       buttons: [
         {
@@ -220,21 +247,29 @@ export class SpaPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.doneSubmit(index)
+            this.doneSubmit(index, e)
           }
         }
       ]
     });
 
+    if (!this.rest.spa.list[index].duser.length) {
+      alert['inputs'] = this.option
+    }
+
     await alert.present();
   }
 
-  public async doneSubmit(index: number) {
+  public async doneSubmit(index: number, userid: number = 0) {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('spa-done', {
       id: this.rest.spa.list[index].id,
+      uid: userid,
+      time: this.rest.spa.time,
+      ctime: this.rest.spa.init
     }).then((resp) => {
-      this.rest.spa.list[index].status = resp.status
+      this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
     }, () => {
       this.rest.defreeze()

@@ -46,7 +46,7 @@ export class VaccinePage {
   public async filter() {
     await this.rest.freeze('Đang tải danh sách')
     this.rest.checkpost('vaccine-search', {
-      filter: this.rest.vaccine.filter
+      filter: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
@@ -106,7 +106,7 @@ export class VaccinePage {
     this.rest.checkpost('vaccine-called', {
       id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.vaccine.filter
+      filter: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
@@ -148,7 +148,7 @@ export class VaccinePage {
     this.rest.checkpost('vaccine-uncalled', {
       id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.vaccine.filter
+      filter: this.rest.vaccine.keyword
     }).then(resp => {
       this.rest.vaccine.list = resp.list
       this.rest.notify('Đã thay đổi trạng thái')
@@ -182,7 +182,7 @@ export class VaccinePage {
     await this.rest.freeze('Đang thay đổi trạng thái')
     this.rest.checkpost('vaccine-done', {
       id: this.rest.vaccine.list[index].id,
-      filter: this.rest.vaccine.filter
+      filter: this.rest.vaccine.keyword
     }).then((resp) => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()
@@ -222,7 +222,7 @@ export class VaccinePage {
     this.rest.checkpost('vaccine-dead', {
       id: this.rest.vaccine.list[index].id,
       note: note,
-      filter: this.rest.vaccine.filter
+      filter: this.rest.vaccine.keyword
     }).then((resp) => {
       this.rest.vaccine.list = resp.list
       this.rest.defreeze()

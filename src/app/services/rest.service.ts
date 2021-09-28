@@ -9,8 +9,8 @@ import { AlertController, LoadingController, ModalController, NavController, Toa
 })
 export class RestService {
   public branch = 'test'
-  public baseurl: string = 'http://localhost/server/index.php?';
-  // public baseurl: string = '/server/index.php?';
+  // public baseurl: string = 'http://localhost/server/index.php?';
+  public baseurl: string = '/server/index.php?';
   // public baseurl: string = 'https://nhatrang.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'https://daklak.thanhxuanpet.com/server/index.php?';
   // public baseurl: string = 'http://test.petcoffee.info/server/index.php?';
@@ -183,32 +183,18 @@ export class RestService {
     list: [],
     new: [],
     data: [],
-    filter: [],
+    keyword: '',
     type: []
   }
   public spa = {
     toggle: false,
+    doctor: [],
     old: [],
     keyword: '',
     time: 0,
     init: 0,
     type: [],
-    edit: {
-      id: 0,
-      name: '',
-      phone: '',
-      note: '',
-      type: [],
-      image: []
-    },
-    select: {
-      name: '',
-      phone: '',
-    },
-    suggest: '',
-    suggestList: [],
     list: [],
-    current: ''
   }
   public expire = {
     id: 0,
@@ -552,12 +538,9 @@ export class RestService {
       this.spa.type = data.type
       
       // this.config = data.config
-      this.ride.clock = data.clock
       this.list.employ = data['employ']
       this.list.except = data['except']
       this.today = data['today']
-      this.spa.current = data['today']
-      this.ride.current = data['today']
       for (const key in data['config']) {
         if (Object.prototype.hasOwnProperty.call(data['config'], key)) {
           this.config[key] = Number(data['config'][key])

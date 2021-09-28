@@ -174,6 +174,7 @@ export class InsertPage {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa-insert', this.rest.temp).then(resp => {
       this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {
@@ -185,6 +186,7 @@ export class InsertPage {
     this.rest.temp.option = this.checkOption()
     this.rest.checkpost('spa-update', this.rest.temp).then(resp => {
       this.rest.spa.list = resp.list
+      this.rest.spa.init = resp.time
       this.rest.defreeze()
       this.rest.navCtrl.pop()
     }, () => {

@@ -86,7 +86,7 @@ export class InsertPage {
   public async updateSubmit() {
     await this.rest.freeze('Thêm lịch nhắc...')
     this.rest.temp.type = this.rest.vaccine.type[this.rest.temp.vaccine].id
-    this.rest.temp.filter = this.rest.vaccine.filter
+    this.rest.temp.filter = this.rest.vaccine.keyword
     this.rest.checkpost('vaccine-update', this.rest.temp).then(resp => {
       if (this.rest.temp.prv) {
         this.rest.vaccine.temp = resp.list
@@ -100,7 +100,7 @@ export class InsertPage {
         this.rest.vaccine.list = resp.list
         this.clear()
         this.rest.defreeze()
-        if (this.rest.vaccine.filter) this.rest.navCtrl.pop()
+        if (this.rest.vaccine.keyword) this.rest.navCtrl.pop()
       }
     }, () => {
       this.rest.defreeze()

@@ -1,0 +1,27 @@
+<ion-toolbar color="success">
+  <ion-button color="light" fill="clear" (click)="rest.navCtrl.pop()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+<ion-content>
+  <div *ngFor="let item of this.rest.spa.old; let i = index" class="stl-card green">
+    <div class="col-xs-6">
+      Tên khách: {{item.name}} <br>
+      Điện thoại: {{item.phone}} <br>
+    </div>
+    <div class="col-xs-6">
+      Người nhận: {{item.duser}} <br>
+      Thời gian nhận: {{item.time}} <br>
+    </div>
+    <div class="upperline">
+      Dịch vụ: {{item.service}}
+    </div>
+    <div>
+      Ghi chú: {{item.note}}
+    </div>
+
+    <div *ngIf="item.image.length">
+      <img class="thumbnail-sm" *ngFor="let image of item.image" [src]="image" (click)="detail(image)">
+    </div>
+  </div>
+</ion-content>
