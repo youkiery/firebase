@@ -16,15 +16,13 @@
       Góp ý
     </ion-fab-button>
   </ion-fab>
-  <ion-item>
+  <ion-item color="secondary">
     <ion-label position="stacked"> Tìm kiếm khách hàng </ion-label>
     <ion-input [(ngModel)]="keyword"> </ion-input>
-    <ion-button slot="end" (click)="search()">
-      Tìm kiếm
-    </ion-button>
+    <img src="/assets/icon/customer-search.png" class="clear-img" slot="end" (click)="search()">
   </ion-item>
 
-  <div>
+  <div class="text-center" style="margin: 10px;">
     Ngày hiển thị: {{ time.timetodate(rest.spa.time) }}
   </div>
 
@@ -40,7 +38,7 @@
       <div class="col-xs-6">
         Người nhận: {{item.user}} <br>
         Thời gian nhận: {{item.time}} <br>
-        <span *ngIf="item.duser"> Người làm: {{item.duser}} <br> </span>
+        <span *ngIf="item.duser"> Người làm: <span class="redden"> {{item.duser}} </span> <br> </span>
         <span *ngIf="item.luser"> Cập nhật cuối: {{item.luser}} lúc {{item.ltime}} <br> </span>
         Trạng thái: <span class="bold"> {{status_text[item.status]}} </span>
       </div>

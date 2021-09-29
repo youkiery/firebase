@@ -85,7 +85,6 @@ export class SpaPage {
         if (resp.list.length) {
           this.rest.spa.init = resp.time
           this.rest.spa.list = resp.list
-          if (this.keyword.length) this.search()
         }
       }, () => { })
     }
@@ -170,7 +169,7 @@ export class SpaPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.calledSubmit(index)
+            this.calledSubmit(index, e)
           }
         }
       ]
@@ -209,7 +208,7 @@ export class SpaPage {
         }, {
           text: 'Xác nhận',
           handler: (e) => {
-            this.returnedSubmit(index)
+            this.returnedSubmit(index, e)
           }
         }
       ]
